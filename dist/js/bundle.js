@@ -10442,8 +10442,12 @@ var App = function (_Component) {
           'main',
           null,
           _react2.default.createElement(_MenuBar2.default, null),
-          _react2.default.createElement(_OptionsPanel2.default, null),
-          _react2.default.createElement(_PreviewPanel2.default, null)
+          _react2.default.createElement(
+            'div',
+            { className: 'panel-container' },
+            _react2.default.createElement(_OptionsPanel2.default, null),
+            _react2.default.createElement(_PreviewPanel2.default, null)
+          )
         )
       );
     }
@@ -10584,7 +10588,7 @@ var OptionsPanel = function (_Component) {
     value: function render() {
       return _react2.default.createElement(
         "section",
-        { className: "options-panel" },
+        { className: "options-panel container" },
         "Options Panel"
       );
     }
@@ -25652,7 +25656,7 @@ var PreviewPanel = function (_Component) {
     value: function render() {
       return _react2.default.createElement(
         "section",
-        { className: "preview-panel" },
+        { className: "preview-panel container" },
         "Preview Panel"
       );
     }
@@ -25702,8 +25706,8 @@ var MenuBar = function (_Component) {
     value: function render() {
       return _react2.default.createElement(
         "section",
-        { className: "menu-bar" },
-        "Menu Bar"
+        { className: "menu-bar container" },
+        "Envelope"
       );
     }
   }]);

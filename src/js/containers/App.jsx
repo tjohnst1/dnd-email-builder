@@ -14,8 +14,10 @@ export default class App extends Component {
       <Provider store={store}>
         <main>
           <MenuBar />
-          <OptionsPanel />
-          <PreviewPanel />
+          <div className="panel-container">
+            <OptionsPanel />
+            <PreviewPanel />
+          </div>
         </main>
       </Provider>
     )
