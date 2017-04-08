@@ -19,7 +19,14 @@ module.exports = {
         options: {
           presets: ['env', 'react']
         }
+      },
+      { test: /\.jsx$/,
+        exclude: /node_modules/,
+        loader: 'eslint-loader',
       }
     ]
+  },
+  resolve: {
+    extensions: ['.js', '.jsx']
   }
 }
