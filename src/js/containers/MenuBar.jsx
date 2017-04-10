@@ -1,9 +1,5 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-export default class MenuBar extends Component {
-  render() {
-    return (
-      <section className="menu-bar container">Envelope</section>
-    );
-  }
-}
+const MenuBar = () => <section className="menu-bar container">Envelope</section>;
+
+export default MenuBar;

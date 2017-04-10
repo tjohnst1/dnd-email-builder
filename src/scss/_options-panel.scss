@@ -1,4 +1,18 @@
 .options-panel {
-  background: #eee;
+  background: $offwhite;
   flex: 1;
+}
+
+.tabs {
+  display: flex;
+  padding: 0;
+  margin: 0;
+  li {
+    flex: 1;
+    list-style: none;
+    text-align: center;
+    &.active {
+      background: darken($offwhite, 10%);
+    }
+  }
 }

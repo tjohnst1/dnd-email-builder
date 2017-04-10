@@ -1,9 +1,5 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-export default class PreviewPanel extends Component {
-  render() {
-    return (
-      <section className="preview-panel container">Preview Panel</section>
-    );
-  }
-}
+const PreviewPanel = () => <section className="preview-panel container">Preview Panel</section>;
+
+export default PreviewPanel;

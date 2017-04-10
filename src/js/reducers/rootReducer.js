@@ -1,19 +1,17 @@
-import { combineReducers } from 'redux'
-import { SWITCH_TAB } from '../actions/actions'
+import { combineReducers } from 'redux';
+import { SWITCH_TAB } from '../actions/actions';
 
-function currentTab(state = 'blocks', action) {
+function currentTab(state = 'Blocks', action) {
   switch (action.type) {
     case SWITCH_TAB:
-      return action.tab
+      return action.tab;
     default:
-      return state
+      return state;
   }
-}
+};
 
 const rootReducer = combineReducers({
-  optionsPanel: {
-    currentTab: currentTab
-  }
-})
+  currentTab,
+});
 
-export default rootReducer
+export default rootReducer;

@@ -1,21 +1,10 @@
-import React, { Component } from 'react';
-import connect from 'react-redux';
+import React from 'react';
+import Tabs from '../components/optionsPanel/Tabs';
 
-class OptionsPanel extends Component {
-  render() {
-    return (
-      <section className="options-panel container">
-        <ul>
-          <li role="presentation" className="">Blocks</li>
-          <li role="presentation">Styles</li>
-        </ul>
-      </section>
-    );
-  }
-}
+const OptionsPanel = () => (
+  <section className="options-panel">
+    <Tabs />
+  </section>
+);
 
-function mapStateToProps(state) {
-  return state.optionsPanel;
-}
-
-export default connect(mapStateToProps)(OptionsPanel);
+export default OptionsPanel;
