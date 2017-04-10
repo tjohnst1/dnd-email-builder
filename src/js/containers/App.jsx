@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import { Provider } from 'react-redux';
 import configureStore from '../store/configureStore';
 
-import MenuBar from './MenuBar.jsx';
-import OptionsPanel from './OptionsPanel.jsx';
-import PreviewPanel from './PreviewPanel.jsx';
+import MenuBar from './MenuBar';
+import OptionsPanel from './OptionsPanel';
+import PreviewPanel from './PreviewPanel';
 
 const store = configureStore();
 
 export default class App extends Component {
-  render(){
+  render() {
     return (
       <Provider store={store}>
         <main>
@@ -20,6 +20,6 @@ export default class App extends Component {
           </div>
         </main>
       </Provider>
-    )
+    );
   }
 }
