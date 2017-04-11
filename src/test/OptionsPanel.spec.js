@@ -4,6 +4,7 @@ import { shallow, mount, render } from 'enzyme';
 import OptionsPanel from '../js/containers/OptionsPanel.jsx';
 import { Tabs } from '../js/components/optionsPanel/Tabs.jsx';
 import Tab from '../js/components/optionsPanel/Tab.jsx';
+import { OptionsPane } from '../js/components/optionsPanel/OptionsPane.jsx';
 
 let props;
 
@@ -12,7 +13,7 @@ describe('<OptionsPanel />', () => {
 
   test("should render itself and it's subcomponents", () => {
     expect(optionsPanelContainer).toHaveLength(1);
-    expect(optionsPanelContainer.children().length).toEqual(1);
+    expect(optionsPanelContainer.children().length).toEqual(2);
   });
 });
 
@@ -52,3 +53,51 @@ describe('<Tab />', () => {
   })
 
 });
+
+describe('<OptionsPane />', () => {
+  props = {
+    currentTab: 'Blocks',
+    currentCategory: null,
+    blocks: [
+      {
+        info: {
+          name: 'one-column',
+          icon: 'img/one-col.png'
+        },
+        modules: [
+          {
+          name: 'button',
+          image: 'img/one-col/button.png',
+          },
+          {
+          name: 'normal text',
+          image: 'img/one-col/button.png',
+          },
+        ]
+      },
+      {
+        info: {
+          name: 'two-column',
+          icon: 'img/two-col.png'
+        },
+        modules: [
+          {
+          name: 'text left, image right',
+          image: 'img/two-col/textleftimageright.png',
+          },
+          {
+          name: 'image left, text right',
+          image: 'img/two-col/imagelefttextright.png',
+          },
+        ]
+      }
+    ]
+  }
+
+  let optionsPaneComponent = shallow(<OptionsPane {...props} />);
+
+  test('should render', () => {
+    expect(optionsPaneComponent.exists()).toBe(true);
+  })
+
+})
