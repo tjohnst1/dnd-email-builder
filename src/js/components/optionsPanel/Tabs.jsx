@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import shortid from 'shortid';
 import Tab from './Tab';
-import { switchTab } from '../../actions/actions';
+import { switchTab, switchCategory } from '../../actions/actions';
 
 export const Tabs = (props) => {
   const tabNames = ['Blocks', 'Styles'];
@@ -10,6 +10,7 @@ export const Tabs = (props) => {
 
   const handleSwitchTab = tabName => (e) => {
     e.preventDefault();
+    props.dispatch(switchCategory(null));
     props.dispatch(switchTab(tabName));
   };
 

@@ -10878,6 +10878,7 @@ var Tabs = exports.Tabs = function Tabs(props) {
   var handleSwitchTab = function handleSwitchTab(tabName) {
     return function (e) {
       e.preventDefault();
+      props.dispatch((0, _actions.switchCategory)(null));
       props.dispatch((0, _actions.switchTab)(tabName));
     };
   };
