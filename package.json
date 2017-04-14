@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server",
-    "test": "jest src\/test\/.+\\.spec\\.js"
+    "start": "ttab 'webpack-dev-server'; ttab 'webpack -w'; ttab 'gulp'",
+    "test": "jest src/test/.+\\.spec\\.js"
   },
   "repository": {
     "type": "git",

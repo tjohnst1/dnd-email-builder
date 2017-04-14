@@ -100,4 +100,14 @@ describe('<OptionsPane />', () => {
     expect(optionsPaneComponent.exists()).toBe(true);
   })
 
+  test('should contain two buttons', () => {
+    expect(optionsPaneComponent.children().length).toEqual(2);
+  })
+
+  test('should receive props', () => {
+    expect(optionsPaneComponent.instance().props.currentTab).toEqual('Blocks');
+    expect(optionsPaneComponent.instance().props.currentCategory).toEqual(null);
+    expect(optionsPaneComponent.instance().props.blocks[0].info.name).toEqual('one-column');
+  })
+
 })
