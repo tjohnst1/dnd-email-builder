@@ -10637,12 +10637,163 @@ module.exports = __webpack_require__(150);
 
 
 /***/ }),
-/* 100 */,
-/* 101 */
-/***/ (function(module, exports) {
+/* 100 */
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-throw new Error("Module build failed: SyntaxError: Unexpected token (20:36)\n\n\u001b[0m \u001b[90m 18 | \u001b[39m  \u001b[36mreturn\u001b[39m (\n \u001b[90m 19 | \u001b[39m    \u001b[33m<\u001b[39m\u001b[33mdiv\u001b[39m className\u001b[33m=\u001b[39m\u001b[32m\"options-pane\"\u001b[39m\u001b[33m>\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 20 | \u001b[39m      { currentTab \u001b[33m===\u001b[39m \u001b[32m'Blocks'\u001b[39m \u001b[33m&&\u001b[39m  \u001b[33m?\u001b[39m buttons \u001b[33m:\u001b[39m \u001b[36mnull\u001b[39m }\n \u001b[90m    | \u001b[39m                                    \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 21 | \u001b[39m    \u001b[33m<\u001b[39m\u001b[33m/\u001b[39m\u001b[33mdiv\u001b[39m\u001b[33m>\u001b[39m\n \u001b[90m 22 | \u001b[39m  )\u001b[33m;\u001b[39m\n \u001b[90m 23 | \u001b[39m}\u001b[33m;\u001b[39m\u001b[0m\n");
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(8);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Button = function Button(props) {
+  var icon = props.icon,
+      text = props.text,
+      handleSwitchCategory = props.handleSwitchCategory;
+
+  return _react2.default.createElement(
+    "button",
+    { className: "button", onClick: handleSwitchCategory },
+    _react2.default.createElement("img", { className: "button__img", src: icon, alt: text }),
+    text
+  );
+};
+
+Button.propTypes = {
+  icon: _react.PropTypes.string.isRequired,
+  text: _react.PropTypes.string.isRequired,
+  handleSwitchCategory: _react.PropTypes.func.isRequired
+};
+
+exports.default = Button;
+
+/***/ }),
+/* 101 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.OptionsPane = undefined;
+
+var _react = __webpack_require__(8);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRedux = __webpack_require__(50);
+
+var _actions = __webpack_require__(59);
+
+var _shortid = __webpack_require__(96);
+
+var _shortid2 = _interopRequireDefault(_shortid);
+
+var _Button = __webpack_require__(100);
+
+var _Button2 = _interopRequireDefault(_Button);
+
+var _EmailModule = __webpack_require__(247);
+
+var _EmailModule2 = _interopRequireDefault(_EmailModule);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var OptionsPane = exports.OptionsPane = function OptionsPane(props) {
+  var blocks = props.blocks,
+      currentTab = props.currentTab,
+      currentCategory = props.currentCategory;
+
+  var innerContent = void 0;
+
+  var handleSwitchCategory = function handleSwitchCategory(category) {
+    return function (e) {
+      e.preventDefault();
+      props.dispatch((0, _actions.switchCategory)(category));
+    };
+  };
+
+  switch (currentTab) {
+    case 'Blocks':
+      if (blocks.length >= 1) {
+        if (currentCategory === null) {
+          innerContent = blocks.map(function (block) {
+            return _react2.default.createElement(_Button2.default, {
+              icon: block.info.icon,
+              text: block.info.name,
+              handleSwitchCategory: handleSwitchCategory(block.info.name),
+              key: _shortid2.default.generate()
+            });
+          });
+        } else {
+          var emailModules = blocks.filter(function (blockCategory) {
+            return blockCategory.info.name === currentCategory;
+          })[0].modules;
+          innerContent = emailModules.map(function (module) {
+            return _react2.default.createElement(_EmailModule2.default, {
+              name: module.name,
+              image: module.image,
+              key: _shortid2.default.generate()
+            });
+          });
+        }
+        break;
+      }
+    default:
+      innerContent = _react2.default.createElement(
+        'p',
+        null,
+        'Loading...'
+      );
+  }
+
+  return _react2.default.createElement(
+    'div',
+    { className: 'options-pane' },
+    innerContent
+  );
+};
+
+OptionsPane.propTypes = {
+  currentTab: _react.PropTypes.string.isRequired,
+  currentCategory: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.null]).isRequired,
+  blocks: _react.PropTypes.oneOfType([_react.PropTypes.arrayOf(_react.PropTypes.shape({
+    info: _react.PropTypes.shape({
+      name: _react.PropTypes.string,
+      icon: _react.PropTypes.string
+    }),
+    modules: _react.PropTypes.arrayOf(_react.PropTypes.shape({
+      name: _react.PropTypes.string,
+      image: _react.PropTypes.string
+    }))
+  })), []]).isRequired,
+  dispatch: _react.PropTypes.func.isRequired
+};
+
+function mapStateToProps(state) {
+  var currentTab = state.currentTab,
+      blocks = state.blocks,
+      currentCategory = state.currentCategory,
+      dispatch = state.dispatch;
+
+  return {
+    currentTab: currentTab,
+    blocks: blocks,
+    currentCategory: currentCategory,
+    dispatch: dispatch
+  };
+}
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps)(OptionsPane);
 
 /***/ }),
 /* 102 */
@@ -25693,6 +25844,46 @@ module.exports = function(module) {
 	return module;
 };
 
+
+/***/ }),
+/* 247 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(8);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var EmailModule = function EmailModule(props) {
+  var image = props.image,
+      name = props.name;
+
+  return _react2.default.createElement(
+    "div",
+    { className: "email-module" },
+    _react2.default.createElement("img", { className: "email-module__img", src: image, alt: name }),
+    _react2.default.createElement(
+      "p",
+      null,
+      name
+    )
+  );
+};
+
+EmailModule.propTypes = {
+  image: _react.PropTypes.string.isRequired,
+  name: _react.PropTypes.string.isRequired
+};
+
+exports.default = EmailModule;
 
 /***/ })
 /******/ ]);

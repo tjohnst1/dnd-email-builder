@@ -73,6 +73,10 @@ describe('<OptionsPane />', () => {
           name: 'normal text',
           image: 'img/one-col/button.png',
           },
+          {
+          name: 'headline text',
+          image: 'img/one-col/headline.png',
+          },
         ]
       },
       {
@@ -100,14 +104,19 @@ describe('<OptionsPane />', () => {
     expect(optionsPaneComponent.exists()).toBe(true);
   })
 
-  test('should contain two buttons', () => {
-    expect(optionsPaneComponent.children().length).toEqual(2);
-  })
-
   test('should receive props', () => {
     expect(optionsPaneComponent.instance().props.currentTab).toEqual('Blocks');
     expect(optionsPaneComponent.instance().props.currentCategory).toEqual(null);
     expect(optionsPaneComponent.instance().props.blocks[0].info.name).toEqual('one-column');
+  })
+
+  test('should contain two buttons if the currentCategory is null', () => {
+    expect(optionsPaneComponent.children().length).toEqual(2);
+  })
+
+  test('should contain three modules if the currentCategory is one-column', () => {
+    props.currentCategory = 'one-column';
+    expect(optionsPaneComponent.children().length).toEqual(3);
   })
 
 })
