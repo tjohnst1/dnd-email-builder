@@ -1,17 +1,18 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { switchCategory } from '../../actions/actions';
 import shortid from 'shortid';
+import classNames from 'classnames';
+import { switchCategory } from '../../actions/actions';
 import Button from './Button';
 import EmailModule from './EmailModule';
 
 export const OptionsPane = (props) => {
-  const { blocks, currentTab, currentCategory } = props;
+  const { blocks, currentTab, currentCategory, dispatch } = props;
   let innerContent;
 
   const handleSwitchCategory = category => (e) => {
     e.preventDefault();
-    props.dispatch(switchCategory(category));
+    dispatch(switchCategory(category));
   };
 
   switch (currentTab) {
@@ -26,7 +27,7 @@ export const OptionsPane = (props) => {
           />);
         } else {
           const emailModules = blocks.filter(blockCategory =>
-            blockCategory.info.name === currentCategory
+            blockCategory.info.name === currentCategory,
           )[0].modules;
           innerContent = emailModules.map(module => <EmailModule
             name={module.name}
@@ -36,12 +37,18 @@ export const OptionsPane = (props) => {
         }
         break;
       }
+      // falls through
     default:
       innerContent = <p>Loading...</p>;
   }
 
+  const classes = classNames({
+    'options-pane': true,
+    'options-pane--columns': currentCategory !== null,
+  });
+
   return (
-    <div className="options-pane">
+    <div className={classes}>
       { innerContent }
     </div>
   );
@@ -49,7 +56,7 @@ export const OptionsPane = (props) => {
 
 OptionsPane.propTypes = {
   currentTab: PropTypes.string.isRequired,
-  currentCategory: PropTypes.oneOfType([PropTypes.string, PropTypes.null]).isRequired,
+  currentCategory: PropTypes.string,
   blocks: PropTypes.oneOfType([
     PropTypes.arrayOf(
       PropTypes.shape({
@@ -68,7 +75,11 @@ OptionsPane.propTypes = {
     ),
     [],
   ]).isRequired,
-  dispatch: PropTypes.func.isRequired
+  dispatch: PropTypes.func.isRequired,
+};
+
+OptionsPane.defaultProps = {
+  currentCategory: null,
 };
 
 function mapStateToProps(state) {
@@ -77,7 +88,7 @@ function mapStateToProps(state) {
     currentTab,
     blocks,
     currentCategory,
-    dispatch
+    dispatch,
   };
 }
 

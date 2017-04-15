@@ -1,6 +1,9 @@
 .options-panel {
   background: $offwhite;
-  flex: 1;
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+  max-width: 350px;
 }
 
 .tabs {
@@ -11,8 +14,92 @@
     flex: 1;
     list-style: none;
     text-align: center;
-    &.active {
+    button {
+      width: 100%;
+      border-radius: 0;
+      border: 0;
       background: darken($offwhite, 10%);
+      padding: 10px;
+      border-top: 1px solid darken($offwhite, 10%);
+      border-right: 1px solid darken($offwhite, 10%);
+      border-bottom: 1px solid darken($offwhite, 20%);
+      border-left: 1px solid darken($offwhite, 10%);
+      transition: all 300ms;
+      cursor: pointer;
+      &:hover {
+        background: darken($offwhite, 20%);
+      }
     }
+    &.active button {
+      background: $offwhite;
+      border-top: 1px solid darken($offwhite, 20%);
+      border-right: 1px solid darken($offwhite, 20%);
+      border-bottom: 1px solid $offwhite;
+      border-left: 1px solid darken($offwhite, 20%);
+    }
+  }
+}
+
+.options-pane {
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  flex: 1;
+  align-items: flex-start;
+  border-right: 1px solid darken($offwhite, 20%);
+}
+
+.options-pane--columns {
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.button {
+  border-radius: 0;
+  border: 0;
+  background: #ffffff;
+  width: 49%;
+  display: inline-block;
+  padding: 10px;
+  transition: all 300ms;
+  cursor: pointer;
+  img, p {
+    display: block;
+    padding: 0;
+    margin: 0;
+  }
+  img {
+    max-width: 100%;
+  }
+  &:hover {
+    box-shadow: 0 6px 10px 0 rgba(0,0,0,0.14), 0 1px 18px 0 rgba(0,0,0,0.12), 0 3px 5px -1px rgba(0,0,0,0.3);
+  }
+}
+
+.email-module {
+  display: block;
+  margin: 20px 0 0 0;
+  cursor: move;
+  img, p {
+    display: block;
+    padding: 0;
+    margin: 0;
+  }
+  img {
+    max-width: 100%;
+  }
+  &:first-of-type {
+    margin: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .options-pane {
+    display: block;
+    padding: 10px;
+  }
+  .button {
+    width: 100%;
+    margin: 10px 0 0 0;
   }
 }

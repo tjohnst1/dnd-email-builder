@@ -4,7 +4,7 @@ const EmailModule = (props) => {
   const { image, name } = props;
   return (
     <div className="email-module">
-      <img className="email-module__img" src={image} alt={name} />
+      <img src={image} alt={name} />
       <p>{ name }</p>
     </div>
   );

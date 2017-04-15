@@ -5,7 +5,7 @@ const Button = (props) => {
   return (
     <button className="button" onClick={handleSwitchCategory}>
       <img className="button__img" src={icon} alt={text} />
-      { text }
+      <p>{ text }</p>
     </button>
   );
 };
@@ -13,7 +13,7 @@ const Button = (props) => {
 Button.propTypes = {
   icon: PropTypes.string.isRequired,
   text: PropTypes.string.isRequired,
-  handleSwitchCategory: PropTypes.func.isRequired
+  handleSwitchCategory: PropTypes.func.isRequired,
 };
 
 export default Button;
