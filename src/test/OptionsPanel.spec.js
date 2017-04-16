@@ -5,8 +5,9 @@ import OptionsPanel from '../js/containers/OptionsPanel.jsx';
 import { Tabs } from '../js/components/optionsPanel/Tabs.jsx';
 import Tab from '../js/components/optionsPanel/Tab.jsx';
 import { OptionsPane } from '../js/components/optionsPanel/OptionsPane.jsx';
+import dummyData from '../js/data/dummyData'
 
-let props;
+let props = dummyData;
 
 describe('<OptionsPanel />', () => {
   const optionsPanelContainer = shallow(<OptionsPanel />);
@@ -18,11 +19,8 @@ describe('<OptionsPanel />', () => {
 });
 
 describe('<Tabs />', () => {
-  props = {
-    currentTab: "Blocks",
-  }
 
-  let tabsContainer = shallow(<Tabs {...props} />);
+  const tabsContainer = shallow(<Tabs {...props} />);
 
   test("should render itself", () => {
     expect(tabsContainer.exists()).toBe(true);
@@ -40,7 +38,7 @@ describe('<Tab />', () => {
     handleSwitchTab: jest.fn(() => 'switched'),
   }
 
-  let tabComponent = shallow(<Tab {...props} />);
+  const tabComponent = shallow(<Tab {...props} />);
 
   test("should render itself", () => {
     expect(tabComponent.exists()).toBe(true);
@@ -55,48 +53,8 @@ describe('<Tab />', () => {
 });
 
 describe('<OptionsPane />', () => {
-  props = {
-    currentTab: 'Blocks',
-    currentCategory: null,
-    blocks: [
-      {
-        info: {
-          name: 'one-column',
-          icon: 'img/one-col.png'
-        },
-        modules: [
-          {
-          name: 'button',
-          image: 'img/one-col/button.png',
-          },
-          {
-          name: 'normal text',
-          image: 'img/one-col/button.png',
-          },
-          {
-          name: 'headline text',
-          image: 'img/one-col/headline.png',
-          },
-        ]
-      },
-      {
-        info: {
-          name: 'two-column',
-          icon: 'img/two-col.png'
-        },
-        modules: [
-          {
-          name: 'text left, image right',
-          image: 'img/two-col/textleftimageright.png',
-          },
-          {
-          name: 'image left, text right',
-          image: 'img/two-col/imagelefttextright.png',
-          },
-        ]
-      }
-    ]
-  }
+  props = dummyData;
+  props.dispatch = jest.fn(() => 'dispatch');
 
   let optionsPaneComponent = shallow(<OptionsPane {...props} />);
 
@@ -107,7 +65,8 @@ describe('<OptionsPane />', () => {
   test('should receive props', () => {
     expect(optionsPaneComponent.instance().props.currentTab).toEqual('Blocks');
     expect(optionsPaneComponent.instance().props.currentCategory).toEqual(null);
-    expect(optionsPaneComponent.instance().props.blocks[0].info.name).toEqual('one-column');
+    expect(optionsPaneComponent.instance().props.emailModules.isFetching).toEqual(false);
+    expect(optionsPaneComponent.instance().props.emailModules.categories[0].name).toEqual('one-column');
   })
 
   test('should contain two buttons if the currentCategory is null', () => {
@@ -115,7 +74,8 @@ describe('<OptionsPane />', () => {
   })
 
   test('should contain three modules if the currentCategory is one-column', () => {
-    props.currentCategory = 'one-column';
+    props.currentCategory = "one-column";
+    optionsPaneComponent = shallow(<OptionsPane {...props} />);
     expect(optionsPaneComponent.children().length).toEqual(3);
   })
 

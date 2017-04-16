@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
-import { SWITCH_TAB, SWITCH_CATEGORY } from '../actions/actions';
+import database from '../store/firebase';
+import { SWITCH_TAB, SWITCH_CATEGORY, REQUEST_EMAIL_MODULES, RECEIVE_EMAIL_MODULES } from '../actions/actions';
 
 function currentTab(state = 'Blocks', action) {
   switch (action.type) {
@@ -19,14 +20,26 @@ function currentCategory(state = null, action) {
   };
 }
 
-function blocks(state = [], action) {
-  return state;
+function emailModules(state = { isFetching: false, categories: [] }, action) {
+  switch (action.type) {
+    case REQUEST_EMAIL_MODULES:
+      return Object.assign({}, state, {
+        isFetching: true,
+      })
+    case RECEIVE_EMAIL_MODULES:
+      return Object.assign({}, state, {
+        isFetching: false,
+        categories: action.emailModules,
+      });
+    default:
+      return state;
+  }
 }
 
 const rootReducer = combineReducers({
   currentTab,
   currentCategory,
-  blocks,
+  emailModules,
 });
 
 export default rootReducer;

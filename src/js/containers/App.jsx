@@ -6,9 +6,7 @@ import MenuBar from './MenuBar';
 import OptionsPanel from './OptionsPanel';
 import PreviewPanel from './PreviewPanel';
 
-import dummyData from '../data/dummyData';
-
-const store = configureStore(dummyData);
+const store = configureStore();
 
 const App = () =>
   <Provider store={store}>

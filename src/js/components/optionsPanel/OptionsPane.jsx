@@ -1,64 +1,84 @@
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import shortid from 'shortid';
 import classNames from 'classnames';
-import { switchCategory } from '../../actions/actions';
+import { switchCategory, fetchEmailModulesIfNeeded } from '../../actions/actions';
 import Button from './Button';
 import EmailModule from './EmailModule';
 
-export const OptionsPane = (props) => {
-  const { blocks, currentTab, currentCategory, dispatch } = props;
-  let innerContent;
-
-  const handleSwitchCategory = category => (e) => {
-    e.preventDefault();
-    dispatch(switchCategory(category));
-  };
-
-  switch (currentTab) {
-    case 'Blocks':
-      if (blocks.length >= 1) {
-        if (currentCategory === null) {
-          innerContent = blocks.map(block => <Button
-            icon={block.info.icon}
-            text={block.info.name}
-            handleSwitchCategory={handleSwitchCategory(block.info.name)}
-            key={shortid.generate()}
-          />);
-        } else {
-          const emailModules = blocks.filter(blockCategory =>
-            blockCategory.info.name === currentCategory,
-          )[0].modules;
-          innerContent = emailModules.map(module => <EmailModule
-            name={module.name}
-            image={module.image}
-            key={shortid.generate()}
-          />);
-        }
-        break;
-      }
-      // falls through
-    default:
-      innerContent = <p>Loading...</p>;
+export class OptionsPane extends Component {
+  constructor(props) {
+    super(props);
+    this.handleSwitchCategory = this.handleSwitchCategory.bind(this);
   }
 
-  const classes = classNames({
-    'options-pane': true,
-    'options-pane--columns': currentCategory !== null,
-  });
+  componentDidMount() {
+    this.props.dispatch(fetchEmailModulesIfNeeded());
+  }
 
-  return (
-    <div className={classes}>
-      { innerContent }
-    </div>
-  );
-};
+  handleSwitchCategory(category) {
+    return (e) => {
+      e.preventDefault();
+      this.props.dispatch(switchCategory(category));
+    };
+  }
+
+  render() {
+    const { currentTab, currentCategory, emailModules } = this.props;
+    let innerContent;
+
+    switch (currentTab) {
+      case 'Blocks':
+        // check if there are email modules available
+        if (emailModules.categories.length > 0) {
+          // if there is no category chosen, show the category buttons
+          if (currentCategory === null) {
+            innerContent = emailModules.categories.map(
+              category => <Button
+                icon={category.image}
+                text={category.name}
+                handleSwitchCategory={this.handleSwitchCategory(category.name)}
+                key={shortid.generate()}
+              />,
+            );
+          // otherwise, show the individual module previews
+          } else {
+            // find the modules from the selected category
+            const moduleCollection = emailModules.categories.filter(category =>
+            category.name === currentCategory)[0].modules;
+            // display the individual modules from the selected category
+            innerContent = moduleCollection.map(module => <EmailModule
+              name={module.name}
+              image={module.image}
+              key={shortid.generate()}
+            />);
+          }
+          break;
+        }
+      // falls through if there are email modules available
+      default:
+        innerContent = <p>Loading...</p>;
+    }
+
+    const classes = classNames({
+      'options-pane': true,
+      'options-pane--columns': currentCategory !== null,
+    });
+
+    return (
+      <div className={classes}>
+        { innerContent }
+      </div>
+    );
+  }
+}
 
 OptionsPane.propTypes = {
   currentTab: PropTypes.string.isRequired,
   currentCategory: PropTypes.string,
-  blocks: PropTypes.oneOfType([
-    PropTypes.arrayOf(
+  emailModules: PropTypes.shape({
+    isFetching: PropTypes.boolean,
+    categories: PropTypes.arrayOf(
       PropTypes.shape({
         info:
           PropTypes.shape({
@@ -73,8 +93,7 @@ OptionsPane.propTypes = {
         ),
       }),
     ),
-    [],
-  ]).isRequired,
+  }).isRequired,
   dispatch: PropTypes.func.isRequired,
 };
 
@@ -83,10 +102,10 @@ OptionsPane.defaultProps = {
 };
 
 function mapStateToProps(state) {
-  const { currentTab, blocks, currentCategory, dispatch } = state;
+  const { currentTab, emailModules, currentCategory, dispatch } = state;
   return {
     currentTab,
-    blocks,
+    emailModules,
     currentCategory,
     dispatch,
   };
