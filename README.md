@@ -1,5 +1,5 @@
-# React/Redux Project Boilerplate
+# DnD HTML Email Builder
 
-A starting point for creating React/Redux projects.
+Easily build HTML emails with a drag and drop interface.
 
-Libraries used: React, Redux, Webpack, Gulp (for style compilation & task running).
+Technologies used: React, Redux, Firebase, Webpack, Gulp (for style compilation & task running).
