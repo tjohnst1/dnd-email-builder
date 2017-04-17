@@ -2,29 +2,45 @@
   "categories": [
     {
       "name": "one-column",
-      "image": "img/one-col.png",
+      "image": "img/modules/one-column/one-column.png",
       "modules": [
         {
-        "name": "button",
-        "image": "img/one-col/button.png"
+        "name": "Preheader",
+        "image": "img/modules/one-column/preheader.png"
         },
         {
-        "name": "normal text",
-        "image": "img/one-col/button.png"
+        "name": "Full Width Image",
+        "image": "img/modules/one-column/full-width-image.png"
+        },
+        {
+        "name": "Paragraph Text",
+        "image": "img/modules/one-column/paragraph-text.png"
+        },
+        {
+        "name": "CTA",
+        "image": "img/modules/one-column/cta.png"
+        },
+        {
+        "name": "Footer",
+        "image": "img/modules/one-column/footer.png"
         }
       ]
     },
     {
       "name": "two-column",
-      "image": "img/two-col.png",
+      "image": "img/modules/two-column/two-column.png",
       "modules": [
         {
-        "name": "text left, image right",
-        "image": "img/two-col/textleftimageright.png"
+        "name": "Text Left, Image Right",
+        "image": "img/modules/two-column/text-left-image-right.png"
         },
         {
-        "name": "image left, text right",
-        "image": "img/two-col/imagelefttextright.png"
+        "name": "Logo Nav",
+        "image": "img/modules/two-column/logo-nav.png"
+        },
+        {
+        "name": "Image Left, Text Right",
+        "image": "img/modules/two-column/image-left-text-right.png"
         }
       ]
     }
