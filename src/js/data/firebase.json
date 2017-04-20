@@ -6,23 +6,53 @@
       "modules": [
         {
         "name": "Preheader",
-        "image": "img/modules/one-column/preheader.png"
+        "image": "img/modules/one-column/preheader.png",
+        "type": "one-column",
+        "content": [
+          {
+            "type": "text",
+            "color": "#828282",
+            "fontFamily": "Helvetica, Arial, sans-serif",
+            "fontSize": "10px",
+            "lineHeight": "12px",
+            "textAlign": "center"
+          }]
         },
         {
         "name": "Full Width Image",
-        "image": "img/modules/one-column/full-width-image.png"
+        "image": "img/modules/one-column/full-width-image.png",
+        "type": "one-column",
+        "content": [
+          {
+            "type": "image",
+            "link": true,
+            "src": "http://placehold.it/576x200",
+            "width": "576"
+          }]
         },
         {
         "name": "Paragraph Text",
-        "image": "img/modules/one-column/paragraph-text.png"
+        "image": "img/modules/one-column/paragraph-text.png",
+        "type": "one-column",
+        "content": [
+          {
+            "type": "text",
+            "color": "#1d1d1d",
+            "fontFamily": "Helvetica, Arial, sans-serif",
+            "fontSize": "14px",
+            "lineHeight": "16px",
+            "textAlign": "left"
+          }]
         },
         {
         "name": "CTA",
-        "image": "img/modules/one-column/cta.png"
+        "image": "img/modules/one-column/cta.png",
+        "type": "one-column"
         },
         {
         "name": "Footer",
-        "image": "img/modules/one-column/footer.png"
+        "image": "img/modules/one-column/footer.png",
+        "type": "one-column"
         }
       ]
     },

@@ -2,6 +2,8 @@ export const SWITCH_TAB = 'SWITCH_TAB';
 export const SWITCH_CATEGORY = 'SWITCH_CATEGORY';
 export const REQUEST_EMAIL_MODULES = 'REQUEST_EMAIL_MODULES';
 export const RECEIVE_EMAIL_MODULES = 'RECEIVE_EMAIL_MODULES';
+export const ADD_MODULE = 'ADD_MODULE';
+export const REMOVE_MODULE = 'REMOVE_MODULE';
 
 import database from '../store/firebase'
 
@@ -51,5 +53,19 @@ function receiveEmailModules(emailModules) {
   return {
     type: RECEIVE_EMAIL_MODULES,
     emailModules,
+  }
+}
+
+export function addModule(emailModule) {
+  return {
+    type: ADD_MODULE,
+    emailModule,
+  }
+}
+
+export function removeModule(emailModule) {
+  return {
+    type: REMOVE_MODULE,
+    emailModule,
   }
 }

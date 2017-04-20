@@ -3,24 +3,37 @@ import React, { PropTypes } from 'react';
 const ImageComponent = (props) => {
   const { link, src, width } = props;
   let imgElement;
+  let styles;
 
   if (link) {
+    const linkStyles = {
+      display: 'block',
+      border: '0 auto',
+      fontSize: 0,
+    };
+    styles = {
+      maxWidth: '100%',
+      border: 0,
+    };
     imgElement = (
-      <a href="#" style="display: block; border: 0 auto; font-size: 0;">
-        <img src={src} width={width} style="max-width: 100%; border: 0;" />
+      <a href="#" style={linkStyles}>
+        <img src={src} width={width} style={styles} alt="placeholder img" />
       </a>
     );
   } else {
-    imgElement = <img src={src} width={width} style="max-width: 100%; border: 0; display: block;" />;
+    styles = {
+      maxWidth: '100%',
+      border: 0,
+      display: 'block',
+    };
+    imgElement = <img src={src} width={width} style={styles} alt="placeholder img" />;
   }
 
-  return (
-    { imgElement }
-  );
+  return imgElement;
 };
 
 ImageComponent.propTypes = {
-  link: PropTypes.boolean.isRequired,
+  link: PropTypes.bool.isRequired,
   src: PropTypes.string.isRequired,
   width: PropTypes.string.isRequired,
 };

@@ -6,6 +6,7 @@ module.exports = {
         "import"
     ],
     "rules": {
-      "import/no-named-as-default": "off"
+      "import/no-named-as-default": "off",
+      "jsx-a11y/href-no-hash": "off"
     }
 };
