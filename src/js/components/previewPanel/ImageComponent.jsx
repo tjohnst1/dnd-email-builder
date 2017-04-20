@@ -3,30 +3,15 @@ import React, { PropTypes } from 'react';
 const ImageComponent = (props) => {
   const { link, src, width } = props;
   let imgElement;
-  let styles;
 
   if (link) {
-    const linkStyles = {
-      display: 'block',
-      border: '0 auto',
-      fontSize: 0,
-    };
-    styles = {
-      maxWidth: '100%',
-      border: 0,
-    };
     imgElement = (
-      <a href="#" style={linkStyles}>
-        <img src={src} width={width} style={styles} alt="placeholder img" />
+      <a href="#">
+        <img className="img" src={src} width={width} alt="placeholder img" />
       </a>
     );
   } else {
-    styles = {
-      maxWidth: '100%',
-      border: 0,
-      display: 'block',
-    };
-    imgElement = <img src={src} width={width} style={styles} alt="placeholder img" />;
+    imgElement = <img className="img" src={src} width={width} alt="placeholder img" />;
   }
 
   return imgElement;

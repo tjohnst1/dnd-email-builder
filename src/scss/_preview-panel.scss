@@ -3,3 +3,24 @@
   display: flex;
   flex: 1;
 }
+
+.img {
+  max-width: 100%;
+  display: block;
+}
+
+.center-block {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.width-90 {
+  width: 90%;
+}
+
+@media screen and (max-width: 640px) {
+  .w100 {
+    width: 100%;
+  }
+}

@@ -16,12 +16,12 @@ const EmailPreview = (props) => {
         ];
         break;
       default:
-        modulesToRender = <p>Nothing</p>;
+        modulesToRender = [...modulesToRender, null];
     }
   });
 
   return (
-    <div>
+    <div className="center-block">
       { modulesToRender }
     </div>
   );

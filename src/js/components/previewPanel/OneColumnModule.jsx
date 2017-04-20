@@ -15,32 +15,13 @@ const OneColumnModule = (props) => {
     />);
   }
 
-  const zeroAuto = { margin: '0 auto' };
   const padt20 = { paddingTop: '20px' };
   return (
-    <table style={zeroAuto} className="w100" width="640">
-      <tbody>
-        <tr>
-          <td>
-            <table style={zeroAuto} width={width}>
-              <tbody>
-                <tr>
-                  <td style={padt20}>
-                    <table width="100%">
-                      <tbody>
-                        <tr>
-                          {content}
-                        </tr>
-                      </tbody>
-                    </table>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <div className="w100" style={padt20} width="640">
+      <div className="center-block width-90">
+        {content}
+      </div>
+    </div>
   );
 };
 

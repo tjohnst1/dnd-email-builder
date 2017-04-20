@@ -11262,17 +11262,13 @@ var EmailPreview = function EmailPreview(props) {
         modulesToRender = [].concat(_toConsumableArray(modulesToRender), [_react2.default.createElement(_OneColumnModule2.default, { content: module.content, key: _shortid2.default.generate() })]);
         break;
       default:
-        modulesToRender = _react2.default.createElement(
-          'p',
-          null,
-          'Nothing'
-        );
+        modulesToRender = [].concat(_toConsumableArray(modulesToRender), [null]);
     }
   });
 
   return _react2.default.createElement(
     'div',
-    null,
+    { className: 'center-block' },
     modulesToRender
   );
 };
@@ -11314,30 +11310,15 @@ var ImageComponent = function ImageComponent(props) {
       width = props.width;
 
   var imgElement = void 0;
-  var styles = void 0;
 
   if (link) {
-    var linkStyles = {
-      display: 'block',
-      border: '0 auto',
-      fontSize: 0
-    };
-    styles = {
-      maxWidth: '100%',
-      border: 0
-    };
     imgElement = _react2.default.createElement(
-      'a',
-      { href: '#', style: linkStyles },
-      _react2.default.createElement('img', { src: src, width: width, style: styles, alt: 'placeholder img' })
+      "a",
+      { href: "#" },
+      _react2.default.createElement("img", { className: "img", src: src, width: width, alt: "placeholder img" })
     );
   } else {
-    styles = {
-      maxWidth: '100%',
-      border: 0,
-      display: 'block'
-    };
-    imgElement = _react2.default.createElement('img', { src: src, width: width, style: styles, alt: 'placeholder img' });
+    imgElement = _react2.default.createElement("img", { className: "img", src: src, width: width, alt: "placeholder img" });
   }
 
   return imgElement;
@@ -11399,51 +11380,14 @@ var OneColumnModule = function OneColumnModule(props) {
     });
   }
 
-  var zeroAuto = { margin: '0 auto' };
   var padt20 = { paddingTop: '20px' };
   return _react2.default.createElement(
-    'table',
-    { style: zeroAuto, className: 'w100', width: '640' },
+    'div',
+    { className: 'w100', style: padt20, width: '640' },
     _react2.default.createElement(
-      'tbody',
-      null,
-      _react2.default.createElement(
-        'tr',
-        null,
-        _react2.default.createElement(
-          'td',
-          null,
-          _react2.default.createElement(
-            'table',
-            { style: zeroAuto, width: width },
-            _react2.default.createElement(
-              'tbody',
-              null,
-              _react2.default.createElement(
-                'tr',
-                null,
-                _react2.default.createElement(
-                  'td',
-                  { style: padt20 },
-                  _react2.default.createElement(
-                    'table',
-                    { width: '100%' },
-                    _react2.default.createElement(
-                      'tbody',
-                      null,
-                      _react2.default.createElement(
-                        'tr',
-                        null,
-                        content
-                      )
-                    )
-                  )
-                )
-              )
-            )
-          )
-        )
-      )
+      'div',
+      { className: 'center-block width-90' },
+      content
     )
   );
 };
@@ -11481,7 +11425,7 @@ var TextComponent = function TextComponent(props) {
 
   var styles = { color: color, fontFamily: fontFamily, fontSize: fontSize, lineHeight: lineHeight, textAlign: textAlign };
   return _react2.default.createElement(
-    'td',
+    'p',
     { style: styles },
     innerContent
   );

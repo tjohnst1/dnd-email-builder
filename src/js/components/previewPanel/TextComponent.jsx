@@ -4,7 +4,7 @@ const TextComponent = (props) => {
   const { color, fontSize, lineHeight, fontFamily, textAlign, innerContent } = props;
   const styles = { color, fontFamily, fontSize, lineHeight, textAlign };
   return (
-    <td style={styles}>{ innerContent }</td>
+    <p style={styles}>{ innerContent }</p>
   );
 };
 
