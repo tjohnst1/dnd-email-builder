@@ -66,7 +66,16 @@ const testState = [
   },
 ]
 
-function emailPreview(state = testState, action) {
+const emailPreviewState = {
+  modules: testState,
+  globalOptions: {
+    backgroundColor: "#ffffff",
+    overallWidth: "640",
+    defaultFont: "Helvetica, Arial, sans-serif",
+  }
+}
+
+function emailPreview(state = emailPreviewState, action) {
   switch (action.type) {
     case ADD_MODULE:
       return [...state, action.emailModule];

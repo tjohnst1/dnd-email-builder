@@ -4,15 +4,15 @@ import shortid from 'shortid';
 import OneColumnModule from './OneColumnModule';
 
 const EmailPreview = (props) => {
-  const emailModules = props.emailPreview;
+  const { modules, globalOptions } = props.emailPreview;
   let modulesToRender = [];
 
-  emailModules.forEach((module) => {
+  modules.forEach((module) => {
     switch (module.type) {
       case 'one-column':
         modulesToRender = [
           ...modulesToRender,
-          <OneColumnModule content={module.content} key={shortid.generate()} />,
+          <OneColumnModule content={module.content} globalOptions={globalOptions} key={shortid.generate()} />,
         ];
         break;
       default:
@@ -28,7 +28,10 @@ const EmailPreview = (props) => {
 };
 
 EmailPreview.propTypes = {
-  emailPreview: PropTypes.arrayOf(PropTypes.object).isRequired,
+  emailPreview: PropTypes.shape({
+    modules: PropTypes.array,
+    globalOptions: PropTypes.object
+  }).isRequired,
 };
 
 function mapStateToProps(state) {
