@@ -28,6 +28,11 @@ const OneColumnModule = (props) => {
 
 OneColumnModule.propTypes = {
   content: PropTypes.arrayOf(PropTypes.object).isRequired,
+  globalOptions: PropTypes.shape({
+    backgroundColor: PropTypes.string,
+    overallWidth: PropTypes.string,
+    defaultFont: PropTypes.string,
+  }).isRequired,
 };
 
 export default OneColumnModule;

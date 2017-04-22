@@ -12,7 +12,11 @@ const EmailPreview = (props) => {
       case 'one-column':
         modulesToRender = [
           ...modulesToRender,
-          <OneColumnModule content={module.content} globalOptions={globalOptions} key={shortid.generate()} />,
+          <OneColumnModule
+            content={module.content}
+            globalOptions={globalOptions}
+            key={shortid.generate()}
+          />,
         ];
         break;
       default:
@@ -30,7 +34,7 @@ const EmailPreview = (props) => {
 EmailPreview.propTypes = {
   emailPreview: PropTypes.shape({
     modules: PropTypes.array,
-    globalOptions: PropTypes.object
+    globalOptions: PropTypes.object,
   }).isRequired,
 };
 

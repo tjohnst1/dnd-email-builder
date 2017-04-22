@@ -1,9 +1,9 @@
+import { isEmpty } from 'lodash';
+
 export const SWITCH_TAB = 'SWITCH_TAB';
 export const SWITCH_CATEGORY = 'SWITCH_CATEGORY';
-export const REQUEST_EMAIL_MODULES = 'REQUEST_EMAIL_MODULES';
-export const RECEIVE_EMAIL_MODULES = 'RECEIVE_EMAIL_MODULES';
-export const ADD_MODULE = 'ADD_MODULE';
-export const REMOVE_MODULE = 'REMOVE_MODULE';
+export const REQUEST_MODULES = 'REQUEST_EMAIL_MODULES';
+export const RECEIVE_MODULES = 'RECEIVE_EMAIL_MODULES';
 
 import database from '../store/firebase'
 
@@ -23,8 +23,8 @@ export function switchCategory(category) {
 
 export function fetchEmailModulesIfNeeded() {
   return (dispatch, getState) => {
-    const emailModules = getState().emailModules;
-    if ((emailModules.categories.length < 1) && !emailModules.isFetching) {
+    const modules = getState().modules;
+    if ((isEmpty(modules.modulesByCategory)) && !modules.isFetching) {
       return dispatch(fetchEmailModules());
     }
   }
@@ -32,7 +32,7 @@ export function fetchEmailModulesIfNeeded() {
 
 function requestEmailModules() {
   return {
-    type: REQUEST_EMAIL_MODULES,
+    type: REQUEST_MODULES,
     isFetching: true,
   }
 }
@@ -42,30 +42,17 @@ function fetchEmailModules() {
     dispatch(requestEmailModules());
     return database.ref('/')
       .once('value', snapshot => {
-        const emailModules = snapshot.val().categories;
-        dispatch(receiveEmailModules(emailModules));
+        const { modules, categories } = snapshot.val();
+        dispatch(receiveEmailModules(modules, categories));
     })
     .catch(error => console.log(error));
   };
 }
 
-function receiveEmailModules(emailModules) {
+function receiveEmailModules(modules, categories) {
   return {
-    type: RECEIVE_EMAIL_MODULES,
-    emailModules,
-  }
-}
-
-export function addModule(emailModule) {
-  return {
-    type: ADD_MODULE,
-    emailModule,
-  }
-}
-
-export function removeModule(emailModule) {
-  return {
-    type: REMOVE_MODULE,
-    emailModule,
+    type: RECEIVE_MODULES,
+    modules,
+    categories,
   }
 }

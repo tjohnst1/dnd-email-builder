@@ -9,14 +9,14 @@ const Tab = (props) => {
 
   return (
     <li role="presentation" className={classes}>
-      <button onClick={props.handleSwitchTab}>{props.tabName}</button>
+      <button onClick={props.handleSwitchTab}>{props.name}</button>
     </li>
   );
 };
 
 Tab.propTypes = {
   active: PropTypes.bool.isRequired,
-  tabName: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
   handleSwitchTab: PropTypes.func.isRequired,
 };
 

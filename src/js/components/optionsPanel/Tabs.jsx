@@ -5,20 +5,19 @@ import Tab from './Tab';
 import { switchTab, switchCategory } from '../../actions/actions';
 
 export const Tabs = (props) => {
-  const tabNames = ['Blocks', 'Styles'];
-  const currentTab = props.currentTab;
+  const { selected, names } = props.tabs;
 
-  const handleSwitchTab = tabName => (e) => {
+  const handleSwitchTab = name => (e) => {
     e.preventDefault();
     props.dispatch(switchCategory(null));
-    props.dispatch(switchTab(tabName));
+    props.dispatch(switchTab(name));
   };
 
-  const tabElements = tabNames.map(tabName => <Tab
-    tabName={tabName}
-    active={currentTab === tabName}
+  const tabElements = names.map(name => <Tab
+    name={name}
+    active={selected === name}
     key={shortid.generate()}
-    handleSwitchTab={handleSwitchTab(tabName)}
+    handleSwitchTab={handleSwitchTab(name)}
   />);
 
   return (
@@ -29,13 +28,16 @@ export const Tabs = (props) => {
 };
 
 Tabs.propTypes = {
-  currentTab: PropTypes.string.isRequired,
+  tabs: PropTypes.shape({
+    selected: PropTypes.string,
+    names: PropTypes.array,
+  }).isRequired,
 };
 
 function mapStateToProps(state) {
-  const { currentTab } = state;
+  const { tabs } = state;
   return {
-    currentTab,
+    tabs,
   };
 }
 

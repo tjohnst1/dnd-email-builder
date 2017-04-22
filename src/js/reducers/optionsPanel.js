@@ -1,9 +1,16 @@
 import { SWITCH_TAB, SWITCH_CATEGORY, REQUEST_MODULES, RECEIVE_MODULES } from '../actions/actions';
 
-export function currentTab(state = 'Modules', action) {
+const tabsIntialState = {
+  selected: 'Modules',
+  names: ['Modules', 'Styles'],
+}
+
+export function tabs(state = tabsIntialState, action) {
   switch (action.type) {
     case SWITCH_TAB:
-      return action.tab;
+      return Object.assign({}, state, {
+        selected: action.tab,
+      })
     default:
       return state;
   }
@@ -20,8 +27,8 @@ export function currentCategory(state = null, action) {
 
 const modulesInitialState = {
   isFetching: false,
-  modulesById: [],
-  moduleCategories: [],
+  all: [],
+  categories: [],
 }
 
 export function modules(state = modulesInitialState, action) {
@@ -33,8 +40,8 @@ export function modules(state = modulesInitialState, action) {
     case RECEIVE_MODULES:
       return Object.assign({}, state, {
         isFetching: false,
-        modulesById: action.modulesById,
-        moduleCategories: action.moduleCategories,
+        all: action.modules,
+        categories: action.categories,
       });
     default:
       return state;

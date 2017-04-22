@@ -1,12 +1,12 @@
 import { combineReducers } from 'redux';
 import database from '../store/firebase';
-import { currentTab, currentCategory, emailModules } from './optionsPanel';
+import { tabs, currentCategory, modules } from './optionsPanel';
 import { emailPreview } from './emailPreview';
 
 const rootReducer = combineReducers({
-  currentTab,
+  tabs,
   currentCategory,
-  emailModules,
+  modules,
   emailPreview,
 });
 

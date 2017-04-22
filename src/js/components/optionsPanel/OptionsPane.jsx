@@ -24,37 +24,33 @@ export class OptionsPane extends Component {
   }
 
   render() {
-    const { currentTab, currentCategory, emailModules } = this.props;
+    const { tabs, currentCategory, modules } = this.props;
+
     let innerContent;
 
-    switch (currentTab) {
-      case 'Blocks':
-        // check if there are email modules available
-        if (emailModules.categories.length > 0) {
-          // if there is no category chosen, show the category buttons
+    switch (tabs.selected) {
+      case 'Modules':
+        if (modules.all.length > 0) {
           if (currentCategory === null) {
-            innerContent = emailModules.categories.map(
-              category => <Button
-                icon={category.image}
-                text={category.name}
-                handleSwitchCategory={this.handleSwitchCategory(category.name)}
-                key={shortid.generate()}
-              />,
-            );
-          // otherwise, show the individual module previews
+            innerContent = modules.categories.map(category => <Button
+              icon={category.image}
+              text={category.name}
+              handleSwitchCategory={this.handleSwitchCategory(category.name)}
+              key={shortid.generate()}
+            />);
           } else {
-            // find the modules from the selected category
-            const moduleCollection = emailModules.categories.filter(category =>
-            category.name === currentCategory)[0].modules;
-            // display the individual modules from the selected category
-            innerContent = moduleCollection.map(module => <EmailModule
+            const modulesByCategory = modules.all.filter((module) => {
+              console.log(module);
+              return module.category === currentCategory;
+            });
+            innerContent = modulesByCategory.map(module => <EmailModule
               name={module.name}
               image={module.image}
               key={shortid.generate()}
             />);
           }
-          break;
         }
+        break;
       // falls through if there are email modules available
       default:
         innerContent = <p>Loading...</p>;
@@ -74,25 +70,15 @@ export class OptionsPane extends Component {
 }
 
 OptionsPane.propTypes = {
-  currentTab: PropTypes.string.isRequired,
+  tabs: PropTypes.shape({
+    selected: PropTypes.string,
+    names: PropTypes.array,
+  }).isRequired,
   currentCategory: PropTypes.string,
-  emailModules: PropTypes.shape({
+  modules: PropTypes.shape({
     isFetching: PropTypes.boolean,
-    categories: PropTypes.arrayOf(
-      PropTypes.shape({
-        info:
-          PropTypes.shape({
-            name: PropTypes.string,
-            icon: PropTypes.string,
-          }),
-        modules: PropTypes.arrayOf(
-          PropTypes.shape({
-            name: PropTypes.string,
-            image: PropTypes.string,
-          }),
-        ),
-      }),
-    ),
+    all: PropTypes.array,
+    categories: PropTypes.array,
   }).isRequired,
   dispatch: PropTypes.func.isRequired,
 };
@@ -102,11 +88,11 @@ OptionsPane.defaultProps = {
 };
 
 function mapStateToProps(state) {
-  const { currentTab, emailModules, currentCategory, dispatch } = state;
+  const { tabs, currentCategory, modules, dispatch } = state;
   return {
-    currentTab,
-    emailModules,
+    tabs,
     currentCategory,
+    modules,
     dispatch,
   };
 }
