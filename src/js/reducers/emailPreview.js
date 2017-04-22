@@ -1,3 +1,5 @@
+import { CHANGE_GLOBAL_WIDTH, CHANGE_BACKGROUND_COLOR } from '../actions/actions';
+
 const testState = [
   {
     "name": "Preheader",
@@ -29,12 +31,7 @@ const testState = [
 ]
 
 const emailPreviewState = {
-  modules: testState,
-  globalOptions: {
-    backgroundColor: "#ffffff",
-    overallWidth: "640",
-    defaultFont: "Helvetica, Arial, sans-serif",
-  }
+  modules: testState
 }
 
 export function emailPreview(state = emailPreviewState, action) {
@@ -43,3 +40,23 @@ export function emailPreview(state = emailPreviewState, action) {
       return state;
   }
 }
+
+const globalOptionsIntialState = {
+  width: 640,
+  backgroundColor: "#ffffff",
+}
+
+export function globalOptions(state = globalOptionsIntialState, action) {
+  switch (action.type) {
+    case CHANGE_GLOBAL_WIDTH:
+      return Object.assign({}, state, {
+        width: action.width,
+      });
+    case CHANGE_BACKGROUND_COLOR:
+      return Object.assign({}, state, {
+        backgroundColor: action.backgroundColor,
+      });
+    default:
+      return state;
+  }
+};

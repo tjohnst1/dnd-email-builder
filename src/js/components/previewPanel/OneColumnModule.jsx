@@ -5,7 +5,7 @@ import TextComponent from './TextComponent';
 const OneColumnModule = (props) => {
   const { type, link, src, width, color, innerContent,
     fontFamily, fontSize, lineHeight, textAlign } = props.content[0];
-  const { overallWidth } = props.globalOptions;
+  const { globalOptions } = props;
   let content;
   if (type === 'image') {
     content = <ImageComponent link={link} src={src} width={width} />;
@@ -16,9 +16,12 @@ const OneColumnModule = (props) => {
     />);
   }
 
-  const padt20 = { paddingTop: '20px' };
+  const styles = {
+    paddingTop: '20px',
+    width: `${globalOptions.width}px`,
+  };
   return (
-    <div className="w100" style={padt20} width={overallWidth}>
+    <div className="w100" style={styles}>
       <div className="center-block width-90">
         {content}
       </div>
@@ -30,8 +33,7 @@ OneColumnModule.propTypes = {
   content: PropTypes.arrayOf(PropTypes.object).isRequired,
   globalOptions: PropTypes.shape({
     backgroundColor: PropTypes.string,
-    overallWidth: PropTypes.string,
-    defaultFont: PropTypes.string,
+    width: PropTypes.number,
   }).isRequired,
 };
 

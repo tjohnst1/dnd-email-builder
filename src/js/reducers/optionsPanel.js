@@ -3,7 +3,7 @@ import { SWITCH_TAB, SWITCH_CATEGORY, REQUEST_MODULES, RECEIVE_MODULES } from '.
 const tabsIntialState = {
   selected: 'Modules',
   names: ['Modules', 'Styles'],
-}
+};
 
 export function tabs(state = tabsIntialState, action) {
   switch (action.type) {
@@ -22,14 +22,14 @@ export function currentCategory(state = null, action) {
       return action.category;
     default:
       return state;
-  };
-}
+  }
+};
 
 const modulesInitialState = {
   isFetching: false,
   all: [],
   categories: [],
-}
+};
 
 export function modules(state = modulesInitialState, action) {
   switch (action.type) {
@@ -46,4 +46,4 @@ export function modules(state = modulesInitialState, action) {
     default:
       return state;
   }
-}
+};

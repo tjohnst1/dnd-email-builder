@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import shortid from 'shortid';
 import classNames from 'classnames';
-import { switchCategory, fetchEmailModulesIfNeeded } from '../../actions/actions';
+import { switchCategory, fetchEmailModulesIfNeeded, changeGlobalWidth, changeBackgroundColor } from '../../actions/actions';
 import Button from './Button';
 import EmailModule from './EmailModule';
 
@@ -10,6 +10,8 @@ export class OptionsPane extends Component {
   constructor(props) {
     super(props);
     this.handleSwitchCategory = this.handleSwitchCategory.bind(this);
+    this.handleChangeGlobalWidth = this.handleChangeGlobalWidth.bind(this);
+    this.handleChangeBackgroundColor = this.handleChangeBackgroundColor.bind(this);
   }
 
   componentDidMount() {
@@ -17,14 +19,21 @@ export class OptionsPane extends Component {
   }
 
   handleSwitchCategory(category) {
-    return (e) => {
-      e.preventDefault();
+    return () => {
       this.props.dispatch(switchCategory(category));
     };
   }
 
+  handleChangeGlobalWidth(e) {
+    this.props.dispatch(changeGlobalWidth(Number(e.target.value)));
+  }
+
+  handleChangeBackgroundColor(e) {
+    this.props.dispatch(changeBackgroundColor(e.target.value));
+  }
+
   render() {
-    const { tabs, currentCategory, modules } = this.props;
+    const { tabs, currentCategory, modules, globalOptions } = this.props;
 
     let innerContent;
 
@@ -39,10 +48,8 @@ export class OptionsPane extends Component {
               key={shortid.generate()}
             />);
           } else {
-            const modulesByCategory = modules.all.filter((module) => {
-              console.log(module);
-              return module.category === currentCategory;
-            });
+            const modulesByCategory = modules.all
+              .filter(module => module.category === currentCategory);
             innerContent = modulesByCategory.map(module => <EmailModule
               name={module.name}
               image={module.image}
@@ -51,7 +58,30 @@ export class OptionsPane extends Component {
           }
         }
         break;
-      // falls through if there are email modules available
+      case 'Styles':
+        innerContent = (
+          <div>
+            <div>
+              <label htmlFor="global-width">Global Width:</label>
+              <input
+                type="number"
+                value={globalOptions.width}
+                onChange={this.handleChangeGlobalWidth}
+                id="global-width"
+              />
+            </div>
+            <div>
+              <label htmlFor="background-color">Background Color:</label>
+              <input
+                type="text"
+                value={globalOptions.backgroundColor}
+                onChange={this.handleChangeBackgroundColor}
+                id="background-color"
+              />
+            </div>
+          </div>
+        );
+        break;
       default:
         innerContent = <p>Loading...</p>;
     }
@@ -80,6 +110,10 @@ OptionsPane.propTypes = {
     all: PropTypes.array,
     categories: PropTypes.array,
   }).isRequired,
+  globalOptions: PropTypes.shape({
+    globalWidth: PropTypes.number,
+    backgroundColor: PropTypes.string,
+  }).isRequired,
   dispatch: PropTypes.func.isRequired,
 };
 
@@ -88,11 +122,12 @@ OptionsPane.defaultProps = {
 };
 
 function mapStateToProps(state) {
-  const { tabs, currentCategory, modules, dispatch } = state;
+  const { tabs, currentCategory, modules, dispatch, globalOptions } = state;
   return {
     tabs,
     currentCategory,
     modules,
+    globalOptions,
     dispatch,
   };
 }

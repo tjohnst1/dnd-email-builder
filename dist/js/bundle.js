@@ -4760,10 +4760,12 @@ module.exports = {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.RECEIVE_MODULES = exports.REQUEST_MODULES = exports.SWITCH_CATEGORY = exports.SWITCH_TAB = undefined;
+exports.CHANGE_BACKGROUND_COLOR = exports.CHANGE_GLOBAL_WIDTH = exports.RECEIVE_MODULES = exports.REQUEST_MODULES = exports.SWITCH_CATEGORY = exports.SWITCH_TAB = undefined;
 exports.switchTab = switchTab;
 exports.switchCategory = switchCategory;
 exports.fetchEmailModulesIfNeeded = fetchEmailModulesIfNeeded;
+exports.changeBackgroundColor = changeBackgroundColor;
+exports.changeGlobalWidth = changeGlobalWidth;
 
 var _lodash = __webpack_require__(158);
 
@@ -4777,20 +4779,22 @@ var SWITCH_TAB = exports.SWITCH_TAB = 'SWITCH_TAB';
 var SWITCH_CATEGORY = exports.SWITCH_CATEGORY = 'SWITCH_CATEGORY';
 var REQUEST_MODULES = exports.REQUEST_MODULES = 'REQUEST_EMAIL_MODULES';
 var RECEIVE_MODULES = exports.RECEIVE_MODULES = 'RECEIVE_EMAIL_MODULES';
+var CHANGE_GLOBAL_WIDTH = exports.CHANGE_GLOBAL_WIDTH = 'CHANGE_GLOBAL_WIDTH';
+var CHANGE_BACKGROUND_COLOR = exports.CHANGE_BACKGROUND_COLOR = 'CHANGE_BACKGROUND_COLOR';
 
 function switchTab(tab) {
   return {
     type: SWITCH_TAB,
     tab: tab
   };
-}
+};
 
 function switchCategory(category) {
   return {
     type: SWITCH_CATEGORY,
     category: category
   };
-}
+};
 
 function fetchEmailModulesIfNeeded() {
   return function (dispatch, getState) {
@@ -4799,14 +4803,14 @@ function fetchEmailModulesIfNeeded() {
       return dispatch(fetchEmailModules());
     }
   };
-}
+};
 
 function requestEmailModules() {
   return {
     type: REQUEST_MODULES,
     isFetching: true
   };
-}
+};
 
 function fetchEmailModules() {
   return function (dispatch) {
@@ -4821,13 +4825,27 @@ function fetchEmailModules() {
       return console.log(error);
     });
   };
-}
+};
 
 function receiveEmailModules(modules, categories) {
   return {
     type: RECEIVE_MODULES,
     modules: modules,
     categories: categories
+  };
+};
+
+function changeBackgroundColor(backgroundColor) {
+  return {
+    type: CHANGE_BACKGROUND_COLOR,
+    backgroundColor: backgroundColor
+  };
+}
+
+function changeGlobalWidth(width) {
+  return {
+    type: CHANGE_GLOBAL_WIDTH,
+    width: width
   };
 }
 
@@ -10996,6 +11014,8 @@ var OptionsPane = exports.OptionsPane = function (_Component) {
     var _this = _possibleConstructorReturn(this, (OptionsPane.__proto__ || Object.getPrototypeOf(OptionsPane)).call(this, props));
 
     _this.handleSwitchCategory = _this.handleSwitchCategory.bind(_this);
+    _this.handleChangeGlobalWidth = _this.handleChangeGlobalWidth.bind(_this);
+    _this.handleChangeBackgroundColor = _this.handleChangeBackgroundColor.bind(_this);
     return _this;
   }
 
@@ -11009,10 +11029,19 @@ var OptionsPane = exports.OptionsPane = function (_Component) {
     value: function handleSwitchCategory(category) {
       var _this2 = this;
 
-      return function (e) {
-        e.preventDefault();
+      return function () {
         _this2.props.dispatch((0, _actions.switchCategory)(category));
       };
+    }
+  }, {
+    key: 'handleChangeGlobalWidth',
+    value: function handleChangeGlobalWidth(e) {
+      this.props.dispatch((0, _actions.changeGlobalWidth)(Number(e.target.value)));
+    }
+  }, {
+    key: 'handleChangeBackgroundColor',
+    value: function handleChangeBackgroundColor(e) {
+      this.props.dispatch((0, _actions.changeBackgroundColor)(e.target.value));
     }
   }, {
     key: 'render',
@@ -11022,7 +11051,8 @@ var OptionsPane = exports.OptionsPane = function (_Component) {
       var _props = this.props,
           tabs = _props.tabs,
           currentCategory = _props.currentCategory,
-          modules = _props.modules;
+          modules = _props.modules,
+          globalOptions = _props.globalOptions;
 
 
       var innerContent = void 0;
@@ -11041,7 +11071,6 @@ var OptionsPane = exports.OptionsPane = function (_Component) {
               });
             } else {
               var modulesByCategory = modules.all.filter(function (module) {
-                console.log(module);
                 return module.category === currentCategory;
               });
               innerContent = modulesByCategory.map(function (module) {
@@ -11054,7 +11083,42 @@ var OptionsPane = exports.OptionsPane = function (_Component) {
             }
           }
           break;
-        // falls through if there are email modules available
+        case 'Styles':
+          innerContent = _react2.default.createElement(
+            'div',
+            null,
+            _react2.default.createElement(
+              'div',
+              null,
+              _react2.default.createElement(
+                'label',
+                { htmlFor: 'global-width' },
+                'Global Width:'
+              ),
+              _react2.default.createElement('input', {
+                type: 'number',
+                value: globalOptions.width,
+                onChange: this.handleChangeGlobalWidth,
+                id: 'global-width'
+              })
+            ),
+            _react2.default.createElement(
+              'div',
+              null,
+              _react2.default.createElement(
+                'label',
+                { htmlFor: 'background-color' },
+                'Background Color:'
+              ),
+              _react2.default.createElement('input', {
+                type: 'text',
+                value: globalOptions.backgroundColor,
+                onChange: this.handleChangeBackgroundColor,
+                id: 'background-color'
+              })
+            )
+          );
+          break;
         default:
           innerContent = _react2.default.createElement(
             'p',
@@ -11090,6 +11154,10 @@ OptionsPane.propTypes = {
     all: _react.PropTypes.array,
     categories: _react.PropTypes.array
   }).isRequired,
+  globalOptions: _react.PropTypes.shape({
+    globalWidth: _react.PropTypes.number,
+    backgroundColor: _react.PropTypes.string
+  }).isRequired,
   dispatch: _react.PropTypes.func.isRequired
 };
 
@@ -11101,12 +11169,14 @@ function mapStateToProps(state) {
   var tabs = state.tabs,
       currentCategory = state.currentCategory,
       modules = state.modules,
-      dispatch = state.dispatch;
+      dispatch = state.dispatch,
+      globalOptions = state.globalOptions;
 
   return {
     tabs: tabs,
     currentCategory: currentCategory,
     modules: modules,
+    globalOptions: globalOptions,
     dispatch: dispatch
   };
 }
@@ -11266,9 +11336,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 var EmailPreview = function EmailPreview(props) {
-  var _props$emailPreview = props.emailPreview,
-      modules = _props$emailPreview.modules,
-      globalOptions = _props$emailPreview.globalOptions;
+  var globalOptions = props.globalOptions;
+  var modules = props.emailPreview.modules;
 
   var modulesToRender = [];
 
@@ -11295,16 +11364,21 @@ var EmailPreview = function EmailPreview(props) {
 
 EmailPreview.propTypes = {
   emailPreview: _react.PropTypes.shape({
-    modules: _react.PropTypes.array,
-    globalOptions: _react.PropTypes.object
+    modules: _react.PropTypes.array
+  }).isRequired,
+  globalOptions: _react.PropTypes.shape({
+    backgroundColor: _react.PropTypes.string,
+    width: _react.PropTypes.number
   }).isRequired
 };
 
 function mapStateToProps(state) {
-  var emailPreview = state.emailPreview;
+  var emailPreview = state.emailPreview,
+      globalOptions = state.globalOptions;
 
   return {
-    emailPreview: emailPreview
+    emailPreview: emailPreview,
+    globalOptions: globalOptions
   };
 }
 
@@ -11392,7 +11466,7 @@ var OneColumnModule = function OneColumnModule(props) {
       fontSize = _props$content$.fontSize,
       lineHeight = _props$content$.lineHeight,
       textAlign = _props$content$.textAlign;
-  var overallWidth = props.globalOptions.overallWidth;
+  var globalOptions = props.globalOptions;
 
   var content = void 0;
   if (type === 'image') {
@@ -11404,10 +11478,13 @@ var OneColumnModule = function OneColumnModule(props) {
     });
   }
 
-  var padt20 = { paddingTop: '20px' };
+  var styles = {
+    paddingTop: '20px',
+    width: globalOptions.width + 'px'
+  };
   return _react2.default.createElement(
     'div',
-    { className: 'w100', style: padt20, width: overallWidth },
+    { className: 'w100', style: styles },
     _react2.default.createElement(
       'div',
       { className: 'center-block width-90' },
@@ -11420,8 +11497,7 @@ OneColumnModule.propTypes = {
   content: _react.PropTypes.arrayOf(_react.PropTypes.object).isRequired,
   globalOptions: _react.PropTypes.shape({
     backgroundColor: _react.PropTypes.string,
-    overallWidth: _react.PropTypes.string,
-    defaultFont: _react.PropTypes.string
+    width: _react.PropTypes.number
   }).isRequired
 };
 
@@ -11597,6 +11673,10 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.emailPreview = emailPreview;
+exports.globalOptions = globalOptions;
+
+var _actions = __webpack_require__(36);
+
 var testState = [{
   "name": "Preheader",
   "image": "img/modules/one-column/preheader.png",
@@ -11623,12 +11703,7 @@ var testState = [{
 }];
 
 var emailPreviewState = {
-  modules: testState,
-  globalOptions: {
-    backgroundColor: "#ffffff",
-    overallWidth: "640",
-    defaultFont: "Helvetica, Arial, sans-serif"
-  }
+  modules: testState
 };
 
 function emailPreview() {
@@ -11640,6 +11715,29 @@ function emailPreview() {
       return state;
   }
 }
+
+var globalOptionsIntialState = {
+  width: 640,
+  backgroundColor: "#ffffff"
+};
+
+function globalOptions() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : globalOptionsIntialState;
+  var action = arguments[1];
+
+  switch (action.type) {
+    case _actions.CHANGE_GLOBAL_WIDTH:
+      return Object.assign({}, state, {
+        width: action.width
+      });
+    case _actions.CHANGE_BACKGROUND_COLOR:
+      return Object.assign({}, state, {
+        backgroundColor: action.backgroundColor
+      });
+    default:
+      return state;
+  }
+};
 
 /***/ }),
 /* 119 */
@@ -11685,8 +11783,8 @@ function currentCategory() {
       return action.category;
     default:
       return state;
-  };
-}
+  }
+};
 
 var modulesInitialState = {
   isFetching: false,
@@ -11712,7 +11810,7 @@ function modules() {
     default:
       return state;
   }
-}
+};
 
 /***/ }),
 /* 120 */
@@ -11741,7 +11839,8 @@ var rootReducer = (0, _redux.combineReducers)({
   tabs: _optionsPanel.tabs,
   currentCategory: _optionsPanel.currentCategory,
   modules: _optionsPanel.modules,
-  emailPreview: _emailPreview.emailPreview
+  emailPreview: _emailPreview.emailPreview,
+  globalOptions: _emailPreview.globalOptions
 });
 
 exports.default = rootReducer;
