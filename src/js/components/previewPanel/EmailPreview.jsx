@@ -25,8 +25,13 @@ const EmailPreview = (props) => {
     }
   });
 
+  const styles = {
+    background: `#${globalOptions.backgroundColor}`,
+    color: '#111111',
+  };
+
   return (
-    <div className="center-block">
+    <div className="center-block" style={styles}>
       { modulesToRender }
     </div>
   );
