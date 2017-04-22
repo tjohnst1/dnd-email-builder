@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import shortid from 'shortid';
 import classNames from 'classnames';
+import { SketchPicker } from 'react-color';
 import { switchCategory, fetchEmailModulesIfNeeded, changeGlobalWidth, changeBackgroundColor } from '../../actions/actions';
 import Button from './Button';
 import EmailModule from './EmailModule';
@@ -12,6 +13,10 @@ export class OptionsPane extends Component {
     this.handleSwitchCategory = this.handleSwitchCategory.bind(this);
     this.handleChangeGlobalWidth = this.handleChangeGlobalWidth.bind(this);
     this.handleChangeBackgroundColor = this.handleChangeBackgroundColor.bind(this);
+    this.toggleColorPicker = this.toggleColorPicker.bind(this);
+    this.state = {
+      showColorPicker: false,
+    };
   }
 
   componentDidMount() {
@@ -28,14 +33,23 @@ export class OptionsPane extends Component {
     this.props.dispatch(changeGlobalWidth(Number(e.target.value)));
   }
 
-  handleChangeBackgroundColor(e) {
-    this.props.dispatch(changeBackgroundColor(e.target.value));
+  handleChangeBackgroundColor(color) {
+    this.props.dispatch(changeBackgroundColor(color.hex));
+  }
+
+  toggleColorPicker() {
+    this.setState({
+      showColorPicker: !this.state.showColorPicker,
+    });
   }
 
   render() {
     const { tabs, currentCategory, modules, globalOptions } = this.props;
 
     let innerContent;
+    const csInnerStyles = {
+      background: globalOptions.backgroundColor,
+    };
 
     switch (tabs.selected) {
       case 'Modules':
@@ -72,12 +86,17 @@ export class OptionsPane extends Component {
             </div>
             <div>
               <label htmlFor="background-color">Background Color:</label>
-              <input
-                type="text"
-                value={globalOptions.backgroundColor}
-                onChange={this.handleChangeBackgroundColor}
-                id="background-color"
-              />
+              <div>
+                <button className="color-swatch" onClick={this.toggleColorPicker}>
+                  <div className="color-swatch__inner" style={csInnerStyles} />
+                </button>
+                { this.state.showColorPicker ? <SketchPicker
+                  disableAlpha
+                  color={globalOptions.backgroundColor}
+                  onChange={this.handleChangeBackgroundColor}
+                  id="background-color"
+                /> : null }
+              </div>
             </div>
           </div>
         );

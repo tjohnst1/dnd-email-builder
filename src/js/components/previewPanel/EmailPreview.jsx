@@ -26,7 +26,7 @@ const EmailPreview = (props) => {
   });
 
   const styles = {
-    background: `#${globalOptions.backgroundColor}`,
+    background: globalOptions.backgroundColor,
     color: '#111111',
   };
 

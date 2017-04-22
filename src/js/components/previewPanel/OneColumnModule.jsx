@@ -20,6 +20,7 @@ const OneColumnModule = (props) => {
     paddingTop: '20px',
     width: `${globalOptions.width}px`,
   };
+
   return (
     <div className="w100" style={styles}>
       <div className="center-block width-90">
