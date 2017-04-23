@@ -1,37 +1,7 @@
 import { CHANGE_GLOBAL_WIDTH, CHANGE_BACKGROUND_COLOR, ADD_BLOCK_TO_PREVIEW, REMOVE_BLOCK_FROM_PREVIEW } from '../actions/actions';
 
-const testState = [
-  {
-    "name": "Preheader",
-    "image": "img/blocks/one-column/preheader.png",
-    "category": "one-column",
-    "id": "m1",
-    "content": [{
-      "type": "text",
-      "color": "#828282",
-      "fontFamily": "Helvetica, Arial, sans-serif",
-      "fontSize": "10px",
-      "lineHeight": "12px",
-      "textAlign": "center",
-      "innerContent": "This is some text."
-    }]
-  },
-  {
-    "name": "Full Width Image",
-    "image": "img/blocks/one-column/full-width-image.png",
-    "category": "one-column",
-    "id": "m2",
-    "content": [{
-      "type": "image",
-      "link": true,
-      "src": "http://placehold.it/576x200",
-      "width": "576"
-    }]
-  },
-]
-
 const emailPreviewState = {
-  blocks: testState,
+  blocks: [],
 }
 
 export function emailPreview(state = emailPreviewState, action) {

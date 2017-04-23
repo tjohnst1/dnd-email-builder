@@ -1,49 +1,72 @@
-import React, { PropTypes } from 'react';
+import React, { PropTypes, Component } from 'react';
+import { flow } from 'lodash';
 import { connect } from 'react-redux';
+import { DropTarget } from 'react-dnd';
 import shortid from 'shortid';
 import OneColumnBlock from './OneColumnBlock';
-import { removeBlockFromPreview } from '../../actions/actions';
+import { addBlockToPreview, removeBlockFromPreview } from '../../actions/actions';
+import { BLOCK } from '../../constants/constants';
 
-const EmailPreview = (props) => {
-  function handleRemoveBlockFromPreview(index) {
+const blockTarget = {
+  drop(props, monitor) {
+    if (monitor.didDrop()) {
+      return;
+    }
+    const block = monitor.getItem();
+    props.dispatch(addBlockToPreview(block.id, 0));
+  },
+};
+
+function collect(connectDrag) {
+  return {
+    connectDropTarget: connectDrag.dropTarget(),
+  };
+}
+
+export class EmailPreview extends Component {
+  super() {
+    this.handleRemoveBlockFromPreview = this.handleRemoveBlockFromPreview.bind(this);
+  }
+
+  handleRemoveBlockFromPreview(index) {
     return () => {
-      props.dispatch(removeBlockFromPreview(index));
+      this.props.dispatch(removeBlockFromPreview(index));
     };
   }
 
-  const { globalOptions } = props;
-  const { blocks } = props.emailPreview;
-  let blocksToRender = [];
+  render() {
+    const { globalOptions, connectDropTarget } = this.props;
+    const { blocks } = this.props.emailPreview;
 
-  blocks.forEach((block, index) => {
-    switch (block.category) {
-      case 'one-column':
-        blocksToRender = [
-          ...blocksToRender,
-          <OneColumnBlock
-            content={block.content}
-            globalOptions={globalOptions}
-            handleRemoveBlockFromPreview={handleRemoveBlockFromPreview(index)}
-            key={shortid.generate()}
-          />,
-        ];
-        break;
-      default:
-        blocksToRender = [...blocksToRender, null];
-    }
-  });
+    let blocksToRender = [];
 
-  const styles = {
-    background: globalOptions.backgroundColor,
-    color: '#111111',
-  };
+    blocks.forEach((block, index) => {
+      switch (block.category) {
+        default:
+          blocksToRender = [
+            ...blocksToRender,
+            <OneColumnBlock
+              content={block.content}
+              globalOptions={globalOptions}
+              handleRemoveBlockFromPreview={this.handleRemoveBlockFromPreview(index)}
+              key={shortid.generate()}
+            />,
+          ];
+      }
+    });
 
-  return (
-    <div className="center-block" style={styles}>
-      { blocksToRender }
-    </div>
-  );
-};
+    const styles = {
+      background: globalOptions.backgroundColor,
+      color: '#111111',
+    };
+
+    return connectDropTarget((
+      <div className="center-block" style={styles}>
+        { blocksToRender.length > 0 ? blocksToRender : <p>Empty</p> }
+      </div>
+    ));
+  }
+}
 
 EmailPreview.propTypes = {
   emailPreview: PropTypes.shape({
@@ -54,6 +77,7 @@ EmailPreview.propTypes = {
     width: PropTypes.number,
   }).isRequired,
   dispatch: PropTypes.func.isRequired,
+  connectDropTarget: PropTypes.func.isRequired,
 };
 
 function mapStateToProps(state) {
@@ -65,4 +89,9 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(EmailPreview);
+export default flow(
+  DropTarget(BLOCK, blockTarget, collect),
+  connect(mapStateToProps),
+)(EmailPreview);
+
+// export default connect(mapStateToProps)(EmailPreview);

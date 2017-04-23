@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import shortid from 'shortid';
 import classNames from 'classnames';
 import { SketchPicker } from 'react-color';
-import { switchCategory, fetchEmailBlocksIfNeeded, changeGlobalWidth, changeBackgroundColor, addBlockToPreview } from '../../actions/actions';
+import { switchCategory, fetchEmailBlocksIfNeeded, changeGlobalWidth, changeBackgroundColor } from '../../actions/actions';
 import Button from './Button';
-import EmailBlock from './EmailBlock';
+import Block from './Block';
 
 export class OptionsPane extends Component {
   constructor(props) {
@@ -37,12 +37,6 @@ export class OptionsPane extends Component {
     this.props.dispatch(changeBackgroundColor(color.hex));
   }
 
-  handleAddBlockToPreview(id) {
-    return () => {
-      this.props.dispatch(addBlockToPreview(id, 0));
-    };
-  }
-
   toggleColorPicker() {
     this.setState({
       showColorPicker: !this.state.showColorPicker,
@@ -70,10 +64,10 @@ export class OptionsPane extends Component {
           } else {
             const blocksByCategory = blocks.all
               .filter(block => block.category === currentCategory);
-            innerContent = blocksByCategory.map(block => <EmailBlock
-              handleAddBlockToPreview={this.handleAddBlockToPreview(block.id)}
+            innerContent = blocksByCategory.map(block => <Block
               name={block.name}
               image={block.image}
+              id={block.id}
               key={shortid.generate()}
             />);
           }
