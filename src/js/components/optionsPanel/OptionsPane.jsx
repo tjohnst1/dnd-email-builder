@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import shortid from 'shortid';
 import classNames from 'classnames';
 import { SketchPicker } from 'react-color';
-import { switchCategory, fetchEmailModulesIfNeeded, changeGlobalWidth, changeBackgroundColor, addModuleToPreview } from '../../actions/actions';
+import { switchCategory, fetchEmailBlocksIfNeeded, changeGlobalWidth, changeBackgroundColor, addBlockToPreview } from '../../actions/actions';
 import Button from './Button';
-import EmailModule from './EmailModule';
+import EmailBlock from './EmailBlock';
 
 export class OptionsPane extends Component {
   constructor(props) {
@@ -20,7 +20,7 @@ export class OptionsPane extends Component {
   }
 
   componentDidMount() {
-    this.props.dispatch(fetchEmailModulesIfNeeded());
+    this.props.dispatch(fetchEmailBlocksIfNeeded());
   }
 
   handleSwitchCategory(category) {
@@ -37,9 +37,9 @@ export class OptionsPane extends Component {
     this.props.dispatch(changeBackgroundColor(color.hex));
   }
 
-  handleAddModuleToPreview(id) {
+  handleAddBlockToPreview(id) {
     return () => {
-      this.props.dispatch(addModuleToPreview(id, 0));
+      this.props.dispatch(addBlockToPreview(id, 0));
     };
   }
 
@@ -50,7 +50,7 @@ export class OptionsPane extends Component {
   }
 
   render() {
-    const { tabs, currentCategory, modules, globalOptions } = this.props;
+    const { tabs, currentCategory, blocks, globalOptions } = this.props;
 
     let innerContent;
     const csInnerStyles = {
@@ -58,22 +58,22 @@ export class OptionsPane extends Component {
     };
 
     switch (tabs.selected) {
-      case 'Modules':
-        if (modules.all.length > 0) {
+      case 'Blocks':
+        if (blocks.all.length > 0) {
           if (currentCategory === null) {
-            innerContent = modules.categories.map(category => <Button
+            innerContent = blocks.categories.map(category => <Button
               icon={category.image}
               text={category.name}
               handleSwitchCategory={this.handleSwitchCategory(category.name)}
               key={shortid.generate()}
             />);
           } else {
-            const modulesByCategory = modules.all
-              .filter(module => module.category === currentCategory);
-            innerContent = modulesByCategory.map(module => <EmailModule
-              handleAddModuleToPreview={this.handleAddModuleToPreview(module.id)}
-              name={module.name}
-              image={module.image}
+            const blocksByCategory = blocks.all
+              .filter(block => block.category === currentCategory);
+            innerContent = blocksByCategory.map(block => <EmailBlock
+              handleAddBlockToPreview={this.handleAddBlockToPreview(block.id)}
+              name={block.name}
+              image={block.image}
               key={shortid.generate()}
             />);
           }
@@ -131,7 +131,7 @@ OptionsPane.propTypes = {
     names: PropTypes.array,
   }).isRequired,
   currentCategory: PropTypes.string,
-  modules: PropTypes.shape({
+  blocks: PropTypes.shape({
     isFetching: PropTypes.boolean,
     all: PropTypes.array,
     categories: PropTypes.array,
@@ -148,11 +148,11 @@ OptionsPane.defaultProps = {
 };
 
 function mapStateToProps(state) {
-  const { tabs, currentCategory, modules, dispatch, globalOptions } = state;
+  const { tabs, currentCategory, blocks, dispatch, globalOptions } = state;
   return {
     tabs,
     currentCategory,
-    modules,
+    blocks,
     globalOptions,
     dispatch,
   };

@@ -1,5 +1,5 @@
 {
-  "modules": [
+  "blocks": [
     {
       "name": "Preheader",
       "image": "img/modules/one-column/preheader.png",

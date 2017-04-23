@@ -1,8 +1,8 @@
-import { SWITCH_TAB, SWITCH_CATEGORY, REQUEST_MODULES, RECEIVE_MODULES } from '../actions/actions';
+import { SWITCH_TAB, SWITCH_CATEGORY, REQUEST_BLOCKS, RECEIVE_BLOCKS } from '../actions/actions';
 
 const tabsIntialState = {
-  selected: 'Modules',
-  names: ['Modules', 'Styles'],
+  selected: 'Blocks',
+  names: ['Blocks', 'Styles'],
 };
 
 export function tabs(state = tabsIntialState, action) {
@@ -25,22 +25,22 @@ export function currentCategory(state = null, action) {
   }
 };
 
-const modulesInitialState = {
+const blocksInitialState = {
   isFetching: false,
   all: [],
   categories: [],
 };
 
-export function modules(state = modulesInitialState, action) {
+export function blocks(state = blocksInitialState, action) {
   switch (action.type) {
-    case REQUEST_MODULES:
+    case REQUEST_BLOCKS:
       return Object.assign({}, state, {
         isFetching: true,
       })
-    case RECEIVE_MODULES:
+    case RECEIVE_BLOCKS:
       return Object.assign({}, state, {
         isFetching: false,
-        all: action.modules,
+        all: action.blocks,
         categories: action.categories,
       });
     default:

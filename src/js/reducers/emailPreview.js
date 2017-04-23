@@ -1,9 +1,9 @@
-import { CHANGE_GLOBAL_WIDTH, CHANGE_BACKGROUND_COLOR, ADD_MODULE_TO_PREVIEW, REMOVE_MODULE_FROM_PREVIEW } from '../actions/actions';
+import { CHANGE_GLOBAL_WIDTH, CHANGE_BACKGROUND_COLOR, ADD_BLOCK_TO_PREVIEW, REMOVE_BLOCK_FROM_PREVIEW } from '../actions/actions';
 
 const testState = [
   {
     "name": "Preheader",
-    "image": "img/modules/one-column/preheader.png",
+    "image": "img/blocks/one-column/preheader.png",
     "category": "one-column",
     "id": "m1",
     "content": [{
@@ -18,7 +18,7 @@ const testState = [
   },
   {
     "name": "Full Width Image",
-    "image": "img/modules/one-column/full-width-image.png",
+    "image": "img/blocks/one-column/full-width-image.png",
     "category": "one-column",
     "id": "m2",
     "content": [{
@@ -31,23 +31,23 @@ const testState = [
 ]
 
 const emailPreviewState = {
-  modules: testState,
+  blocks: testState,
 }
 
 export function emailPreview(state = emailPreviewState, action) {
-  const modules = state.modules;
+  const blocks = state.blocks;
   switch (action.type) {
-    case ADD_MODULE_TO_PREVIEW:
+    case ADD_BLOCK_TO_PREVIEW:
       return {
-        modules: modules
+        blocks: blocks
           .slice(0, action.index)
-          .concat(action.module)
-          .concat(modules.slice(action.index)),
+          .concat(action.block)
+          .concat(blocks.slice(action.index)),
       };
-    case REMOVE_MODULE_FROM_PREVIEW:
-      return { modules: modules
+    case REMOVE_BLOCK_FROM_PREVIEW:
+      return { blocks: blocks
         .slice(0, action.index)
-        .concat(modules.slice(action.index + 1)),
+        .concat(blocks.slice(action.index + 1)),
       };
     default:
       return state;

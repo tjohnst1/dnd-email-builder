@@ -2,10 +2,10 @@ import React, { PropTypes } from 'react';
 import ImageComponent from './ImageComponent';
 import TextComponent from './TextComponent';
 
-const OneColumnModule = (props) => {
+const OneColumnBlock = (props) => {
   const { type, link, src, width, color, innerContent,
     fontFamily, fontSize, lineHeight, textAlign } = props.content[0];
-  const { globalOptions, handleRemoveModuleFromPreview } = props;
+  const { globalOptions, handleRemoveBlockFromPreview } = props;
   let content;
   if (type === 'image') {
     content = <ImageComponent link={link} src={src} width={width} />;
@@ -22,7 +22,7 @@ const OneColumnModule = (props) => {
   };
 
   return (
-    <div className="w100" style={styles} onClick={handleRemoveModuleFromPreview}>
+    <div className="w100" style={styles} onClick={handleRemoveBlockFromPreview}>
       <div className="center-block width-90">
         {content}
       </div>
@@ -30,13 +30,13 @@ const OneColumnModule = (props) => {
   );
 };
 
-OneColumnModule.propTypes = {
+OneColumnBlock.propTypes = {
   content: PropTypes.arrayOf(PropTypes.object).isRequired,
   globalOptions: PropTypes.shape({
     backgroundColor: PropTypes.string,
     width: PropTypes.number,
   }).isRequired,
-  handleRemoveModuleFromPreview: PropTypes.func.isRequired,
+  handleRemoveBlockFromPreview: PropTypes.func.isRequired,
 };
 
-export default OneColumnModule;
+export default OneColumnBlock;

@@ -1,13 +1,13 @@
 export default {
   currentTab: 'Blocks',
   currentCategory: null,
-  emailModules: {
+  emailBlocks: {
     isFetching: false,
     categories: [
       {
         name: 'one-column',
         image: 'img/one-col.png',
-        modules: [
+        blocks: [
           {
           name: 'button',
           image: 'img/one-col/button.png'
@@ -25,7 +25,7 @@ export default {
       {
         name: 'two-column',
         image: 'img/two-col.png',
-        modules: [
+        blocks: [
           {
           name: 'text left, image right',
           image: 'img/two-col/textleftimageright.png'

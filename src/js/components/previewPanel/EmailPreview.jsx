@@ -1,35 +1,35 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import shortid from 'shortid';
-import OneColumnModule from './OneColumnModule';
-import { removeModuleFromPreview } from '../../actions/actions';
+import OneColumnBlock from './OneColumnBlock';
+import { removeBlockFromPreview } from '../../actions/actions';
 
 const EmailPreview = (props) => {
-  function handleRemoveModuleFromPreview(index) {
+  function handleRemoveBlockFromPreview(index) {
     return () => {
-      props.dispatch(removeModuleFromPreview(index));
+      props.dispatch(removeBlockFromPreview(index));
     };
   }
 
   const { globalOptions } = props;
-  const { modules } = props.emailPreview;
-  let modulesToRender = [];
+  const { blocks } = props.emailPreview;
+  let blocksToRender = [];
 
-  modules.forEach((module, index) => {
-    switch (module.category) {
+  blocks.forEach((block, index) => {
+    switch (block.category) {
       case 'one-column':
-        modulesToRender = [
-          ...modulesToRender,
-          <OneColumnModule
-            content={module.content}
+        blocksToRender = [
+          ...blocksToRender,
+          <OneColumnBlock
+            content={block.content}
             globalOptions={globalOptions}
-            handleRemoveModuleFromPreview={handleRemoveModuleFromPreview(index)}
+            handleRemoveBlockFromPreview={handleRemoveBlockFromPreview(index)}
             key={shortid.generate()}
           />,
         ];
         break;
       default:
-        modulesToRender = [...modulesToRender, null];
+        blocksToRender = [...blocksToRender, null];
     }
   });
 
@@ -40,14 +40,14 @@ const EmailPreview = (props) => {
 
   return (
     <div className="center-block" style={styles}>
-      { modulesToRender }
+      { blocksToRender }
     </div>
   );
 };
 
 EmailPreview.propTypes = {
   emailPreview: PropTypes.shape({
-    modules: PropTypes.array,
+    blocks: PropTypes.array,
   }).isRequired,
   globalOptions: PropTypes.shape({
     backgroundColor: PropTypes.string,

@@ -508,21 +508,21 @@ body {
   .button:hover {
     box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12), 0 3px 5px -1px rgba(0, 0, 0, 0.3); }
 
-.email-module {
+.email-block {
   display: block;
   margin: 20px 0 0 0;
   cursor: move; }
-  .email-module img, .email-module p {
+  .email-block img, .email-block p {
     display: block;
     padding: 0;
     margin: 0; }
-  .email-module img {
+  .email-block img {
     max-width: 100%; }
-  .email-module p {
+  .email-block p {
     font-size: 12px;
     text-align: center;
     margin-top: 5px; }
-  .email-module:first-of-type {
+  .email-block:first-of-type {
     margin: 0; }
 
 @media (max-width: 768px) {

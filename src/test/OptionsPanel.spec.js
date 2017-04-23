@@ -65,15 +65,15 @@ describe('<OptionsPane />', () => {
   test('should receive props', () => {
     expect(optionsPaneComponent.instance().props.currentTab).toEqual('Blocks');
     expect(optionsPaneComponent.instance().props.currentCategory).toEqual(null);
-    expect(optionsPaneComponent.instance().props.emailModules.isFetching).toEqual(false);
-    expect(optionsPaneComponent.instance().props.emailModules.categories[0].name).toEqual('one-column');
+    expect(optionsPaneComponent.instance().props.emailBlocks.isFetching).toEqual(false);
+    expect(optionsPaneComponent.instance().props.emailBlocks.categories[0].name).toEqual('one-column');
   })
 
   test('should contain two buttons if the currentCategory is null', () => {
     expect(optionsPaneComponent.children().length).toEqual(2);
   })
 
-  test('should contain three modules if the currentCategory is one-column', () => {
+  test('should contain three blocks if the currentCategory is one-column', () => {
     props.currentCategory = "one-column";
     optionsPaneComponent = shallow(<OptionsPane {...props} />);
     expect(optionsPaneComponent.children().length).toEqual(3);

@@ -2,12 +2,12 @@ import { isEmpty } from 'lodash';
 
 export const SWITCH_TAB = 'SWITCH_TAB';
 export const SWITCH_CATEGORY = 'SWITCH_CATEGORY';
-export const REQUEST_MODULES = 'REQUEST_EMAIL_MODULES';
-export const RECEIVE_MODULES = 'RECEIVE_EMAIL_MODULES';
+export const REQUEST_BLOCKS = 'REQUEST_EMAIL_BLOCKS';
+export const RECEIVE_BLOCKS = 'RECEIVE_EMAIL_BLOCKS';
 export const CHANGE_GLOBAL_WIDTH = 'CHANGE_GLOBAL_WIDTH';
 export const CHANGE_BACKGROUND_COLOR = 'CHANGE_BACKGROUND_COLOR';
-export const ADD_MODULE_TO_PREVIEW = 'ADD_MODULE_TO_PREVIEW';
-export const REMOVE_MODULE_FROM_PREVIEW = 'REMOVE_MODULE_FROM_PREVIEW';
+export const ADD_BLOCK_TO_PREVIEW = 'ADD_BLOCK_TO_PREVIEW';
+export const REMOVE_BLOCK_FROM_PREVIEW = 'REMOVE_BLOCK_FROM_PREVIEW';
 
 import database from '../store/firebase'
 
@@ -25,38 +25,38 @@ export function switchCategory(category) {
   };
 }
 
-export function fetchEmailModulesIfNeeded() {
+export function fetchEmailBlocksIfNeeded() {
   return (dispatch, getState) => {
-    const modules = getState().modules;
-    if ((isEmpty(modules.modulesByCategory)) && !modules.isFetching) {
-      return dispatch(fetchEmailModules());
+    const blocks = getState().blocks;
+    if ((isEmpty(blocks.blocksByCategory)) && !blocks.isFetching) {
+      return dispatch(fetchEmailBlocks());
     }
   };
 }
 
-function requestEmailModules() {
+function requestEmailBlocks() {
   return {
-    type: REQUEST_MODULES,
+    type: REQUEST_BLOCKS,
     isFetching: true,
   };
 }
 
-function fetchEmailModules() {
+function fetchEmailBlocks() {
   return dispatch => {
-    dispatch(requestEmailModules());
+    dispatch(requestEmailBlocks());
     return database.ref('/')
       .once('value', snapshot => {
-        const { modules, categories } = snapshot.val();
-        dispatch(receiveEmailModules(modules, categories));
+        const { blocks, categories } = snapshot.val();
+        dispatch(receiveEmailBlocks(blocks, categories));
     })
     .catch(error => console.log(error));
   };
 }
 
-function receiveEmailModules(modules, categories) {
+function receiveEmailBlocks(blocks, categories) {
   return {
-    type: RECEIVE_MODULES,
-    modules,
+    type: RECEIVE_BLOCKS,
+    blocks,
     categories,
   };
 }
@@ -75,24 +75,24 @@ export function changeGlobalWidth(width) {
   };
 }
 
-export function addModuleToPreview(id, index) {
+export function addBlockToPreview(id, index) {
   return (dispatch, getState) => {
-    const moduleToAdd = getState().modules.all.filter((module) => module.id === id)[0];
-    dispatch(actuallyAddModuleToPreview(moduleToAdd, index));
+    const blockToAdd = getState().blocks.all.filter((block) => block.id === id)[0];
+    dispatch(actuallyAddBlockToPreview(blockToAdd, index));
   }
 }
 
-function actuallyAddModuleToPreview(module, index){
+function actuallyAddBlockToPreview(block, index){
   return {
-    type: ADD_MODULE_TO_PREVIEW,
-    module,
+    type: ADD_BLOCK_TO_PREVIEW,
+    block,
     index,
   };
 }
 
-export function removeModuleFromPreview(index) {
+export function removeBlockFromPreview(index) {
   return {
-    type: REMOVE_MODULE_FROM_PREVIEW,
+    type: REMOVE_BLOCK_FROM_PREVIEW,
     index,
   };
 }
