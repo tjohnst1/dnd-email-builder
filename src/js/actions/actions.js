@@ -6,6 +6,8 @@ export const REQUEST_MODULES = 'REQUEST_EMAIL_MODULES';
 export const RECEIVE_MODULES = 'RECEIVE_EMAIL_MODULES';
 export const CHANGE_GLOBAL_WIDTH = 'CHANGE_GLOBAL_WIDTH';
 export const CHANGE_BACKGROUND_COLOR = 'CHANGE_BACKGROUND_COLOR';
+export const ADD_MODULE_TO_PREVIEW = 'ADD_MODULE_TO_PREVIEW';
+export const REMOVE_MODULE_FROM_PREVIEW = 'REMOVE_MODULE_FROM_PREVIEW';
 
 import database from '../store/firebase'
 
@@ -13,15 +15,15 @@ export function switchTab(tab) {
   return {
     type: SWITCH_TAB,
     tab,
-  }
-};
+  };
+}
 
 export function switchCategory(category) {
   return {
     type: SWITCH_CATEGORY,
     category,
-  }
-};
+  };
+}
 
 export function fetchEmailModulesIfNeeded() {
   return (dispatch, getState) => {
@@ -29,15 +31,15 @@ export function fetchEmailModulesIfNeeded() {
     if ((isEmpty(modules.modulesByCategory)) && !modules.isFetching) {
       return dispatch(fetchEmailModules());
     }
-  }
-};
+  };
+}
 
 function requestEmailModules() {
   return {
     type: REQUEST_MODULES,
     isFetching: true,
-  }
-};
+  };
+}
 
 function fetchEmailModules() {
   return dispatch => {
@@ -48,27 +50,49 @@ function fetchEmailModules() {
         dispatch(receiveEmailModules(modules, categories));
     })
     .catch(error => console.log(error));
-  }
-};
+  };
+}
 
 function receiveEmailModules(modules, categories) {
   return {
     type: RECEIVE_MODULES,
     modules,
     categories,
-  }
-};
+  };
+}
 
 export function changeBackgroundColor(backgroundColor) {
   return {
     type: CHANGE_BACKGROUND_COLOR,
     backgroundColor,
-  }
+  };
 }
 
 export function changeGlobalWidth(width) {
   return {
     type: CHANGE_GLOBAL_WIDTH,
     width,
+  };
+}
+
+export function addModuleToPreview(id, index) {
+  return (dispatch, getState) => {
+    const moduleToAdd = getState().modules.all.filter((module) => module.id === id)[0];
+    dispatch(actuallyAddModuleToPreview(moduleToAdd, index));
   }
+}
+
+function actuallyAddModuleToPreview(module, index){
+  return {
+    type: ADD_MODULE_TO_PREVIEW,
+    module,
+    index,
+  };
+}
+
+export function removeModuleFromPreview(index) {
+  return {
+    type: REMOVE_MODULE_FROM_PREVIEW,
+    index,
+  };
 }

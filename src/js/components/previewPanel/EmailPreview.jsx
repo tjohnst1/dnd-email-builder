@@ -2,20 +2,28 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import shortid from 'shortid';
 import OneColumnModule from './OneColumnModule';
+import { removeModuleFromPreview } from '../../actions/actions';
 
 const EmailPreview = (props) => {
+  function handleRemoveModuleFromPreview(index) {
+    return () => {
+      props.dispatch(removeModuleFromPreview(index));
+    };
+  }
+
   const { globalOptions } = props;
   const { modules } = props.emailPreview;
   let modulesToRender = [];
 
-  modules.forEach((module) => {
-    switch (module.type) {
+  modules.forEach((module, index) => {
+    switch (module.category) {
       case 'one-column':
         modulesToRender = [
           ...modulesToRender,
           <OneColumnModule
             content={module.content}
             globalOptions={globalOptions}
+            handleRemoveModuleFromPreview={handleRemoveModuleFromPreview(index)}
             key={shortid.generate()}
           />,
         ];
@@ -45,13 +53,15 @@ EmailPreview.propTypes = {
     backgroundColor: PropTypes.string,
     width: PropTypes.number,
   }).isRequired,
+  dispatch: PropTypes.func.isRequired,
 };
 
 function mapStateToProps(state) {
-  const { emailPreview, globalOptions } = state;
+  const { emailPreview, globalOptions, dispatch } = state;
   return {
     emailPreview,
     globalOptions,
+    dispatch,
   };
 }
 

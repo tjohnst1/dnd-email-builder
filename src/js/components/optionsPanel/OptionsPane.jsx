@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import shortid from 'shortid';
 import classNames from 'classnames';
 import { SketchPicker } from 'react-color';
-import { switchCategory, fetchEmailModulesIfNeeded, changeGlobalWidth, changeBackgroundColor } from '../../actions/actions';
+import { switchCategory, fetchEmailModulesIfNeeded, changeGlobalWidth, changeBackgroundColor, addModuleToPreview } from '../../actions/actions';
 import Button from './Button';
 import EmailModule from './EmailModule';
 
@@ -37,6 +37,12 @@ export class OptionsPane extends Component {
     this.props.dispatch(changeBackgroundColor(color.hex));
   }
 
+  handleAddModuleToPreview(id) {
+    return () => {
+      this.props.dispatch(addModuleToPreview(id, 0));
+    };
+  }
+
   toggleColorPicker() {
     this.setState({
       showColorPicker: !this.state.showColorPicker,
@@ -65,6 +71,7 @@ export class OptionsPane extends Component {
             const modulesByCategory = modules.all
               .filter(module => module.category === currentCategory);
             innerContent = modulesByCategory.map(module => <EmailModule
+              handleAddModuleToPreview={this.handleAddModuleToPreview(module.id)}
               name={module.name}
               image={module.image}
               key={shortid.generate()}
