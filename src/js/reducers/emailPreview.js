@@ -1,4 +1,4 @@
-import { CHANGE_GLOBAL_WIDTH, CHANGE_BACKGROUND_COLOR, ADD_BLOCK_TO_PREVIEW, REMOVE_BLOCK_FROM_PREVIEW } from '../actions/actions';
+import { CHANGE_GLOBAL_WIDTH, CHANGE_BACKGROUND_COLOR, ADD_BLOCK_TO_PREVIEW, REMOVE_BLOCK_FROM_PREVIEW, MOVE_BLOCKS_IN_PREVIEW } from '../actions/actions';
 
 const emailPreviewState = {
   blocks: [],
@@ -15,9 +15,17 @@ export function emailPreview(state = emailPreviewState, action) {
           .concat(blocks.slice(action.index)),
       };
     case REMOVE_BLOCK_FROM_PREVIEW:
-      return { blocks: blocks
-        .slice(0, action.index)
-        .concat(blocks.slice(action.index + 1)),
+      return {
+        blocks: blocks
+          .slice(0, action.index)
+          .concat(blocks.slice(action.index + 1)),
+      };
+    case MOVE_BLOCKS_IN_PREVIEW:
+      return {
+        blocks: blocks
+          .slice(0, action.hoverIndex)
+          .concat(blocks.slice(action.sourceIndex, action.sourceIndex + 1))
+          .concat(blocks.slice(action.hoverIndex))
       };
     default:
       return state;

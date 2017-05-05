@@ -1,11 +1,52 @@
 import React, { PropTypes } from 'react';
+import { DragSource, DropTarget } from 'react-dnd';
+import { flow } from 'lodash';
 import ImageComponent from './ImageComponent';
 import TextComponent from './TextComponent';
+import { DROPPED_BLOCK } from '../../constants/constants';
+
+
+const sourceSpec = {
+  beginDrag(props) {
+    return {
+      index: props.index,
+    };
+  },
+};
+
+function sourceCollect(connect, monitor) {
+  return {
+    connectDragSource: connect.dragSource(),
+    isDragging: monitor.isDragging(),
+  };
+}
+
+const targetSpec = {
+  hover(props, monitor, component) {
+    const dragIndex = monitor.getItem().index;
+    const hoverIndex = props.index;
+
+    if (dragIndex === hoverIndex) {
+      return;
+    }
+
+    props.handleMoveBlocks(dragIndex, hoverIndex);
+
+    monitor.getItem().index = hoverIndex;
+  },
+};
+
+function targetCollect(connect) {
+  return {
+    connectDropTarget: connect.dropTarget(),
+  };
+}
 
 const OneColumnBlock = (props) => {
   const { type, link, src, width, color, innerContent,
     fontFamily, fontSize, lineHeight, textAlign } = props.content[0];
-  const { globalOptions, handleRemoveBlockFromPreview } = props;
+  const { globalOptions, handleRemoveBlockFromPreview, handleMoveBlocks,
+    connectDragSource, connectDropTarget, index, isDragging } = props;
   let content;
   if (type === 'image') {
     content = <ImageComponent link={link} src={src} width={width} />;
@@ -19,15 +60,16 @@ const OneColumnBlock = (props) => {
   const styles = {
     paddingTop: '20px',
     width: `${globalOptions.width}px`,
+    opacity: isDragging ? 0 : 1,
   };
 
-  return (
+  return connectDragSource(connectDropTarget((
     <div className="w100" style={styles} onClick={handleRemoveBlockFromPreview}>
       <div className="center-block width-90">
         {content}
       </div>
     </div>
-  );
+  )));
 };
 
 OneColumnBlock.propTypes = {
@@ -37,6 +79,10 @@ OneColumnBlock.propTypes = {
     width: PropTypes.number,
   }).isRequired,
   handleRemoveBlockFromPreview: PropTypes.func.isRequired,
+  id: PropTypes.string.isRequired,
 };
 
-export default OneColumnBlock;
+export default flow(
+  DropTarget(DROPPED_BLOCK, targetSpec, targetCollect),
+  DragSource(DROPPED_BLOCK, sourceSpec, sourceCollect),
+)(OneColumnBlock);

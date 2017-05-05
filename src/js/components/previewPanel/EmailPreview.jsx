@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { DropTarget } from 'react-dnd';
 import shortid from 'shortid';
 import OneColumnBlock from './OneColumnBlock';
-import { addBlockToPreview, removeBlockFromPreview } from '../../actions/actions';
+import { addBlockToPreview, removeBlockFromPreview, moveBlocks } from '../../actions/actions';
 import { BLOCK } from '../../constants/constants';
 
 const blockTarget = {
@@ -13,7 +13,7 @@ const blockTarget = {
       return;
     }
     const block = monitor.getItem();
-    props.dispatch(addBlockToPreview(block.id, 0));
+    props.dispatch(addBlockToPreview(block.id, props.emailPreview.blocks.length));
   },
 };
 
@@ -26,6 +26,7 @@ function collect(connectDrag) {
 export class EmailPreview extends Component {
   super() {
     this.handleRemoveBlockFromPreview = this.handleRemoveBlockFromPreview.bind(this);
+    this.handleMoveBlocks = this.handleMoveBlocks.bind(this);
   }
 
   handleRemoveBlockFromPreview(index) {
@@ -34,8 +35,12 @@ export class EmailPreview extends Component {
     };
   }
 
+  handleMoveBlocks(dragIndex, targetIndex) {
+    this.dispatch(moveBlocks(dragIndex, targetIndex));
+  }
+
   render() {
-    const { globalOptions, connectDropTarget } = this.props;
+    const { globalOptions, connectDropTarget, dispatch } = this.props;
     const { blocks } = this.props.emailPreview;
 
     let blocksToRender = [];
@@ -48,8 +53,12 @@ export class EmailPreview extends Component {
             <OneColumnBlock
               content={block.content}
               globalOptions={globalOptions}
+              id={block.id}
+              index={block.index}
               handleRemoveBlockFromPreview={this.handleRemoveBlockFromPreview(index)}
+              handleMoveBlocks={this.handleMoveBlocks}
               key={shortid.generate()}
+              dispatch={dispatch}
             />,
           ];
       }

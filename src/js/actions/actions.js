@@ -8,6 +8,7 @@ export const CHANGE_GLOBAL_WIDTH = 'CHANGE_GLOBAL_WIDTH';
 export const CHANGE_BACKGROUND_COLOR = 'CHANGE_BACKGROUND_COLOR';
 export const ADD_BLOCK_TO_PREVIEW = 'ADD_BLOCK_TO_PREVIEW';
 export const REMOVE_BLOCK_FROM_PREVIEW = 'REMOVE_BLOCK_FROM_PREVIEW';
+export const MOVE_BLOCKS_IN_PREVIEW = 'MOVE_BLOCKS_IN_PREVIEW';
 
 import database from '../store/firebase'
 
@@ -78,6 +79,7 @@ export function changeGlobalWidth(width) {
 export function addBlockToPreview(id, index) {
   return (dispatch, getState) => {
     const blockToAdd = getState().blocks.all.filter((block) => block.id === id)[0];
+    blockToAdd.index = index;
     dispatch(actuallyAddBlockToPreview(blockToAdd, index));
   }
 }
@@ -95,4 +97,13 @@ export function removeBlockFromPreview(index) {
     type: REMOVE_BLOCK_FROM_PREVIEW,
     index,
   };
+}
+
+export function moveBlocks(sourceIndex, hoverIndex) {
+  console.log("moving")
+  return {
+    type: MOVE_BLOCKS_IN_PREVIEW,
+    sourceIndex,
+    hoverIndex,
+  }
 }
