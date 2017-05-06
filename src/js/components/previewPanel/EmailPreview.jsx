@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react';
-import { flow } from 'lodash';
+import { flow, uniqueId } from 'lodash';
 import { connect } from 'react-redux';
 import { DropTarget } from 'react-dnd';
 import shortid from 'shortid';
@@ -9,11 +9,11 @@ import { BLOCK } from '../../constants/constants';
 
 const blockTarget = {
   drop(props, monitor) {
-    if (monitor.didDrop()) {
-      return;
+    const blockId = monitor.getItem().id;
+    if (blockId) {
+      const dropId = uniqueId();
+      props.dispatch(addBlockToPreview(blockId, props.emailPreview.blocks.length, dropId));
     }
-    const block = monitor.getItem();
-    props.dispatch(addBlockToPreview(block.id, props.emailPreview.blocks.length));
   },
 };
 
@@ -55,6 +55,7 @@ export class EmailPreview extends Component {
               globalOptions={globalOptions}
               id={block.id}
               index={block.index}
+              dropId={block.dropId}
               handleRemoveBlockFromPreview={this.handleRemoveBlockFromPreview(index)}
               handleMoveBlocks={this.handleMoveBlocks}
               key={shortid.generate()}
@@ -71,7 +72,9 @@ export class EmailPreview extends Component {
 
     return connectDropTarget((
       <div className="center-block" style={styles}>
-        { blocksToRender.length > 0 ? blocksToRender : <p>Empty</p> }
+        { blocksToRender.length > 0 ?
+          blocksToRender : <p className="preview-panel--empty">Insert Content Here</p>
+        }
       </div>
     ));
   }

@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 
 const ImageComponent = (props) => {
-  const { link, src, width } = props;
+  const { link, src, width } = props.content[0];
   let imgElement;
 
   if (link) {
@@ -18,9 +18,13 @@ const ImageComponent = (props) => {
 };
 
 ImageComponent.propTypes = {
-  link: PropTypes.bool.isRequired,
-  src: PropTypes.string.isRequired,
-  width: PropTypes.string.isRequired,
+  content: PropTypes.arrayOf(
+    PropTypes.shape({
+      link: PropTypes.shape.isRequired,
+      src: PropTypes.string.isRequired,
+      width: PropTypes.string.isRequired,
+    }),
+  ).isRequired,
 };
 
 export default ImageComponent;

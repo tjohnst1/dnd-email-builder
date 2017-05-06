@@ -3642,11 +3642,12 @@ function changeGlobalWidth(width) {
   };
 }
 
-function addBlockToPreview(id, index) {
+function addBlockToPreview(id, index, dropId) {
   return function (dispatch, getState) {
     var blockToAdd = getState().blocks.all.filter(function (block) {
       return block.id === id;
     })[0];
+    blockToAdd.dropId = dropId;
     blockToAdd.index = index;
     dispatch(actuallyAddBlockToPreview(blockToAdd, index));
   };
@@ -3668,7 +3669,6 @@ function removeBlockFromPreview(index) {
 }
 
 function moveBlocks(sourceIndex, hoverIndex) {
-  console.log("moving");
   return {
     type: MOVE_BLOCKS_IN_PREVIEW,
     sourceIndex: sourceIndex,
@@ -33451,11 +33451,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var blockTarget = {
   drop: function drop(props, monitor) {
-    if (monitor.didDrop()) {
-      return;
+    var blockId = monitor.getItem().id;
+    if (blockId) {
+      var dropId = (0, _lodash.uniqueId)();
+      props.dispatch((0, _actions.addBlockToPreview)(blockId, props.emailPreview.blocks.length, dropId));
     }
-    var block = monitor.getItem();
-    props.dispatch((0, _actions.addBlockToPreview)(block.id, props.emailPreview.blocks.length));
   }
 };
 
@@ -33516,6 +33516,7 @@ var EmailPreview = exports.EmailPreview = function (_Component) {
               globalOptions: globalOptions,
               id: block.id,
               index: block.index,
+              dropId: block.dropId,
               handleRemoveBlockFromPreview: _this3.handleRemoveBlockFromPreview(index),
               handleMoveBlocks: _this3.handleMoveBlocks,
               key: _shortid2.default.generate(),
@@ -33534,8 +33535,8 @@ var EmailPreview = exports.EmailPreview = function (_Component) {
         { className: 'center-block', style: styles },
         blocksToRender.length > 0 ? blocksToRender : _react2.default.createElement(
           'p',
-          null,
-          'Empty'
+          { className: 'preview-panel--empty' },
+          'Insert Content Here'
         )
       ));
     }
@@ -33590,9 +33591,10 @@ var _react2 = _interopRequireDefault(_react);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var ImageComponent = function ImageComponent(props) {
-  var link = props.link,
-      src = props.src,
-      width = props.width;
+  var _props$content$ = props.content[0],
+      link = _props$content$.link,
+      src = _props$content$.src,
+      width = _props$content$.width;
 
   var imgElement = void 0;
 
@@ -33610,9 +33612,11 @@ var ImageComponent = function ImageComponent(props) {
 };
 
 ImageComponent.propTypes = {
-  link: _react.PropTypes.bool.isRequired,
-  src: _react.PropTypes.string.isRequired,
-  width: _react.PropTypes.string.isRequired
+  content: _react.PropTypes.arrayOf(_react.PropTypes.shape({
+    link: _react.PropTypes.shape.isRequired,
+    src: _react.PropTypes.string.isRequired,
+    width: _react.PropTypes.string.isRequired
+  })).isRequired
 };
 
 exports.default = ImageComponent;
@@ -33627,6 +33631,9 @@ exports.default = ImageComponent;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.OneColumnBlock = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = __webpack_require__(1);
 
@@ -33648,10 +33655,17 @@ var _constants = __webpack_require__(73);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var sourceSpec = {
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var blockSource = {
   beginDrag: function beginDrag(props) {
     return {
-      index: props.index
+      index: props.index,
+      dropId: props.dropId
     };
   }
 };
@@ -33664,72 +33678,71 @@ function sourceCollect(connect, monitor) {
 }
 
 var targetSpec = {
-  hover: function hover(props, monitor, component) {
-    var dragIndex = monitor.getItem().index;
-    var hoverIndex = props.index;
+  hover: function hover(props, monitor) {
+    var dragId = monitor.getItem().dropId;
 
-    if (dragIndex === hoverIndex) {
-      return;
+    if (dragId && dragId !== props.dropId) {
+      var dragIndex = monitor.getItem().index;
+      var hoverIndex = props.index;
+      props.handleMoveBlocks(dragIndex, hoverIndex);
     }
-
-    props.handleMoveBlocks(dragIndex, hoverIndex);
-
-    monitor.getItem().index = hoverIndex;
   }
 };
 
-function targetCollect(connect) {
+function targetCollect(connect, monitor) {
   return {
     connectDropTarget: connect.dropTarget()
   };
 }
 
-var OneColumnBlock = function OneColumnBlock(props) {
-  var _props$content$ = props.content[0],
-      type = _props$content$.type,
-      link = _props$content$.link,
-      src = _props$content$.src,
-      width = _props$content$.width,
-      color = _props$content$.color,
-      innerContent = _props$content$.innerContent,
-      fontFamily = _props$content$.fontFamily,
-      fontSize = _props$content$.fontSize,
-      lineHeight = _props$content$.lineHeight,
-      textAlign = _props$content$.textAlign;
-  var globalOptions = props.globalOptions,
-      handleRemoveBlockFromPreview = props.handleRemoveBlockFromPreview,
-      handleMoveBlocks = props.handleMoveBlocks,
-      connectDragSource = props.connectDragSource,
-      connectDropTarget = props.connectDropTarget,
-      index = props.index,
-      isDragging = props.isDragging;
+var OneColumnBlock = exports.OneColumnBlock = function (_Component) {
+  _inherits(OneColumnBlock, _Component);
 
-  var content = void 0;
-  if (type === 'image') {
-    content = _react2.default.createElement(_ImageComponent2.default, { link: link, src: src, width: width });
-  } else if (type === 'text') {
-    content = _react2.default.createElement(_TextComponent2.default, {
-      color: color, fontFamily: fontFamily, innerContent: innerContent,
-      fontSize: fontSize, lineHeight: lineHeight, textAlign: textAlign
-    });
+  function OneColumnBlock() {
+    _classCallCheck(this, OneColumnBlock);
+
+    return _possibleConstructorReturn(this, (OneColumnBlock.__proto__ || Object.getPrototypeOf(OneColumnBlock)).apply(this, arguments));
   }
 
-  var styles = {
-    paddingTop: '20px',
-    width: globalOptions.width + 'px',
-    opacity: isDragging ? 0 : 1
-  };
+  _createClass(OneColumnBlock, [{
+    key: 'render',
+    value: function render() {
+      var _props = this.props,
+          content = _props.content,
+          globalOptions = _props.globalOptions,
+          handleRemoveBlockFromPreview = _props.handleRemoveBlockFromPreview,
+          connectDragSource = _props.connectDragSource,
+          connectDropTarget = _props.connectDropTarget,
+          isDragging = _props.isDragging;
+      var type = content[0].type;
 
-  return connectDragSource(connectDropTarget(_react2.default.createElement(
-    'div',
-    { className: 'w100', style: styles, onClick: handleRemoveBlockFromPreview },
-    _react2.default.createElement(
-      'div',
-      { className: 'center-block width-90' },
-      content
-    )
-  )));
-};
+      var component = void 0;
+      if (type === 'image') {
+        component = _react2.default.createElement(_ImageComponent2.default, { content: content });
+      } else if (type === 'text') {
+        component = _react2.default.createElement(_TextComponent2.default, { content: content });
+      }
+
+      var styles = {
+        paddingTop: '20px',
+        width: globalOptions.width + 'px',
+        opacity: isDragging ? 0.3 : 1
+      };
+
+      return connectDragSource(connectDropTarget(_react2.default.createElement(
+        'div',
+        { className: 'w100', style: styles, onClick: handleRemoveBlockFromPreview },
+        _react2.default.createElement(
+          'div',
+          { className: 'center-block width-90' },
+          component
+        )
+      )));
+    }
+  }]);
+
+  return OneColumnBlock;
+}(_react.Component);
 
 OneColumnBlock.propTypes = {
   content: _react.PropTypes.arrayOf(_react.PropTypes.object).isRequired,
@@ -33738,10 +33751,12 @@ OneColumnBlock.propTypes = {
     width: _react.PropTypes.number
   }).isRequired,
   handleRemoveBlockFromPreview: _react.PropTypes.func.isRequired,
-  id: _react.PropTypes.string.isRequired
+  connectDropTarget: _react.PropTypes.func.isRequired,
+  connectDragSource: _react.PropTypes.func.isRequired,
+  isDragging: _react.PropTypes.bool.isRequired
 };
 
-exports.default = (0, _lodash.flow)((0, _reactDnd.DropTarget)(_constants.DROPPED_BLOCK, targetSpec, targetCollect), (0, _reactDnd.DragSource)(_constants.DROPPED_BLOCK, sourceSpec, sourceCollect))(OneColumnBlock);
+exports.default = (0, _lodash.flow)((0, _reactDnd.DragSource)(_constants.DROPPED_BLOCK, blockSource, sourceCollect), (0, _reactDnd.DropTarget)(_constants.DROPPED_BLOCK, targetSpec, targetCollect))(OneColumnBlock);
 
 /***/ }),
 /* 226 */
@@ -33761,14 +33776,15 @@ var _react2 = _interopRequireDefault(_react);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var TextComponent = function TextComponent(props) {
-  var color = props.color,
-      fontSize = props.fontSize,
-      lineHeight = props.lineHeight,
-      fontFamily = props.fontFamily,
-      textAlign = props.textAlign,
-      innerContent = props.innerContent;
+  var _props$content$ = props.content[0],
+      color = _props$content$.color,
+      fontSize = _props$content$.fontSize,
+      lineHeight = _props$content$.lineHeight,
+      fontFamily = _props$content$.fontFamily,
+      textAlign = _props$content$.textAlign,
+      innerContent = _props$content$.innerContent;
 
-  var styles = { color: color, fontFamily: fontFamily, fontSize: fontSize, lineHeight: lineHeight, textAlign: textAlign };
+  var styles = { color: color, fontSize: fontSize, lineHeight: lineHeight, fontFamily: fontFamily, textAlign: textAlign };
   return _react2.default.createElement(
     'p',
     { style: styles },
@@ -33777,12 +33793,14 @@ var TextComponent = function TextComponent(props) {
 };
 
 TextComponent.propTypes = {
-  color: _react.PropTypes.string.isRequired,
-  fontSize: _react.PropTypes.string.isRequired,
-  lineHeight: _react.PropTypes.string.isRequired,
-  fontFamily: _react.PropTypes.string.isRequired,
-  textAlign: _react.PropTypes.string.isRequired,
-  innerContent: _react.PropTypes.string.isRequired
+  content: _react.PropTypes.arrayOf(_react.PropTypes.shape({
+    color: _react.PropTypes.string.isRequired,
+    fontSize: _react.PropTypes.string.isRequired,
+    lineHeight: _react.PropTypes.string.isRequired,
+    fontFamily: _react.PropTypes.string.isRequired,
+    textAlign: _react.PropTypes.string.isRequired,
+    innerContent: _react.PropTypes.string.isRequired
+  })).isRequired
 };
 
 exports.default = TextComponent;
@@ -33936,8 +33954,16 @@ function emailPreview() {
         blocks: blocks.slice(0, action.index).concat(blocks.slice(action.index + 1))
       };
     case _actions.MOVE_BLOCKS_IN_PREVIEW:
+      var hoverIndex = action.hoverIndex,
+          sourceIndex = action.sourceIndex;
+
+      var temp = blocks.slice();
+      temp[hoverIndex] = blocks[sourceIndex];
+      temp[hoverIndex].index = hoverIndex;
+      temp[sourceIndex] = blocks[hoverIndex];
+      temp[sourceIndex].index = sourceIndex;
       return {
-        blocks: blocks.slice(0, action.hoverIndex).concat(blocks.slice(action.sourceIndex, action.sourceIndex + 1)).concat(blocks.slice(action.hoverIndex))
+        blocks: temp
       };
     default:
       return state;

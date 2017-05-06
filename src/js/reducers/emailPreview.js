@@ -21,11 +21,14 @@ export function emailPreview(state = emailPreviewState, action) {
           .concat(blocks.slice(action.index + 1)),
       };
     case MOVE_BLOCKS_IN_PREVIEW:
+      const { hoverIndex, sourceIndex } = action;
+      let temp = blocks.slice();
+      temp[hoverIndex] = blocks[sourceIndex];
+      temp[hoverIndex].index = hoverIndex;
+      temp[sourceIndex] = blocks[hoverIndex];
+      temp[sourceIndex].index = sourceIndex;
       return {
-        blocks: blocks
-          .slice(0, action.hoverIndex)
-          .concat(blocks.slice(action.sourceIndex, action.sourceIndex + 1))
-          .concat(blocks.slice(action.hoverIndex))
+        blocks: temp,
       };
     default:
       return state;

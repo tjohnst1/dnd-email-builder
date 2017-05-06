@@ -76,9 +76,10 @@ export function changeGlobalWidth(width) {
   };
 }
 
-export function addBlockToPreview(id, index) {
+export function addBlockToPreview(id, index, dropId) {
   return (dispatch, getState) => {
     const blockToAdd = getState().blocks.all.filter((block) => block.id === id)[0];
+    blockToAdd.dropId = dropId;
     blockToAdd.index = index;
     dispatch(actuallyAddBlockToPreview(blockToAdd, index));
   }
@@ -100,7 +101,6 @@ export function removeBlockFromPreview(index) {
 }
 
 export function moveBlocks(sourceIndex, hoverIndex) {
-  console.log("moving")
   return {
     type: MOVE_BLOCKS_IN_PREVIEW,
     sourceIndex,

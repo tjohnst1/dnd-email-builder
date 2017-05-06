@@ -1,15 +1,15 @@
-import React, { PropTypes } from 'react';
+import React, { PropTypes, Component } from 'react';
 import { DragSource, DropTarget } from 'react-dnd';
 import { flow } from 'lodash';
 import ImageComponent from './ImageComponent';
 import TextComponent from './TextComponent';
 import { DROPPED_BLOCK } from '../../constants/constants';
 
-
-const sourceSpec = {
+const blockSource = {
   beginDrag(props) {
     return {
       index: props.index,
+      dropId: props.dropId,
     };
   },
 };
@@ -22,55 +22,50 @@ function sourceCollect(connect, monitor) {
 }
 
 const targetSpec = {
-  hover(props, monitor, component) {
-    const dragIndex = monitor.getItem().index;
-    const hoverIndex = props.index;
+  hover(props, monitor) {
+    const dragId = monitor.getItem().dropId;
 
-    if (dragIndex === hoverIndex) {
-      return;
+    if (dragId && dragId !== props.dropId) {
+      const dragIndex = monitor.getItem().index;
+      const hoverIndex = props.index;
+      props.handleMoveBlocks(dragIndex, hoverIndex);
     }
-
-    props.handleMoveBlocks(dragIndex, hoverIndex);
-
-    monitor.getItem().index = hoverIndex;
   },
 };
 
-function targetCollect(connect) {
+function targetCollect(connect, monitor) {
   return {
     connectDropTarget: connect.dropTarget(),
   };
 }
 
-const OneColumnBlock = (props) => {
-  const { type, link, src, width, color, innerContent,
-    fontFamily, fontSize, lineHeight, textAlign } = props.content[0];
-  const { globalOptions, handleRemoveBlockFromPreview, handleMoveBlocks,
-    connectDragSource, connectDropTarget, index, isDragging } = props;
-  let content;
-  if (type === 'image') {
-    content = <ImageComponent link={link} src={src} width={width} />;
-  } else if (type === 'text') {
-    content = (<TextComponent
-      color={color} fontFamily={fontFamily} innerContent={innerContent}
-      fontSize={fontSize} lineHeight={lineHeight} textAlign={textAlign}
-    />);
-  }
+export class OneColumnBlock extends Component {
+  render() {
+    const { content, globalOptions, handleRemoveBlockFromPreview,
+      connectDragSource, connectDropTarget, isDragging } = this.props;
+    const { type } = content[0];
+    let component;
+    if (type === 'image') {
+      component = <ImageComponent content={content} />;
+    } else if (type === 'text') {
+      component = (<TextComponent content={content} />);
+    }
 
-  const styles = {
-    paddingTop: '20px',
-    width: `${globalOptions.width}px`,
-    opacity: isDragging ? 0 : 1,
-  };
+    const styles = {
+      paddingTop: '20px',
+      width: `${globalOptions.width}px`,
+      opacity: isDragging ? 0.3 : 1,
+    };
 
-  return connectDragSource(connectDropTarget((
-    <div className="w100" style={styles} onClick={handleRemoveBlockFromPreview}>
-      <div className="center-block width-90">
-        {content}
+    return connectDragSource(connectDropTarget((
+      <div className="w100" style={styles} onClick={handleRemoveBlockFromPreview}>
+        <div className="center-block width-90">
+          {component}
+        </div>
       </div>
-    </div>
-  )));
-};
+    )));
+  }
+}
 
 OneColumnBlock.propTypes = {
   content: PropTypes.arrayOf(PropTypes.object).isRequired,
@@ -79,10 +74,12 @@ OneColumnBlock.propTypes = {
     width: PropTypes.number,
   }).isRequired,
   handleRemoveBlockFromPreview: PropTypes.func.isRequired,
-  id: PropTypes.string.isRequired,
+  connectDropTarget: PropTypes.func.isRequired,
+  connectDragSource: PropTypes.func.isRequired,
+  isDragging: PropTypes.bool.isRequired,
 };
 
 export default flow(
+  DragSource(DROPPED_BLOCK, blockSource, sourceCollect),
   DropTarget(DROPPED_BLOCK, targetSpec, targetCollect),
-  DragSource(DROPPED_BLOCK, sourceSpec, sourceCollect),
 )(OneColumnBlock);
