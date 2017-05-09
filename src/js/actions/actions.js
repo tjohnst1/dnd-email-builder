@@ -1,4 +1,4 @@
-import { isEmpty } from 'lodash';
+import { isEmpty, uniqueId } from 'lodash';
 
 export const SWITCH_TAB = 'SWITCH_TAB';
 export const SWITCH_CATEGORY = 'SWITCH_CATEGORY';
@@ -9,6 +9,8 @@ export const CHANGE_BACKGROUND_COLOR = 'CHANGE_BACKGROUND_COLOR';
 export const ADD_BLOCK_TO_PREVIEW = 'ADD_BLOCK_TO_PREVIEW';
 export const REMOVE_BLOCK_FROM_PREVIEW = 'REMOVE_BLOCK_FROM_PREVIEW';
 export const MOVE_BLOCKS_IN_PREVIEW = 'MOVE_BLOCKS_IN_PREVIEW';
+export const CLEAR_MARKER_FROM_PREVIEW = 'CLEAR_MARKER_FROM_PREVIEW';
+export const MOVE_MARKER = 'MOVE_MARKER';
 
 import database from '../store/firebase'
 
@@ -76,10 +78,9 @@ export function changeGlobalWidth(width) {
   };
 }
 
-export function addBlockToPreview(id, index, dropId) {
+export function addBlockToPreview(blockId, index) {
   return (dispatch, getState) => {
-    const blockToAdd = getState().blocks.all.filter((block) => block.id === id)[0];
-    blockToAdd.dropId = dropId;
+    let blockToAdd = getState().blocks.all.filter((block) => block.id === blockId)[0];
     blockToAdd.index = index;
     dispatch(actuallyAddBlockToPreview(blockToAdd, index));
   }
@@ -105,5 +106,18 @@ export function moveBlocks(sourceIndex, hoverIndex) {
     type: MOVE_BLOCKS_IN_PREVIEW,
     sourceIndex,
     hoverIndex,
+  }
+}
+
+export function clearMarkerFromPreview() {
+  return {
+    type: CLEAR_MARKER_FROM_PREVIEW,
+  }
+}
+
+export function moveMarker(index) {
+  return {
+    type: MOVE_MARKER,
+    index,
   }
 }
