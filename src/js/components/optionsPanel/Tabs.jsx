@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import shortid from 'shortid';
+import { uniqueId } from 'lodash';
 import Tab from './Tab';
 import { switchTab, switchCategory } from '../../actions/actions';
 
@@ -16,7 +16,7 @@ export const Tabs = (props) => {
   const tabElements = names.map(name => <Tab
     name={name}
     active={selected === name}
-    key={shortid.generate()}
+    key={uniqueId()}
     handleSwitchTab={handleSwitchTab(name)}
   />);
 

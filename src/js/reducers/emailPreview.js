@@ -31,9 +31,8 @@ export function emailPreview(state = emailPreviewState, action) {
     case ADD_BLOCK_TO_PREVIEW:
       return Object.assign({}, state, {
         blocks: blocks
-          .slice(0, action.index)
+          .slice()
           .concat(action.block)
-          .concat(blocks.slice(action.index))
         }
       );
     case REMOVE_BLOCK_FROM_PREVIEW:

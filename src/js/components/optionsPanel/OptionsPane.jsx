@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import shortid from 'shortid';
+import { uniqueId } from 'lodash';
 import classNames from 'classnames';
 import { SketchPicker } from 'react-color';
 import { switchCategory, fetchEmailBlocksIfNeeded, changeGlobalWidth, changeBackgroundColor } from '../../actions/actions';
@@ -59,7 +59,7 @@ export class OptionsPane extends Component {
               icon={category.image}
               text={category.name}
               handleSwitchCategory={this.handleSwitchCategory(category.name)}
-              key={shortid.generate()}
+              key={uniqueId()}
             />);
           } else {
             const blocksByCategory = blocks.all
@@ -68,7 +68,7 @@ export class OptionsPane extends Component {
               name={block.name}
               image={block.image}
               id={block.id}
-              key={shortid.generate()}
+              key={uniqueId()}
             />);
           }
         }

@@ -78,11 +78,13 @@ export function changeGlobalWidth(width) {
   };
 }
 
-export function addBlockToPreview(blockId, index) {
+export function addBlockToPreview(blockId) {
   return (dispatch, getState) => {
-    let blockToAdd = getState().blocks.all.filter((block) => block.id === blockId)[0];
-    blockToAdd.index = index;
-    dispatch(actuallyAddBlockToPreview(blockToAdd, index));
+    const blockPrototype = getState().blocks.all.filter((block) => block.id === blockId)[0]
+    const blockToAdd = Object.assign({}, blockPrototype, {
+      previewId: uniqueId()
+    });
+    dispatch(actuallyAddBlockToPreview(blockToAdd));
   }
 }
 
@@ -90,7 +92,6 @@ function actuallyAddBlockToPreview(block, index){
   return {
     type: ADD_BLOCK_TO_PREVIEW,
     block,
-    index,
   };
 }
 

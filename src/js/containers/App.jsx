@@ -1,8 +1,9 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { DragDropContextProvider } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
+import { DragDropContextProvider } from 'react-dnd';
 import configureStore from '../store/configureStore';
+
 
 import MenuBar from './MenuBar';
 import OptionsPanel from './OptionsPanel';
