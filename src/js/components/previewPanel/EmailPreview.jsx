@@ -17,7 +17,7 @@ export class EmailPreview extends Component {
   }
 
   handleRemoveBlockFromPreview(index) {
-    this.props.dispatch(removeBlockFromPreview(index));
+    return () => this.props.dispatch(removeBlockFromPreview(index));
   }
 
   handleMoveBlocks(dragIndex, targetIndex) {

@@ -3,7 +3,7 @@ import ImageComponent from './ImageComponent';
 import TextComponent from './TextComponent';
 
 const OneColumnBlock = (props) => {
-  const { content, globalOptions, handleRemoveBlockFromPreview } = props;
+  const { content, globalOptions, index, handleRemoveBlockFromPreview } = props;
   const { type } = content[0];
 
   let component;
@@ -20,7 +20,7 @@ const OneColumnBlock = (props) => {
   };
 
   return (
-    <div className="w100" style={styles} onClick={handleRemoveBlockFromPreview}>
+    <div className="w100" style={styles} onClick={handleRemoveBlockFromPreview(index)}>
       <div className="center-block width-90">
         {component}
       </div>
@@ -35,6 +35,7 @@ OneColumnBlock.propTypes = {
     width: PropTypes.number,
   }).isRequired,
   handleRemoveBlockFromPreview: PropTypes.func.isRequired,
+  index: PropTypes.string.isRequired,
 };
 
 export default OneColumnBlock;
