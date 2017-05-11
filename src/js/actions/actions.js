@@ -82,13 +82,13 @@ export function addBlockToPreview(blockId) {
   return (dispatch, getState) => {
     const blockPrototype = getState().blocks.all.filter((block) => block.id === blockId)[0]
     const blockToAdd = Object.assign({}, blockPrototype, {
-      previewId: uniqueId()
+      previewId: uniqueId(),
     });
     dispatch(actuallyAddBlockToPreview(blockToAdd));
   }
 }
 
-function actuallyAddBlockToPreview(block, index){
+function actuallyAddBlockToPreview(block){
   return {
     type: ADD_BLOCK_TO_PREVIEW,
     block,

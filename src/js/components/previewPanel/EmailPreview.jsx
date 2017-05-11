@@ -38,7 +38,7 @@ export class EmailPreview extends Component {
 
     let blocksToRender = [];
 
-    blocks.forEach((block) => {
+    blocks.forEach((block, i) => {
       switch (block.category) {
         case 'preview-panel-marker':
           blocksToRender = [
@@ -53,7 +53,8 @@ export class EmailPreview extends Component {
               content={block.content}
               globalOptions={globalOptions}
               id={block.id}
-              index={block.index}
+              index={i}
+              previewId={block.previewId}
               handleRemoveBlockFromPreview={this.handleRemoveBlockFromPreview}
               handleMoveBlocks={this.handleMoveBlocks}
               handleMoveMarker={this.handleMoveMarker}
@@ -96,7 +97,7 @@ EmailPreview.propTypes = {
 const blockTarget = {
   drop(props, monitor) {
     const blockId = monitor.getItem().id;
-    props.dispatch(addBlockToPreview(blockId));
+    props.dispatch(addBlockToPreview(blockId, props.emailPreview.blocks.length));
   },
 };
 
