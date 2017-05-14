@@ -3547,13 +3547,14 @@ module.exports = React;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.MOVE_MARKER = exports.CLEAR_MARKER_FROM_PREVIEW = exports.MOVE_BLOCK_IN_PREVIEW = exports.REMOVE_BLOCK_FROM_PREVIEW = exports.ADD_BLOCK_TO_PREVIEW = exports.CHANGE_BACKGROUND_COLOR = exports.CHANGE_GLOBAL_WIDTH = exports.RECEIVE_BLOCKS = exports.REQUEST_BLOCKS = exports.SWITCH_CATEGORY = exports.SWITCH_TAB = undefined;
+exports.MOVE_MARKER = exports.CLEAR_MARKER_FROM_PREVIEW = exports.MOVE_BLOCK_IN_PREVIEW = exports.REMOVE_ALL_BLOCKS_IN_PREVIEW = exports.REMOVE_BLOCK_FROM_PREVIEW = exports.ADD_BLOCK_TO_PREVIEW = exports.CHANGE_BACKGROUND_COLOR = exports.CHANGE_GLOBAL_WIDTH = exports.RECEIVE_BLOCKS = exports.REQUEST_BLOCKS = exports.SWITCH_CATEGORY = exports.SWITCH_TAB = undefined;
 exports.switchTab = switchTab;
 exports.switchCategory = switchCategory;
 exports.fetchEmailBlocksIfNeeded = fetchEmailBlocksIfNeeded;
 exports.changeBackgroundColor = changeBackgroundColor;
 exports.changeGlobalWidth = changeGlobalWidth;
 exports.addBlockToPreview = addBlockToPreview;
+exports.removeAllBlocksInPreview = removeAllBlocksInPreview;
 exports.removeBlockFromPreview = removeBlockFromPreview;
 exports.moveBlock = moveBlock;
 exports.clearMarkerFromPreview = clearMarkerFromPreview;
@@ -3575,6 +3576,7 @@ var CHANGE_GLOBAL_WIDTH = exports.CHANGE_GLOBAL_WIDTH = 'CHANGE_GLOBAL_WIDTH';
 var CHANGE_BACKGROUND_COLOR = exports.CHANGE_BACKGROUND_COLOR = 'CHANGE_BACKGROUND_COLOR';
 var ADD_BLOCK_TO_PREVIEW = exports.ADD_BLOCK_TO_PREVIEW = 'ADD_BLOCK_TO_PREVIEW';
 var REMOVE_BLOCK_FROM_PREVIEW = exports.REMOVE_BLOCK_FROM_PREVIEW = 'REMOVE_BLOCK_FROM_PREVIEW';
+var REMOVE_ALL_BLOCKS_IN_PREVIEW = exports.REMOVE_ALL_BLOCKS_IN_PREVIEW = 'REMOVE_ALL_BLOCKS_IN_PREVIEW';
 var MOVE_BLOCK_IN_PREVIEW = exports.MOVE_BLOCK_IN_PREVIEW = 'MOVE_BLOCKS_IN_PREVIEW';
 var CLEAR_MARKER_FROM_PREVIEW = exports.CLEAR_MARKER_FROM_PREVIEW = 'CLEAR_MARKER_FROM_PREVIEW';
 var MOVE_MARKER = exports.MOVE_MARKER = 'MOVE_MARKER';
@@ -3662,6 +3664,12 @@ function actuallyAddBlockToPreview(block) {
   return {
     type: ADD_BLOCK_TO_PREVIEW,
     block: block
+  };
+}
+
+function removeAllBlocksInPreview() {
+  return {
+    type: REMOVE_ALL_BLOCKS_IN_PREVIEW
   };
 }
 
@@ -33827,17 +33835,50 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _reactRedux = __webpack_require__(73);
+
+var _actions = __webpack_require__(37);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var MenuBar = function MenuBar() {
+var MenuBar = function MenuBar(props) {
+  function handleRemoveAllBlocks() {
+    props.dispatch((0, _actions.removeAllBlocksInPreview)());
+  }
+
   return _react2.default.createElement(
-    "section",
-    { className: "menu-bar container" },
-    "Envelope"
+    'section',
+    { className: 'menu-bar container' },
+    _react2.default.createElement(
+      'h1',
+      { className: 'menu-bar__logo' },
+      'Envelope'
+    ),
+    _react2.default.createElement(
+      'div',
+      null,
+      _react2.default.createElement(
+        'button',
+        { className: 'menu-bar__button', onClick: handleRemoveAllBlocks },
+        'Clear'
+      )
+    )
   );
 };
 
-exports.default = MenuBar;
+MenuBar.propTypes = {
+  dispatch: _react.PropTypes.func.isRequired
+};
+
+function mapStateToProps(state) {
+  var dispatch = state.dispatch;
+
+  return {
+    dispatch: dispatch
+  };
+}
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps)(MenuBar);
 
 /***/ }),
 /* 227 */
@@ -33992,6 +34033,12 @@ function emailPreview() {
       temp = blocks.slice(0, action.index).concat(blocks.slice(action.index + 1));
       return Object.assign({}, state, {
         blocks: temp
+      });
+
+    case _actions.REMOVE_ALL_BLOCKS_IN_PREVIEW:
+      return Object.assign({}, state, {
+        markerPresent: false,
+        blocks: []
       });
 
     case _actions.MOVE_BLOCK_IN_PREVIEW:

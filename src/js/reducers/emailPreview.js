@@ -1,6 +1,6 @@
 import { CHANGE_GLOBAL_WIDTH, CHANGE_BACKGROUND_COLOR, ADD_BLOCK_TO_PREVIEW,
   REMOVE_BLOCK_FROM_PREVIEW, MOVE_BLOCK_IN_PREVIEW, CLEAR_MARKER_FROM_PREVIEW,
-  MOVE_MARKER } from '../actions/actions';
+  MOVE_MARKER, REMOVE_ALL_BLOCKS_IN_PREVIEW } from '../actions/actions';
 
 const emailPreviewState = {
   blocks: [],
@@ -53,6 +53,12 @@ export function emailPreview(state = emailPreviewState, action) {
           blocks: temp,
         }
       );
+
+    case REMOVE_ALL_BLOCKS_IN_PREVIEW:
+      return Object.assign({}, state, {
+        markerPresent: false,
+        blocks: [],
+      });
 
     case MOVE_BLOCK_IN_PREVIEW:
       const { sourcePreviewId } = action;
