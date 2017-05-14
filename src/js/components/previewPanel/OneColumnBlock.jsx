@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import { DragSource, DropTarget } from 'react-dnd';
+import { findDOMNode } from 'react-dom';
 import { flow } from 'lodash';
 import ImageComponent from './ImageComponent';
 import TextComponent from './TextComponent';
@@ -18,7 +19,7 @@ const OneColumnBlock = (props) => {
   }
 
   const styles = {
-    marginTop: '20px',
+    paddingTop: '20px',
     width: `${globalOptions.width}px`,
   };
 
@@ -63,19 +64,47 @@ function collectSource(c) {
 
 // specify what to do when hovering/dropping on a block
 const target = {
-  hover(props) {
-    const { index } = props;
-    // props.handleMoveMarker(index);
-    console.log(index);
+  hover(props, monitor, component) {
+    const { index, id } = props;
+    const dragId = monitor.getItem().id;
+    let targetIndex;
+
+    // make sure the module being dragged isn't over itself
+    if (dragId === id) {
+      return;
+    }
+
+    // Determine rectangle on screen
+    const hoverBoundingRect = findDOMNode(component).getBoundingClientRect();
+
+    // Get vertical middle
+    const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
+
+    // Determine mouse position
+    const clientOffset = monitor.getClientOffset();
+
+    // Get pixels to the top
+    const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+
+    if (hoverClientY < hoverMiddleY) {
+      targetIndex = index - 1;
+    } else {
+      targetIndex = index + 1;
+    }
+
+    if (targetIndex < 0) {
+      targetIndex = 0;
+    }
+
+    props.handleMoveMarker(targetIndex);
   },
   drop(props, monitor) {
-    const sourcePreviewId = monitor.getItem().previewId;
-    const sourceIndex = monitor.getItem().index;
+    // clear the marker from screen
     const targetPreviewId = props.previewId;
-    const targetIndex = props.index;
+    const sourcePreviewId = monitor.getItem().previewId;
 
     if (sourcePreviewId !== targetPreviewId) {
-      props.handleMoveBlocks(sourceIndex, targetIndex);
+      props.handleMoveBlock(sourcePreviewId);
     }
   },
 };

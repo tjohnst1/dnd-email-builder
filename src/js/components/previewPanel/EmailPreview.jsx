@@ -4,14 +4,14 @@ import { uniqueId, flow } from 'lodash';
 import { connect } from 'react-redux';
 import OneColumnBlock from './OneColumnBlock';
 import Divider from './Divider';
-import { removeBlockFromPreview, moveBlocks, clearMarkerFromPreview,
+import { removeBlockFromPreview, moveBlock, clearMarkerFromPreview,
   moveMarker, addBlockToPreview } from '../../actions/actions';
 
 export class EmailPreview extends Component {
   constructor(props) {
     super(props);
     this.handleRemoveBlockFromPreview = this.handleRemoveBlockFromPreview.bind(this);
-    this.handleMoveBlocks = this.handleMoveBlocks.bind(this);
+    this.handleMoveBlock = this.handleMoveBlock.bind(this);
     this.handleMoveMarker = this.handleMoveMarker.bind(this);
     this.handleClearMarkerFromPreview = this.handleClearMarkerFromPreview.bind(this);
   }
@@ -20,12 +20,14 @@ export class EmailPreview extends Component {
     return () => this.props.dispatch(removeBlockFromPreview(index));
   }
 
-  handleMoveBlocks(dragIndex, targetIndex) {
-    this.props.dispatch(moveBlocks(dragIndex, targetIndex));
+  handleMoveBlock(sourcePreviewId) {
+    this.props.dispatch(moveBlock(sourcePreviewId));
   }
 
   handleMoveMarker(index) {
-    this.props.dispatch(moveMarker(index));
+    if (this.props.emailPreview.blocks[index] === undefined || (this.props.emailPreview.blocks[index].id !== 'preview-panel-marker')) {
+      this.props.dispatch(moveMarker(index));
+    }
   }
 
   handleClearMarkerFromPreview() {
@@ -56,7 +58,7 @@ export class EmailPreview extends Component {
               index={i}
               previewId={block.previewId}
               handleRemoveBlockFromPreview={this.handleRemoveBlockFromPreview}
-              handleMoveBlocks={this.handleMoveBlocks}
+              handleMoveBlock={this.handleMoveBlock}
               handleMoveMarker={this.handleMoveMarker}
               handleClearMarkerFromPreview={this.handleClearMarkerFromPreview}
               key={uniqueId()}
