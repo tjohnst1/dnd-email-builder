@@ -99,12 +99,19 @@ const target = {
     props.handleMoveMarker(targetIndex);
   },
   drop(props, monitor) {
-    // clear the marker from screen
-    const targetPreviewId = props.previewId;
-    const sourcePreviewId = monitor.getItem().previewId;
+    const itemType = monitor.getItemType();
 
-    if (sourcePreviewId !== targetPreviewId) {
-      props.handleMoveBlock(sourcePreviewId);
+    // check to see where the block was dragged from and act accordingly
+    if (itemType === 'PREVIEW_PANEL_BLOCK') {
+      const targetPreviewId = props.previewId;
+      const sourcePreviewId = monitor.getItem().previewId;
+
+      if (sourcePreviewId !== targetPreviewId) {
+        props.handleMoveBlock(sourcePreviewId);
+      }
+    } else {
+      const blockId = monitor.getItem().id;
+      props.handleAddBlockToPreview(blockId);
     }
   },
 };
@@ -118,5 +125,5 @@ function collectTarget(c) {
 
 export default flow(
  DragSource('PREVIEW_PANEL_BLOCK', source, collectSource),
- DropTarget('PREVIEW_PANEL_BLOCK', target, collectTarget),
+ DropTarget(['PREVIEW_PANEL_BLOCK', 'BLOCK'], target, collectTarget),
 )(OneColumnBlock);

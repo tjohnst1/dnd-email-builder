@@ -14,10 +14,15 @@ export class EmailPreview extends Component {
     this.handleMoveBlock = this.handleMoveBlock.bind(this);
     this.handleMoveMarker = this.handleMoveMarker.bind(this);
     this.handleClearMarkerFromPreview = this.handleClearMarkerFromPreview.bind(this);
+    this.handleAddBlockToPreview = this.handleAddBlockToPreview.bind(this);
   }
 
   handleRemoveBlockFromPreview(index) {
     return () => this.props.dispatch(removeBlockFromPreview(index));
+  }
+
+  handleAddBlockToPreview(blockId, index) {
+    this.props.dispatch(addBlockToPreview(blockId, index));
   }
 
   handleMoveBlock(sourcePreviewId) {
@@ -58,6 +63,7 @@ export class EmailPreview extends Component {
               index={i}
               previewId={block.previewId}
               handleRemoveBlockFromPreview={this.handleRemoveBlockFromPreview}
+              handleAddBlockToPreview={this.handleAddBlockToPreview}
               handleMoveBlock={this.handleMoveBlock}
               handleMoveMarker={this.handleMoveMarker}
               handleClearMarkerFromPreview={this.handleClearMarkerFromPreview}
@@ -98,8 +104,15 @@ EmailPreview.propTypes = {
 // specify what should happen on drop
 const blockTarget = {
   drop(props, monitor) {
+    const hasAlreadyDropped = monitor.didDrop();
+
+    // check if a child component has already handled the drop
+    if (hasAlreadyDropped) {
+      return;
+    }
+
     const blockId = monitor.getItem().id;
-    props.dispatch(addBlockToPreview(blockId, props.emailPreview.blocks.length));
+    props.dispatch(addBlockToPreview(blockId));
   },
 };
 

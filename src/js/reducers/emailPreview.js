@@ -4,6 +4,7 @@ import { CHANGE_GLOBAL_WIDTH, CHANGE_BACKGROUND_COLOR, ADD_BLOCK_TO_PREVIEW,
 
 const emailPreviewState = {
   blocks: [],
+  markerPresent: false,
 }
 
 export function emailPreview(state = emailPreviewState, action) {
@@ -20,16 +21,29 @@ export function emailPreview(state = emailPreviewState, action) {
         name: 'Preview Panel Marker',
       });
       return Object.assign({}, state, {
+        markerPresent: true,
         blocks: temp
       });
 
     case ADD_BLOCK_TO_PREVIEW:
+      temp = blocks.slice();
+
+      // if the marker is present, replace the marker with the block in question
+      if (state.markerPresent === true) {
+        temp = temp.map((block) => {
+          if (block.id === 'preview-panel-marker') {
+            return action.block;
+          }
+          return block;
+        });
+      // if the marker is not present, append the block in question to the end
+      } else {
+        temp = temp.concat(action.block);
+      }
       return Object.assign({}, state, {
-        blocks: blocks
-          .slice()
-          .concat(action.block)
-        },
-      );
+        markerPresent: false,
+        blocks: temp,
+      });
 
     case REMOVE_BLOCK_FROM_PREVIEW:
       temp = blocks
@@ -62,12 +76,14 @@ export function emailPreview(state = emailPreviewState, action) {
       });
 
       return Object.assign({}, state, {
+          markerPresent: false,
           blocks: temp,
         }
       );
 
     case CLEAR_MARKER_FROM_PREVIEW:
       return Object.assign({}, state, {
+        markerPresent: false,
         blocks: blocks.slice().filter(block =>
           block.id !== 'preview-panel-marker'),
       });
