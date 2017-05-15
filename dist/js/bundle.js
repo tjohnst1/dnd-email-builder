@@ -33391,9 +33391,9 @@ var _lodash = __webpack_require__(44);
 
 var _reactRedux = __webpack_require__(73);
 
-var _OneColumnBlock = __webpack_require__(224);
+var _DroppedBlock = __webpack_require__(583);
 
-var _OneColumnBlock2 = _interopRequireDefault(_OneColumnBlock);
+var _DroppedBlock2 = _interopRequireDefault(_DroppedBlock);
 
 var _Divider = __webpack_require__(221);
 
@@ -33465,7 +33465,6 @@ var EmailPreview = exports.EmailPreview = function (_Component) {
 
       var _props = this.props,
           globalOptions = _props.globalOptions,
-          dispatch = _props.dispatch,
           connectDropTarget = _props.connectDropTarget;
       var blocks = this.props.emailPreview.blocks;
 
@@ -33478,7 +33477,8 @@ var EmailPreview = exports.EmailPreview = function (_Component) {
             blocksToRender = [].concat(_toConsumableArray(blocksToRender), [_react2.default.createElement(_Divider2.default, { key: (0, _lodash.uniqueId)() })]);
             break;
           default:
-            blocksToRender = [].concat(_toConsumableArray(blocksToRender), [_react2.default.createElement(_OneColumnBlock2.default, {
+            blocksToRender = [].concat(_toConsumableArray(blocksToRender), [_react2.default.createElement(_DroppedBlock2.default, {
+              category: block.category,
               content: block.content,
               globalOptions: globalOptions,
               id: block.id,
@@ -33489,8 +33489,7 @@ var EmailPreview = exports.EmailPreview = function (_Component) {
               handleMoveBlock: _this3.handleMoveBlock,
               handleMoveMarker: _this3.handleMoveMarker,
               handleClearMarkerFromPreview: _this3.handleClearMarkerFromPreview,
-              key: (0, _lodash.uniqueId)(),
-              dispatch: dispatch
+              key: (0, _lodash.uniqueId)()
             })]);
         }
       });
@@ -33626,12 +33625,6 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDnd = __webpack_require__(65);
-
-var _reactDom = __webpack_require__(121);
-
-var _lodash = __webpack_require__(44);
-
 var _ImageComponent = __webpack_require__(223);
 
 var _ImageComponent2 = _interopRequireDefault(_ImageComponent);
@@ -33644,11 +33637,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var OneColumnBlock = function OneColumnBlock(props) {
   var content = props.content,
-      globalOptions = props.globalOptions,
-      index = props.index,
-      handleRemoveBlockFromPreview = props.handleRemoveBlockFromPreview,
-      connectDragSource = props.connectDragSource,
-      connectDropTarget = props.connectDropTarget;
+      globalOptions = props.globalOptions;
   var type = content[0].type;
 
 
@@ -33665,15 +33654,15 @@ var OneColumnBlock = function OneColumnBlock(props) {
     width: globalOptions.width + 'px'
   };
 
-  return connectDragSource(connectDropTarget(_react2.default.createElement(
+  return _react2.default.createElement(
     'div',
-    { className: 'w100', style: styles, onClick: handleRemoveBlockFromPreview(index) },
+    { className: 'w100', style: styles },
     _react2.default.createElement(
       'div',
       { className: 'center-block width-90' },
       component
     )
-  )));
+  );
 };
 
 OneColumnBlock.propTypes = {
@@ -33681,97 +33670,10 @@ OneColumnBlock.propTypes = {
   globalOptions: _react.PropTypes.shape({
     backgroundColor: _react.PropTypes.string,
     width: _react.PropTypes.number
-  }).isRequired,
-  handleRemoveBlockFromPreview: _react.PropTypes.func.isRequired,
-  index: _react.PropTypes.number.isRequired,
-  connectDropTarget: _react.PropTypes.func.isRequired,
-  connectDragSource: _react.PropTypes.func.isRequired
+  }).isRequired
 };
 
-// specify which information to collect on drag
-var source = {
-  beginDrag: function beginDrag(props) {
-    var previewId = props.previewId,
-        index = props.index;
-
-    return {
-      previewId: previewId,
-      index: index
-    };
-  }
-};
-
-// inject connectDragSource into the component
-function collectSource(c) {
-  return {
-    connectDragSource: c.dragSource()
-  };
-}
-
-// specify what to do when hovering/dropping on a block
-var target = {
-  hover: function hover(props, monitor, component) {
-    var index = props.index,
-        id = props.id;
-
-    var dragId = monitor.getItem().id;
-    var targetIndex = void 0;
-
-    // make sure the module being dragged isn't over itself
-    if (dragId === id) {
-      return;
-    }
-
-    // Determine rectangle on screen
-    var hoverBoundingRect = (0, _reactDom.findDOMNode)(component).getBoundingClientRect();
-
-    // Get vertical middle
-    var hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
-
-    // Determine mouse position
-    var clientOffset = monitor.getClientOffset();
-
-    // Get pixels to the top
-    var hoverClientY = clientOffset.y - hoverBoundingRect.top;
-
-    if (hoverClientY < hoverMiddleY) {
-      targetIndex = index - 1;
-    } else {
-      targetIndex = index + 1;
-    }
-
-    if (targetIndex < 0) {
-      targetIndex = 0;
-    }
-
-    props.handleMoveMarker(targetIndex);
-  },
-  drop: function drop(props, monitor) {
-    var itemType = monitor.getItemType();
-
-    // check to see where the block was dragged from and act accordingly
-    if (itemType === 'PREVIEW_PANEL_BLOCK') {
-      var targetPreviewId = props.previewId;
-      var sourcePreviewId = monitor.getItem().previewId;
-
-      if (sourcePreviewId !== targetPreviewId) {
-        props.handleMoveBlock(sourcePreviewId);
-      }
-    } else {
-      var blockId = monitor.getItem().id;
-      props.handleAddBlockToPreview(blockId);
-    }
-  }
-};
-
-// inject connectDragSource into the component
-function collectTarget(c) {
-  return {
-    connectDropTarget: c.dropTarget()
-  };
-}
-
-exports.default = (0, _lodash.flow)((0, _reactDnd.DragSource)('PREVIEW_PANEL_BLOCK', source, collectSource), (0, _reactDnd.DropTarget)(['PREVIEW_PANEL_BLOCK', 'BLOCK'], target, collectTarget))(OneColumnBlock);
+exports.default = OneColumnBlock;
 
 /***/ }),
 /* 225 */
@@ -65774,6 +65676,159 @@ __webpack_require__(579);
 exports.setImmediate = setImmediate;
 exports.clearImmediate = clearImmediate;
 
+
+/***/ }),
+/* 583 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDnd = __webpack_require__(65);
+
+var _reactDom = __webpack_require__(121);
+
+var _lodash = __webpack_require__(44);
+
+var _OneColumnBlock = __webpack_require__(224);
+
+var _OneColumnBlock2 = _interopRequireDefault(_OneColumnBlock);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var DroppedBlock = function DroppedBlock(props) {
+  var category = props.category,
+      content = props.content,
+      globalOptions = props.globalOptions,
+      index = props.index,
+      handleRemoveBlockFromPreview = props.handleRemoveBlockFromPreview,
+      connectDragSource = props.connectDragSource,
+      connectDropTarget = props.connectDropTarget;
+
+
+  var blockToRender = void 0;
+
+  // render the correct block based on the category provided
+  switch (category) {
+    default:
+      blockToRender = _react2.default.createElement(_OneColumnBlock2.default, {
+        content: content,
+        globalOptions: globalOptions
+      });
+      break;
+  }
+
+  return connectDragSource(connectDropTarget(_react2.default.createElement(
+    'div',
+    { onClick: handleRemoveBlockFromPreview(index) },
+    blockToRender
+  )));
+};
+
+DroppedBlock.propTypes = {
+  content: _react.PropTypes.arrayOf(_react.PropTypes.object).isRequired,
+  globalOptions: _react.PropTypes.shape({
+    backgroundColor: _react.PropTypes.string,
+    width: _react.PropTypes.number
+  }).isRequired,
+  handleRemoveBlockFromPreview: _react.PropTypes.func.isRequired,
+  index: _react.PropTypes.number.isRequired,
+  connectDropTarget: _react.PropTypes.func.isRequired,
+  connectDragSource: _react.PropTypes.func.isRequired
+};
+
+// specify which information to collect on drag
+var source = {
+  beginDrag: function beginDrag(props) {
+    var previewId = props.previewId,
+        index = props.index;
+
+    return {
+      previewId: previewId,
+      index: index
+    };
+  }
+};
+
+// inject connectDragSource into the component
+function collectSource(c) {
+  return {
+    connectDragSource: c.dragSource()
+  };
+}
+
+// specify what to do when hovering/dropping on a block
+var target = {
+  hover: function hover(props, monitor, component) {
+    var index = props.index,
+        id = props.id;
+
+    var dragId = monitor.getItem().id;
+    var targetIndex = void 0;
+
+    // make sure the module being dragged isn't over itself
+    if (dragId === id) {
+      return;
+    }
+
+    // Determine rectangle on screen
+    var hoverBoundingRect = (0, _reactDom.findDOMNode)(component).getBoundingClientRect();
+
+    // Get vertical middle
+    var hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
+
+    // Determine mouse position
+    var clientOffset = monitor.getClientOffset();
+
+    // Get pixels to the top
+    var hoverClientY = clientOffset.y - hoverBoundingRect.top;
+
+    if (hoverClientY < hoverMiddleY) {
+      targetIndex = index - 1;
+    } else {
+      targetIndex = index + 1;
+    }
+
+    if (targetIndex < 0) {
+      targetIndex = 0;
+    }
+
+    props.handleMoveMarker(targetIndex);
+  },
+  drop: function drop(props, monitor) {
+    var itemType = monitor.getItemType();
+
+    // check to see where the block was dragged from and act accordingly
+    if (itemType === 'PREVIEW_PANEL_BLOCK') {
+      var targetPreviewId = props.previewId;
+      var sourcePreviewId = monitor.getItem().previewId;
+
+      if (sourcePreviewId !== targetPreviewId) {
+        props.handleMoveBlock(sourcePreviewId);
+      }
+    } else {
+      var blockId = monitor.getItem().id;
+      props.handleAddBlockToPreview(blockId);
+    }
+  }
+};
+
+// inject connectDragSource into the component
+function collectTarget(c) {
+  return {
+    connectDropTarget: c.dropTarget()
+  };
+}
+
+exports.default = (0, _lodash.flow)((0, _reactDnd.DragSource)('PREVIEW_PANEL_BLOCK', source, collectSource), (0, _reactDnd.DropTarget)(['PREVIEW_PANEL_BLOCK', 'BLOCK'], target, collectTarget))(DroppedBlock);
 
 /***/ })
 /******/ ]);

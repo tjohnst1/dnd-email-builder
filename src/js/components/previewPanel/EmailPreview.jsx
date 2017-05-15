@@ -2,7 +2,7 @@ import React, { PropTypes, Component } from 'react';
 import { DropTarget } from 'react-dnd';
 import { uniqueId, flow } from 'lodash';
 import { connect } from 'react-redux';
-import OneColumnBlock from './OneColumnBlock';
+import DroppedBlock from './DroppedBlock';
 import Divider from './Divider';
 import { removeBlockFromPreview, moveBlock, clearMarkerFromPreview,
   moveMarker, addBlockToPreview } from '../../actions/actions';
@@ -40,7 +40,7 @@ export class EmailPreview extends Component {
   }
 
   render() {
-    const { globalOptions, dispatch, connectDropTarget } = this.props;
+    const { globalOptions, connectDropTarget } = this.props;
     const { blocks } = this.props.emailPreview;
 
     let blocksToRender = [];
@@ -56,7 +56,8 @@ export class EmailPreview extends Component {
         default:
           blocksToRender = [
             ...blocksToRender,
-            <OneColumnBlock
+            <DroppedBlock
+              category={block.category}
               content={block.content}
               globalOptions={globalOptions}
               id={block.id}
@@ -68,7 +69,6 @@ export class EmailPreview extends Component {
               handleMoveMarker={this.handleMoveMarker}
               handleClearMarkerFromPreview={this.handleClearMarkerFromPreview}
               key={uniqueId()}
-              dispatch={dispatch}
             />,
           ];
       }
