@@ -385,6 +385,9 @@ body {
   padding: 0;
   margin: 0; }
 
+main {
+  position: relative; }
+
 .panel-container {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -420,8 +423,10 @@ body {
   background: white;
   border: 0;
   cursor: pointer;
-  margin: 5px 0 0 0;
+  margin: 5px 10px 0 0;
   outline: none; }
+  .menu-bar__button:last-of-type {
+    margin: 5px 0 0 0; }
 
 .options-panel {
   background: #ECF0F1;
@@ -584,3 +589,19 @@ body {
 @media screen and (max-width: 640px) {
   .w100 {
     width: 100%; } }
+
+.export-modal {
+  position: absolute;
+  z-index: 99;
+  top: 50%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center; }
+
+.export-modal__inner {
+  width: 50%;
+  background-color: #ffffff;
+  margin: 0 auto; }

@@ -17,6 +17,10 @@ body {
   margin: 0;
 }
 
+main {
+  position: relative;
+}
+
 .panel-container {
   display: flex;
   height: calc(100% - 50px);

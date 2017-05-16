@@ -4,10 +4,10 @@ import HTML5Backend from 'react-dnd-html5-backend';
 import { DragDropContextProvider } from 'react-dnd';
 import configureStore from '../store/configureStore';
 
-
 import MenuBar from './MenuBar';
 import OptionsPanel from './OptionsPanel';
 import PreviewPanel from './PreviewPanel';
+import ExportModal from './ExportModal';
 
 const store = configureStore();
 
@@ -21,6 +21,7 @@ const App = () =>
           <PreviewPanel />
         </div>
       </DragDropContextProvider>
+      <ExportModal />
     </main>
   </Provider>;
 

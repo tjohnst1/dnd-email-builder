@@ -12,6 +12,7 @@ export const REMOVE_ALL_BLOCKS_IN_PREVIEW = 'REMOVE_ALL_BLOCKS_IN_PREVIEW';
 export const MOVE_BLOCK_IN_PREVIEW = 'MOVE_BLOCKS_IN_PREVIEW';
 export const CLEAR_MARKER_FROM_PREVIEW = 'CLEAR_MARKER_FROM_PREVIEW';
 export const MOVE_MARKER = 'MOVE_MARKER';
+export const TOGGLE_MODAL = 'TOGGLE_MODAL';
 
 import database from '../store/firebase'
 
@@ -126,5 +127,11 @@ export function moveMarker(index) {
   return {
     type: MOVE_MARKER,
     index,
+  }
+}
+
+export function toggleModal() {
+  return {
+    type: TOGGLE_MODAL,
   }
 }

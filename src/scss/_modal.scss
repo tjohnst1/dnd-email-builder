@@ -1,0 +1,13 @@
+.export-modal {
+  position: absolute;
+  z-index: 99;
+  top: 50%;
+  display: flex;
+  align-items: center;
+}
+
+.export-modal__inner {
+  width: 50%;
+  background-color: #ffffff;
+  margin: 0 auto;
+}

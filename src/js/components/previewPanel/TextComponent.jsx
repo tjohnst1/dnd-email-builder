@@ -3,7 +3,14 @@ import React, { PropTypes } from 'react';
 const TextComponent = (props) => {
   const { color, fontSize, lineHeight,
     fontFamily, textAlign, innerContent } = props.content[0];
-  const styles = { color, fontSize, lineHeight, fontFamily, textAlign };
+  const styles = {
+    margin: '0 auto', 
+    color,
+    fontSize,
+    lineHeight,
+    fontFamily,
+    textAlign
+  };
   return (
     <p style={styles}>{ innerContent }</p>
   );

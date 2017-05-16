@@ -16,6 +16,7 @@ const OneColumnBlock = (props) => {
 
   const styles = {
     paddingTop: '20px',
+    margin: '0 auto',
     width: `${globalOptions.width}px`,
   };
 

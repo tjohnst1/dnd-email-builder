@@ -33,6 +33,7 @@ DroppedBlock.propTypes = {
     backgroundColor: PropTypes.string,
     width: PropTypes.number,
   }).isRequired,
+  handleClearMarkerFromPreview: PropTypes.func.isRequired,
   handleRemoveBlockFromPreview: PropTypes.func.isRequired,
   index: PropTypes.number.isRequired,
   connectDropTarget: PropTypes.func.isRequired,
@@ -103,7 +104,10 @@ const target = {
 
       if (sourcePreviewId !== targetPreviewId) {
         props.handleMoveBlock(sourcePreviewId);
+      } else {
+        props.handleClearMarkerFromPreview();
       }
+
     } else {
       const blockId = monitor.getItem().id;
       props.handleAddBlockToPreview(blockId);
