@@ -1,13 +1,19 @@
 import React, { PropTypes } from 'react';
+import { uniqueId } from 'lodash';
 import { connect } from 'react-redux';
+import { toggleModal } from '../actions/actions';
 
 const ExportModal = (props) => {
+  function handleToggleModal() {
+    props.dispatch(toggleModal());
+  }
+
   const { modal } = props;
   const { blocks } = props.emailPreview;
-  const stringifiedBlocks = blocks.map((block, i) => {
+  const stringifiedBlocks = blocks.map((block) => {
     const json = JSON.stringify(block);
     return (
-      <p key={i}>{json}</p>
+      <p key={uniqueId()}>{json}</p>
     );
   });
 
@@ -19,8 +25,9 @@ const ExportModal = (props) => {
         <div className="export-modal__inner">
           {stringifiedBlocks}
         </div>
+        <button onClick={handleToggleModal}>Close</button>
       </aside>
-    )
+    );
   }
 
   return whatToShow;
@@ -33,13 +40,15 @@ ExportModal.propTypes = {
   modal: PropTypes.shape({
     isShowing: PropTypes.bool.isRequired,
   }).isRequired,
+  dispatch: PropTypes.func.isRequired,
 };
 
 function mapStateToProps(state) {
-  const { emailPreview, modal } = state;
+  const { emailPreview, modal, dispatch } = state;
   return {
     emailPreview,
     modal,
+    dispatch,
   };
 }
 

@@ -1,31 +1,39 @@
-import React, { PropTypes } from 'react';
+import React, { PropTypes, Component } from 'react';
 import { DragSource, DropTarget } from 'react-dnd';
-import { findDOMNode } from 'react-dom';
 import { flow } from 'lodash';
 import OneColumnBlock from './OneColumnBlock';
 
-const DroppedBlock = (props) => {
-  const { category, content, globalOptions, index, handleRemoveBlockFromPreview,
-  connectDragSource, connectDropTarget } = props;
+class DroppedBlock extends Component {
 
-  let blockToRender;
-
-  // render the correct block based on the category provided
-  switch (category) {
-    default:
-      blockToRender = (<OneColumnBlock
-        content={content}
-        globalOptions={globalOptions}
-      />);
-      break;
+  getNode() {
+    return (node) => {
+      this.node = node;
+    };
   }
 
-  return connectDragSource(connectDropTarget((
-    <div onClick={handleRemoveBlockFromPreview(index)}>
-      {blockToRender}
-    </div>
-  )));
-};
+  render() {
+    const { category, content, globalOptions, index, handleRemoveBlockFromPreview,
+    connectDragSource, connectDropTarget } = this.props;
+
+    let blockToRender;
+
+    // render the correct block based on the category provided
+    switch (category) {
+      default:
+        blockToRender = (<OneColumnBlock
+          content={content}
+          globalOptions={globalOptions}
+        />);
+        break;
+    }
+
+    return connectDragSource(connectDropTarget((
+      <div onClick={handleRemoveBlockFromPreview(index)} ref={this.getNode()}>
+        {blockToRender}
+      </div>
+    )));
+  }
+}
 
 DroppedBlock.propTypes = {
   content: PropTypes.arrayOf(PropTypes.object).isRequired,
@@ -33,11 +41,11 @@ DroppedBlock.propTypes = {
     backgroundColor: PropTypes.string,
     width: PropTypes.number,
   }).isRequired,
-  handleClearMarkerFromPreview: PropTypes.func.isRequired,
   handleRemoveBlockFromPreview: PropTypes.func.isRequired,
   index: PropTypes.number.isRequired,
   connectDropTarget: PropTypes.func.isRequired,
   connectDragSource: PropTypes.func.isRequired,
+  category: PropTypes.string.isRequired,
 };
 
 // specify which information to collect on drag
@@ -71,7 +79,7 @@ const target = {
     }
 
     // Determine rectangle on screen
-    const hoverBoundingRect = findDOMNode(component).getBoundingClientRect();
+    const hoverBoundingRect = component.decoratedComponentInstance;
 
     // Get vertical middle
     const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
@@ -107,7 +115,6 @@ const target = {
       } else {
         props.handleClearMarkerFromPreview();
       }
-
     } else {
       const blockId = monitor.getItem().id;
       props.handleAddBlockToPreview(blockId);

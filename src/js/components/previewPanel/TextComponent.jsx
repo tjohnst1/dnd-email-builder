@@ -4,12 +4,12 @@ const TextComponent = (props) => {
   const { color, fontSize, lineHeight,
     fontFamily, textAlign, innerContent } = props.content[0];
   const styles = {
-    margin: '0 auto', 
+    margin: '0 auto',
     color,
     fontSize,
     lineHeight,
     fontFamily,
-    textAlign
+    textAlign,
   };
   return (
     <p style={styles}>{ innerContent }</p>

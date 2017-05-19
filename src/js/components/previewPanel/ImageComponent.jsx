@@ -7,7 +7,7 @@ const ImageComponent = (props) => {
   if (link) {
     imgElement = (
       <a href="#">
-        <img className="img" src={src} width={width} alt="placeholder img" style={{margin: '0 auto'}} />
+        <img className="img" src={src} width={width} alt="placeholder img" style={{ margin: '0 auto' }} />
       </a>
     );
   } else {
