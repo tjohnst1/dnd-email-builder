@@ -1,18 +1,26 @@
 .preview-panel {
-  padding: 20px;
+  margin: 10px;
   display: flex;
   flex: 1;
+  border-radius: 5px;
+  overflow: hidden;
 }
 
 .preview-panel .center-block {
   width: 100%;
   height: 100%;
+  position: relative;
+  overflow: hidden;
+  &.hovering {
+    border: 5px solid $blue;
+  }
 }
 
 .preview-panel--empty {
-  width: 100%;
-  height: 100%;
   text-align: center;
+  width: 100%;
+  position: absolute;
+  top: 50%;
 }
 
 .img {

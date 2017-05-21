@@ -16,8 +16,8 @@ const MenuBar = (props) => {
     <section className="menu-bar container">
       <h1 className="menu-bar__logo">Envelope</h1>
       <div>
-        <button className="menu-bar__button" onClick={handleToggleModal}>Export</button>
-        <button className="menu-bar__button" onClick={handleRemoveAllBlocks}>Clear</button>
+        <button className="menu-bar__button button" onClick={handleToggleModal}>Export</button>
+        <button className="menu-bar__button button" onClick={handleRemoveAllBlocks}>Clear</button>
       </div>
     </section>
   );

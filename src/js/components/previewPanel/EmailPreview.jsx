@@ -1,4 +1,5 @@
 import React, { PropTypes, Component } from 'react';
+import classNames from 'classnames';
 import { DropTarget } from 'react-dnd';
 import { uniqueId, flow } from 'lodash';
 import { connect } from 'react-redux';
@@ -40,7 +41,7 @@ export class EmailPreview extends Component {
   }
 
   render() {
-    const { globalOptions, connectDropTarget } = this.props;
+    const { globalOptions, connectDropTarget, isOver } = this.props;
     const { blocks } = this.props.emailPreview;
 
     let blocksToRender = [];
@@ -79,8 +80,13 @@ export class EmailPreview extends Component {
       color: '#111111',
     };
 
+    const classes = classNames({
+      'center-block': true,
+      hovering: isOver && (blocksToRender.length === 0),
+    });
+
     return connectDropTarget((
-      <div className="center-block" style={styles} ref={this.refFunc}>
+      <div className={classes} style={styles} ref={this.refFunc}>
         { blocksToRender.length > 0 ?
           blocksToRender : <p className="preview-panel--empty">Insert Content Here</p>
         }
@@ -99,6 +105,7 @@ EmailPreview.propTypes = {
   }).isRequired,
   dispatch: PropTypes.func.isRequired,
   connectDropTarget: PropTypes.func.isRequired,
+  isOver: PropTypes.bool.isRequired,
 };
 
 // specify what should happen on drop
@@ -116,10 +123,11 @@ const blockTarget = {
   },
 };
 
-// inject connectDropTarget into the component
-function collect(c) {
+// inject connectDropTarget & isOver into the component
+function collect(c, m) {
   return {
     connectDropTarget: c.dropTarget(),
+    isOver: m.isOver(),
   };
 }
 

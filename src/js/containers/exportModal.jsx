@@ -4,12 +4,14 @@ import { connect } from 'react-redux';
 import { toggleModal } from '../actions/actions';
 
 const ExportModal = (props) => {
-  function handleToggleModal() {
+  const { modal } = props;
+  const { blocks } = props.emailPreview;
+
+  function closeModal(e) {
+    e.stopPropagation();
     props.dispatch(toggleModal());
   }
 
-  const { modal } = props;
-  const { blocks } = props.emailPreview;
   const stringifiedBlocks = blocks.map((block) => {
     const json = JSON.stringify(block);
     return (
@@ -21,11 +23,11 @@ const ExportModal = (props) => {
 
   if (modal.isShowing) {
     whatToShow = (
-      <aside className="export-modal">
+      <aside className="export-modal" onClick={closeModal}>
         <div className="export-modal__inner">
           {stringifiedBlocks}
+          <button className="export-modal__btn" onClick={closeModal}>Close</button>
         </div>
-        <button onClick={handleToggleModal}>Close</button>
       </aside>
     );
   }

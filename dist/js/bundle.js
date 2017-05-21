@@ -32962,8 +32962,8 @@ var Button = function Button(props) {
 
   return _react2.default.createElement(
     "button",
-    { className: "button", onClick: handleSwitchCategory },
-    _react2.default.createElement("img", { className: "button__img", src: icon, alt: text }),
+    { className: "options-panel-button", onClick: handleSwitchCategory },
+    _react2.default.createElement("img", { className: "options-panel-button__img", src: icon, alt: text }),
     _react2.default.createElement(
       "p",
       null,
@@ -33585,6 +33585,10 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _classnames = __webpack_require__(122);
+
+var _classnames2 = _interopRequireDefault(_classnames);
+
 var _reactDnd = __webpack_require__(66);
 
 var _lodash = __webpack_require__(35);
@@ -33665,7 +33669,8 @@ var EmailPreview = exports.EmailPreview = function (_Component) {
 
       var _props = this.props,
           globalOptions = _props.globalOptions,
-          connectDropTarget = _props.connectDropTarget;
+          connectDropTarget = _props.connectDropTarget,
+          isOver = _props.isOver;
       var blocks = this.props.emailPreview.blocks;
 
 
@@ -33699,9 +33704,14 @@ var EmailPreview = exports.EmailPreview = function (_Component) {
         color: '#111111'
       };
 
+      var classes = (0, _classnames2.default)({
+        'center-block': true,
+        hovering: isOver && blocksToRender.length === 0
+      });
+
       return connectDropTarget(_react2.default.createElement(
         'div',
-        { className: 'center-block', style: styles, ref: this.refFunc },
+        { className: classes, style: styles, ref: this.refFunc },
         blocksToRender.length > 0 ? blocksToRender : _react2.default.createElement(
           'p',
           { className: 'preview-panel--empty' },
@@ -33723,7 +33733,8 @@ EmailPreview.propTypes = {
     width: _react.PropTypes.number
   }).isRequired,
   dispatch: _react.PropTypes.func.isRequired,
-  connectDropTarget: _react.PropTypes.func.isRequired
+  connectDropTarget: _react.PropTypes.func.isRequired,
+  isOver: _react.PropTypes.bool.isRequired
 };
 
 // specify what should happen on drop
@@ -33741,10 +33752,11 @@ var blockTarget = {
   }
 };
 
-// inject connectDropTarget into the component
-function collect(c) {
+// inject connectDropTarget & isOver into the component
+function collect(c, m) {
   return {
-    connectDropTarget: c.dropTarget()
+    connectDropTarget: c.dropTarget(),
+    isOver: m.isOver()
   };
 }
 
@@ -33954,12 +33966,14 @@ var _actions = __webpack_require__(22);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var ExportModal = function ExportModal(props) {
-  function handleToggleModal() {
-    props.dispatch((0, _actions.toggleModal)());
-  }
-
   var modal = props.modal;
   var blocks = props.emailPreview.blocks;
+
+
+  function closeModal(e) {
+    e.stopPropagation();
+    props.dispatch((0, _actions.toggleModal)());
+  }
 
   var stringifiedBlocks = blocks.map(function (block) {
     var json = JSON.stringify(block);
@@ -33975,16 +33989,16 @@ var ExportModal = function ExportModal(props) {
   if (modal.isShowing) {
     whatToShow = _react2.default.createElement(
       'aside',
-      { className: 'export-modal' },
+      { className: 'export-modal', onClick: closeModal },
       _react2.default.createElement(
         'div',
         { className: 'export-modal__inner' },
-        stringifiedBlocks
-      ),
-      _react2.default.createElement(
-        'button',
-        { onClick: handleToggleModal },
-        'Close'
+        stringifiedBlocks,
+        _react2.default.createElement(
+          'button',
+          { className: 'export-modal__btn', onClick: closeModal },
+          'Close'
+        )
       )
     );
   }
@@ -34059,12 +34073,12 @@ var MenuBar = function MenuBar(props) {
       null,
       _react2.default.createElement(
         'button',
-        { className: 'menu-bar__button', onClick: handleToggleModal },
+        { className: 'menu-bar__button button', onClick: handleToggleModal },
         'Export'
       ),
       _react2.default.createElement(
         'button',
-        { className: 'menu-bar__button', onClick: handleRemoveAllBlocks },
+        { className: 'menu-bar__button button', onClick: handleRemoveAllBlocks },
         'Clear'
       )
     )
@@ -34145,7 +34159,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var PreviewPanel = function PreviewPanel() {
   return _react2.default.createElement(
     'section',
-    { className: 'preview-panel container' },
+    { className: 'preview-panel' },
     _react2.default.createElement(_EmailPreview2.default, null)
   );
 };
