@@ -1,8 +1,8 @@
-import { TOGGLE_MODAL } from '../actions/actions';
+import { TOGGLE_EXPORT_MODAL } from '../actions/actions';
 
-export function modal(state = {isShowing: false}, action) {
+export function exportModal(state = {isShowing: false}, action) {
   switch (action.type) {
-    case TOGGLE_MODAL:
+    case TOGGLE_EXPORT_MODAL:
       return {
         isShowing: !state.isShowing,
       };

@@ -1,10 +1,13 @@
+import generateEmailCode from '../data/contentGenerators';
 import { CHANGE_GLOBAL_WIDTH, CHANGE_BACKGROUND_COLOR, ADD_BLOCK_TO_PREVIEW,
   REMOVE_BLOCK_FROM_PREVIEW, MOVE_BLOCK_IN_PREVIEW, CLEAR_MARKER_FROM_PREVIEW,
   MOVE_MARKER, REMOVE_ALL_BLOCKS_IN_PREVIEW } from '../actions/actions';
 
+
 const emailPreviewState = {
   blocks: [],
   markerPresent: false,
+  code: '',
 }
 
 export function emailPreview(state = emailPreviewState, action) {
@@ -40,9 +43,11 @@ export function emailPreview(state = emailPreviewState, action) {
       } else {
         temp = temp.concat(action.block);
       }
+
       return Object.assign({}, state, {
         markerPresent: false,
         blocks: temp,
+        code: generateEmailCode(temp),
       });
 
     case REMOVE_BLOCK_FROM_PREVIEW:
@@ -93,6 +98,7 @@ export function emailPreview(state = emailPreviewState, action) {
         blocks: blocks.slice().filter(block =>
           block.id !== 'preview-panel-marker'),
       });
+
     default:
       return state;
   }

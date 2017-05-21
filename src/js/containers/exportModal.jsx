@@ -1,15 +1,15 @@
 import React, { PropTypes } from 'react';
 import { uniqueId } from 'lodash';
 import { connect } from 'react-redux';
-import { toggleModal } from '../actions/actions';
+import { toggleExportModal } from '../actions/actions';
 
 const ExportModal = (props) => {
-  const { modal } = props;
+  const { exportModal } = props;
   const { blocks } = props.emailPreview;
 
   function closeModal(e) {
     e.stopPropagation();
-    props.dispatch(toggleModal());
+    props.dispatch(toggleExportModal());
   }
 
   const stringifiedBlocks = blocks.map((block) => {
@@ -21,7 +21,7 @@ const ExportModal = (props) => {
 
   let whatToShow = null;
 
-  if (modal.isShowing) {
+  if (exportModal.isShowing) {
     whatToShow = (
       <aside className="export-modal" onClick={closeModal}>
         <div className="export-modal__inner">
@@ -39,17 +39,17 @@ ExportModal.propTypes = {
   emailPreview: PropTypes.shape({
     blocks: PropTypes.array.isRequired,
   }).isRequired,
-  modal: PropTypes.shape({
+  exportModal: PropTypes.shape({
     isShowing: PropTypes.bool.isRequired,
   }).isRequired,
   dispatch: PropTypes.func.isRequired,
 };
 
 function mapStateToProps(state) {
-  const { emailPreview, modal, dispatch } = state;
+  const { emailPreview, exportModal, dispatch } = state;
   return {
     emailPreview,
-    modal,
+    exportModal,
     dispatch,
   };
 }
