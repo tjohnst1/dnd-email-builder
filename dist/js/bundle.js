@@ -33036,6 +33036,8 @@ var OptionsPane = exports.OptionsPane = function (_Component) {
 
     _this.handleSwitchCategory = _this.handleSwitchCategory.bind(_this);
     _this.handleChangeGlobalWidth = _this.handleChangeGlobalWidth.bind(_this);
+    _this.handleDecreaseGlobalWidth = _this.handleDecreaseGlobalWidth.bind(_this);
+    _this.handleIncreaseGlobalWidth = _this.handleIncreaseGlobalWidth.bind(_this);
     _this.handleChangeBackgroundColor = _this.handleChangeBackgroundColor.bind(_this);
     _this.toggleColorPicker = _this.toggleColorPicker.bind(_this);
     _this.state = {
@@ -33057,6 +33059,16 @@ var OptionsPane = exports.OptionsPane = function (_Component) {
       return function () {
         _this2.props.dispatch((0, _actions.switchCategory)(category));
       };
+    }
+  }, {
+    key: 'handleDecreaseGlobalWidth',
+    value: function handleDecreaseGlobalWidth() {
+      this.props.dispatch((0, _actions.changeGlobalWidth)(this.props.globalOptions.width - 5));
+    }
+  }, {
+    key: 'handleIncreaseGlobalWidth',
+    value: function handleIncreaseGlobalWidth() {
+      this.props.dispatch((0, _actions.changeGlobalWidth)(this.props.globalOptions.width + 5));
     }
   }, {
     key: 'handleChangeGlobalWidth',
@@ -33088,6 +33100,7 @@ var OptionsPane = exports.OptionsPane = function (_Component) {
 
 
       var innerContent = void 0;
+
       var csInnerStyles = {
         background: globalOptions.backgroundColor
       };
@@ -33122,37 +33135,57 @@ var OptionsPane = exports.OptionsPane = function (_Component) {
         case 'Styles':
           innerContent = _react2.default.createElement(
             'div',
-            null,
+            { className: 'style-item-container' },
             _react2.default.createElement(
               'div',
-              null,
+              { className: 'style-item' },
               _react2.default.createElement(
                 'label',
-                { htmlFor: 'global-width' },
-                'Global Width:'
+                { className: 'style-item__label', htmlFor: 'global-width' },
+                'Global Width'
               ),
-              _react2.default.createElement('input', {
-                type: 'number',
-                value: globalOptions.width,
-                onChange: this.handleChangeGlobalWidth,
-                id: 'global-width'
-              })
+              _react2.default.createElement(
+                'div',
+                { className: 'style-item__input' },
+                _react2.default.createElement(
+                  'button',
+                  { className: 'global-width__button', onClick: this.handleDecreaseGlobalWidth },
+                  '-'
+                ),
+                _react2.default.createElement('input', {
+                  type: 'text',
+                  value: globalOptions.width,
+                  onChange: this.handleChangeGlobalWidth,
+                  className: 'global-width',
+                  id: 'global-width'
+                }),
+                _react2.default.createElement(
+                  'button',
+                  { className: 'global-width__button', onClick: this.handleIncreaseGlobalWidth },
+                  '+'
+                )
+              )
             ),
             _react2.default.createElement(
               'div',
-              null,
+              { className: 'style-item' },
               _react2.default.createElement(
                 'label',
-                { htmlFor: 'background-color' },
+                { className: 'style-item__label', htmlFor: 'background-color' },
                 'Background Color:'
               ),
               _react2.default.createElement(
                 'div',
-                null,
+                { className: 'style-item__input color-picker' },
                 _react2.default.createElement(
                   'button',
-                  { className: 'color-swatch', onClick: this.toggleColorPicker },
-                  _react2.default.createElement('div', { className: 'color-swatch__inner', style: csInnerStyles })
+                  { className: 'color-input', onClick: this.toggleColorPicker },
+                  _react2.default.createElement('div', { className: 'color-input__swatch', style: csInnerStyles }),
+                  _react2.default.createElement(
+                    'p',
+                    { className: 'color-input__text' },
+                    globalOptions.backgroundColor
+                  )
                 ),
                 this.state.showColorPicker ? _react2.default.createElement(_reactColor.SketchPicker, {
                   disableAlpha: true,

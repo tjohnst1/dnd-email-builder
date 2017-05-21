@@ -12,6 +12,8 @@ export class OptionsPane extends Component {
     super(props);
     this.handleSwitchCategory = this.handleSwitchCategory.bind(this);
     this.handleChangeGlobalWidth = this.handleChangeGlobalWidth.bind(this);
+    this.handleDecreaseGlobalWidth = this.handleDecreaseGlobalWidth.bind(this);
+    this.handleIncreaseGlobalWidth = this.handleIncreaseGlobalWidth.bind(this);
     this.handleChangeBackgroundColor = this.handleChangeBackgroundColor.bind(this);
     this.toggleColorPicker = this.toggleColorPicker.bind(this);
     this.state = {
@@ -27,6 +29,14 @@ export class OptionsPane extends Component {
     return () => {
       this.props.dispatch(switchCategory(category));
     };
+  }
+
+  handleDecreaseGlobalWidth() {
+    this.props.dispatch(changeGlobalWidth(this.props.globalOptions.width - 5));
+  }
+
+  handleIncreaseGlobalWidth() {
+    this.props.dispatch(changeGlobalWidth(this.props.globalOptions.width + 5));
   }
 
   handleChangeGlobalWidth(e) {
@@ -47,6 +57,7 @@ export class OptionsPane extends Component {
     const { tabs, currentCategory, blocks, globalOptions } = this.props;
 
     let innerContent;
+
     const csInnerStyles = {
       background: globalOptions.backgroundColor,
     };
@@ -75,21 +86,27 @@ export class OptionsPane extends Component {
         break;
       case 'Styles':
         innerContent = (
-          <div>
-            <div>
-              <label htmlFor="global-width">Global Width:</label>
-              <input
-                type="number"
-                value={globalOptions.width}
-                onChange={this.handleChangeGlobalWidth}
-                id="global-width"
-              />
+          <div className="style-item-container">
+            <div className="style-item">
+              <label className="style-item__label" htmlFor="global-width">Global Width</label>
+              <div className="style-item__input">
+                <button className="global-width__button" onClick={this.handleDecreaseGlobalWidth}>-</button>
+                <input
+                  type="text"
+                  value={globalOptions.width}
+                  onChange={this.handleChangeGlobalWidth}
+                  className="global-width"
+                  id="global-width"
+                />
+                <button className="global-width__button" onClick={this.handleIncreaseGlobalWidth}>+</button>
+              </div>
             </div>
-            <div>
-              <label htmlFor="background-color">Background Color:</label>
-              <div>
-                <button className="color-swatch" onClick={this.toggleColorPicker}>
-                  <div className="color-swatch__inner" style={csInnerStyles} />
+            <div className="style-item">
+              <label className="style-item__label" htmlFor="background-color">Background Color:</label>
+              <div className="style-item__input color-picker">
+                <button className="color-input" onClick={this.toggleColorPicker}>
+                  <div className="color-input__swatch" style={csInnerStyles} />
+                  <p className="color-input__text">{globalOptions.backgroundColor}</p>
                 </button>
                 { this.state.showColorPicker ? <SketchPicker
                   disableAlpha
