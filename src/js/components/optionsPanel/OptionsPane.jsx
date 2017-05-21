@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import { uniqueId } from 'lodash';
 import classNames from 'classnames';
 import { SketchPicker } from 'react-color';
-import { switchCategory, fetchEmailBlocksIfNeeded, changeGlobalWidth, changeBackgroundColor } from '../../actions/actions';
+import { switchCategory, fetchEmailBlocksIfNeeded, changeGlobalWidth,
+  changeBackgroundColor, clearMarkerFromPreview } from '../../actions/actions';
 import Button from './Button';
 import Block from './Block';
 
@@ -15,6 +16,7 @@ export class OptionsPane extends Component {
     this.handleDecreaseGlobalWidth = this.handleDecreaseGlobalWidth.bind(this);
     this.handleIncreaseGlobalWidth = this.handleIncreaseGlobalWidth.bind(this);
     this.handleChangeBackgroundColor = this.handleChangeBackgroundColor.bind(this);
+    this.handleClearMarkerFromPreview = this.handleClearMarkerFromPreview.bind(this);
     this.toggleColorPicker = this.toggleColorPicker.bind(this);
     this.state = {
       showColorPicker: false,
@@ -45,6 +47,10 @@ export class OptionsPane extends Component {
 
   handleChangeBackgroundColor(color) {
     this.props.dispatch(changeBackgroundColor(color.hex));
+  }
+
+  handleClearMarkerFromPreview() {
+    this.props.dispatch(clearMarkerFromPreview());
   }
 
   toggleColorPicker() {
@@ -80,6 +86,7 @@ export class OptionsPane extends Component {
               image={block.image}
               id={block.id}
               key={uniqueId()}
+              handleClearMarkerFromPreview={this.handleClearMarkerFromPreview}
             />);
           }
         }
@@ -90,7 +97,10 @@ export class OptionsPane extends Component {
             <div className="style-item">
               <label className="style-item__label" htmlFor="global-width">Global Width</label>
               <div className="style-item__input">
-                <button className="global-width__button" onClick={this.handleDecreaseGlobalWidth}>-</button>
+                <button
+                  className="global-width__button"
+                  onClick={this.handleDecreaseGlobalWidth}
+                >-</button>
                 <input
                   type="text"
                   value={globalOptions.width}
@@ -98,11 +108,17 @@ export class OptionsPane extends Component {
                   className="global-width"
                   id="global-width"
                 />
-                <button className="global-width__button" onClick={this.handleIncreaseGlobalWidth}>+</button>
+                <button
+                  className="global-width__button"
+                  onClick={this.handleIncreaseGlobalWidth}
+                >+</button>
               </div>
             </div>
             <div className="style-item">
-              <label className="style-item__label" htmlFor="background-color">Background Color:</label>
+              <label
+                className="style-item__label"
+                htmlFor="background-color"
+              >Background Color:</label>
               <div className="style-item__input color-picker">
                 <button className="color-input" onClick={this.toggleColorPicker}>
                   <div className="color-input__swatch" style={csInnerStyles} />
@@ -148,7 +164,7 @@ OptionsPane.propTypes = {
     categories: PropTypes.array,
   }).isRequired,
   globalOptions: PropTypes.shape({
-    globalWidth: PropTypes.number,
+    width: PropTypes.number,
     backgroundColor: PropTypes.string,
   }).isRequired,
   dispatch: PropTypes.func.isRequired,

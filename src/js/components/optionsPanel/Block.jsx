@@ -8,6 +8,13 @@ const blockSource = {
       id: props.id,
     };
   },
+  endDrag(props, monitor) {
+    const didDrop = monitor.didDrop();
+
+    if (!didDrop) {
+      props.handleClearMarkerFromPreview();
+    }
+  },
 };
 
 // inject connectDragSource into the component

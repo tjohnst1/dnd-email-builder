@@ -4,7 +4,6 @@ import { flow } from 'lodash';
 import OneColumnBlock from './OneColumnBlock';
 
 class DroppedBlock extends Component {
-
   getNode() {
     return (node) => {
       this.node = node;
@@ -57,6 +56,13 @@ const source = {
       index,
     };
   },
+  endDrag(props, monitor) {
+    const didDrop = monitor.didDrop();
+
+    if (!didDrop) {
+      props.handleClearMarkerFromPreview();
+    }
+  },
 };
 
 // inject connectDragSource into the component
@@ -69,17 +75,18 @@ function collectSource(c) {
 // specify what to do when hovering/dropping on a block
 const target = {
   hover(props, monitor, component) {
-    const { index, id } = props;
-    const dragId = monitor.getItem().id;
+    const { index, previewId } = props;
+    const dragId = monitor.getItem().previewId;
+
     let targetIndex;
 
     // make sure the module being dragged isn't over itself
-    if (dragId === id) {
+    if (dragId === previewId) {
       return;
     }
 
     // Determine rectangle on screen
-    const hoverBoundingRect = component.decoratedComponentInstance;
+    const hoverBoundingRect = component.decoratedComponentInstance.node.getBoundingClientRect();
 
     // Get vertical middle
     const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;

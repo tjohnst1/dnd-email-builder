@@ -32902,6 +32902,13 @@ var blockSource = {
     return {
       id: props.id
     };
+  },
+  endDrag: function endDrag(props, monitor) {
+    var didDrop = monitor.didDrop();
+
+    if (!didDrop) {
+      props.handleClearMarkerFromPreview();
+    }
   }
 };
 
@@ -33039,6 +33046,7 @@ var OptionsPane = exports.OptionsPane = function (_Component) {
     _this.handleDecreaseGlobalWidth = _this.handleDecreaseGlobalWidth.bind(_this);
     _this.handleIncreaseGlobalWidth = _this.handleIncreaseGlobalWidth.bind(_this);
     _this.handleChangeBackgroundColor = _this.handleChangeBackgroundColor.bind(_this);
+    _this.handleClearMarkerFromPreview = _this.handleClearMarkerFromPreview.bind(_this);
     _this.toggleColorPicker = _this.toggleColorPicker.bind(_this);
     _this.state = {
       showColorPicker: false
@@ -33079,6 +33087,11 @@ var OptionsPane = exports.OptionsPane = function (_Component) {
     key: 'handleChangeBackgroundColor',
     value: function handleChangeBackgroundColor(color) {
       this.props.dispatch((0, _actions.changeBackgroundColor)(color.hex));
+    }
+  }, {
+    key: 'handleClearMarkerFromPreview',
+    value: function handleClearMarkerFromPreview() {
+      this.props.dispatch((0, _actions.clearMarkerFromPreview)());
     }
   }, {
     key: 'toggleColorPicker',
@@ -33126,7 +33139,8 @@ var OptionsPane = exports.OptionsPane = function (_Component) {
                   name: block.name,
                   image: block.image,
                   id: block.id,
-                  key: (0, _lodash.uniqueId)()
+                  key: (0, _lodash.uniqueId)(),
+                  handleClearMarkerFromPreview: _this3.handleClearMarkerFromPreview
                 });
               });
             }
@@ -33149,7 +33163,10 @@ var OptionsPane = exports.OptionsPane = function (_Component) {
                 { className: 'style-item__input' },
                 _react2.default.createElement(
                   'button',
-                  { className: 'global-width__button', onClick: this.handleDecreaseGlobalWidth },
+                  {
+                    className: 'global-width__button',
+                    onClick: this.handleDecreaseGlobalWidth
+                  },
                   '-'
                 ),
                 _react2.default.createElement('input', {
@@ -33161,7 +33178,10 @@ var OptionsPane = exports.OptionsPane = function (_Component) {
                 }),
                 _react2.default.createElement(
                   'button',
-                  { className: 'global-width__button', onClick: this.handleIncreaseGlobalWidth },
+                  {
+                    className: 'global-width__button',
+                    onClick: this.handleIncreaseGlobalWidth
+                  },
                   '+'
                 )
               )
@@ -33171,7 +33191,10 @@ var OptionsPane = exports.OptionsPane = function (_Component) {
               { className: 'style-item' },
               _react2.default.createElement(
                 'label',
-                { className: 'style-item__label', htmlFor: 'background-color' },
+                {
+                  className: 'style-item__label',
+                  htmlFor: 'background-color'
+                },
                 'Background Color:'
               ),
               _react2.default.createElement(
@@ -33233,7 +33256,7 @@ OptionsPane.propTypes = {
     categories: _react.PropTypes.array
   }).isRequired,
   globalOptions: _react.PropTypes.shape({
-    globalWidth: _react.PropTypes.number,
+    width: _react.PropTypes.number,
     backgroundColor: _react.PropTypes.string
   }).isRequired,
   dispatch: _react.PropTypes.func.isRequired
@@ -33523,6 +33546,13 @@ var source = {
       previewId: previewId,
       index: index
     };
+  },
+  endDrag: function endDrag(props, monitor) {
+    var didDrop = monitor.didDrop();
+
+    if (!didDrop) {
+      props.handleClearMarkerFromPreview();
+    }
   }
 };
 
@@ -33537,18 +33567,19 @@ function collectSource(c) {
 var target = {
   hover: function hover(props, monitor, component) {
     var index = props.index,
-        id = props.id;
+        previewId = props.previewId;
 
-    var dragId = monitor.getItem().id;
+    var dragId = monitor.getItem().previewId;
+
     var targetIndex = void 0;
 
     // make sure the module being dragged isn't over itself
-    if (dragId === id) {
+    if (dragId === previewId) {
       return;
     }
 
     // Determine rectangle on screen
-    var hoverBoundingRect = component.decoratedComponentInstance;
+    var hoverBoundingRect = component.decoratedComponentInstance.node.getBoundingClientRect();
 
     // Get vertical middle
     var hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
