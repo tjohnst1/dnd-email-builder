@@ -16,6 +16,10 @@
   }
 }
 
+.selected {
+  border: 2px solid $blue;
+}
+
 .preview-panel--empty {
   text-align: center;
   width: 100%;

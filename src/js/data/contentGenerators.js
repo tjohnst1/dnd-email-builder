@@ -3,11 +3,12 @@ function generateTextTD(options) {
 }
 
 function generateImageTD(options) {
-  return `<td class={options.classNames} style="padding: ${options.padding}; font-family: ${options.fontFamily}; font-size: ${options.fontSize}; line-height: ${options.lineHeight}; text-align: ${options.textAlign}; color: ${options.color}">${options.innerContent}</td>`;
+  return `<td class={options.classNames} style="padding: ${options.padding}; font-size: 0; display: block; border: 0;"><img src="${options.src}" style="display: block; border: 0;"></td>`;
 }
 
-function generateOneColumnWrapper(innerContent) {
-  return `<table style="margin: 0 auto;" class="w100" align="center" width="640" cellpadding="0" cellspacing="0" border="0">
+function generateOneColumnWrapper(blockName, innerContent) {
+  return `<!-- /// ${blockName} -->
+    <table style="margin: 0 auto;" class="w100" align="center" width="640" cellpadding="0" cellspacing="0" border="0">
       <tr>
         <td>
           <table style="margin: 0 auto;" width="90%" align="center" cellpadding="0" cellspacing="0" border="0">
@@ -23,7 +24,8 @@ function generateOneColumnWrapper(innerContent) {
           </table>
         </td>
       </tr>
-    </table>`;
+    </table>
+    <!-- ${blockName} /// -->\r\n`;
 }
 
 export default function generateEmailCode(blocks) {
@@ -33,6 +35,7 @@ export default function generateEmailCode(blocks) {
     switch (block.category) {
       // 'one-column'
       default:
+        const blockName = block.name;
         const blockContent = block.content.map((content) => {
           if (content.type === 'image') {
             return generateImageTD(content);
@@ -40,7 +43,7 @@ export default function generateEmailCode(blocks) {
           return generateTextTD(content);
         })
         .join('');
-        innerContent += generateOneColumnWrapper(blockContent)
+        innerContent += generateOneColumnWrapper(blockName, blockContent)
     }
   });
 

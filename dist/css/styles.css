@@ -675,6 +675,9 @@ main {
   .preview-panel .center-block.hovering {
     border: 5px solid #01BAEF; }
 
+.selected {
+  border: 2px solid #01BAEF; }
+
 .preview-panel--empty {
   text-align: center;
   width: 100%;
@@ -712,14 +715,23 @@ main {
   background: rgba(0, 0, 0, 0.5); }
 
 .export-modal__inner {
-  width: 50%;
+  width: 70%;
   background-color: #ffffff;
   margin: 0 auto;
   background: white;
-  height: 30%;
+  height: 70%;
   text-align: center;
   position: relative; }
 
+.export-modal__code-block {
+  text-align: left;
+  margin: 10px 20px;
+  height: 90%; }
+  .export-modal__code-block pre, .export-modal__code-block code {
+    height: 100%;
+    width: 100%;
+    overflow: scroll; }
+
 .export-modal__btn {
-  bottom: 10%;
+  bottom: 2%;
   position: absolute; }

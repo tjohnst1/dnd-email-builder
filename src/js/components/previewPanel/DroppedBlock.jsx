@@ -11,8 +11,8 @@ class DroppedBlock extends Component {
   }
 
   render() {
-    const { category, content, globalOptions, index, handleRemoveBlockFromPreview,
-    connectDragSource, connectDropTarget } = this.props;
+    const { category, content, globalOptions, connectDragSource,
+      connectDropTarget, previewId } = this.props;
 
     let blockToRender;
 
@@ -22,12 +22,13 @@ class DroppedBlock extends Component {
         blockToRender = (<OneColumnBlock
           content={content}
           globalOptions={globalOptions}
+          previewId={previewId}
         />);
         break;
     }
 
     return connectDragSource(connectDropTarget((
-      <div onClick={handleRemoveBlockFromPreview(index)} ref={this.getNode()}>
+      <div ref={this.getNode()}>
         {blockToRender}
       </div>
     )));
@@ -40,11 +41,14 @@ DroppedBlock.propTypes = {
     backgroundColor: PropTypes.string,
     width: PropTypes.number,
   }).isRequired,
-  handleRemoveBlockFromPreview: PropTypes.func.isRequired,
-  index: PropTypes.number.isRequired,
   connectDropTarget: PropTypes.func.isRequired,
   connectDragSource: PropTypes.func.isRequired,
   category: PropTypes.string.isRequired,
+  previewId: PropTypes.string.isRequired,
+};
+
+DroppedBlock.defaultProps = {
+  selectedBlock: null,
 };
 
 // specify which information to collect on drag

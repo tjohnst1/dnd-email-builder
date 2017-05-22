@@ -5,21 +5,25 @@ import { uniqueId, flow } from 'lodash';
 import { connect } from 'react-redux';
 import DroppedBlock from './DroppedBlock';
 import Divider from './Divider';
-import { removeBlockFromPreview, moveBlock, clearMarkerFromPreview,
+import { selectBlock, moveBlock, clearMarkerFromPreview,
   moveMarker, addBlockToPreview } from '../../actions/actions';
 
 export class EmailPreview extends Component {
   constructor(props) {
     super(props);
-    this.handleRemoveBlockFromPreview = this.handleRemoveBlockFromPreview.bind(this);
+    this.handleSelectBlockInPreview = this.handleSelectBlockInPreview.bind(this);
     this.handleMoveBlock = this.handleMoveBlock.bind(this);
     this.handleMoveMarker = this.handleMoveMarker.bind(this);
     this.handleClearMarkerFromPreview = this.handleClearMarkerFromPreview.bind(this);
     this.handleAddBlockToPreview = this.handleAddBlockToPreview.bind(this);
   }
 
-  handleRemoveBlockFromPreview(index) {
-    return () => this.props.dispatch(removeBlockFromPreview(index));
+  handleSelectBlockInPreview(e) {
+    e.stopPropagation();
+    // prevent unnecessary actions from being dispatched
+    if (this.props.emailPreview.selectedBlock !== null) {
+      this.props.dispatch(selectBlock(null));
+    }
   }
 
   handleAddBlockToPreview(blockId, index) {
@@ -41,12 +45,11 @@ export class EmailPreview extends Component {
   }
 
   render() {
-    const { globalOptions, connectDropTarget, isOver } = this.props;
-    const { blocks } = this.props.emailPreview;
+    const { globalOptions, connectDropTarget, isOver, emailPreview } = this.props;
 
     let blocksToRender = [];
 
-    blocks.forEach((block, i) => {
+    emailPreview.blocks.forEach((block, i) => {
       switch (block.category) {
         case 'preview-panel-marker':
           blocksToRender = [
@@ -64,7 +67,6 @@ export class EmailPreview extends Component {
               id={block.id}
               index={i}
               previewId={block.previewId}
-              handleRemoveBlockFromPreview={this.handleRemoveBlockFromPreview}
               handleAddBlockToPreview={this.handleAddBlockToPreview}
               handleMoveBlock={this.handleMoveBlock}
               handleMoveMarker={this.handleMoveMarker}
@@ -86,7 +88,12 @@ export class EmailPreview extends Component {
     });
 
     return connectDropTarget((
-      <div className={classes} style={styles} ref={this.refFunc}>
+      <div
+        className={classes}
+        style={styles}
+        ref={this.refFunc}
+        onClick={this.handleSelectBlockInPreview}
+      >
         { blocksToRender.length > 0 ?
           blocksToRender : <p className="preview-panel--empty">Insert Content Here</p>
         }
@@ -98,6 +105,9 @@ export class EmailPreview extends Component {
 EmailPreview.propTypes = {
   emailPreview: PropTypes.shape({
     blocks: PropTypes.array,
+    selectedBlock: PropTypes.string,
+    code: PropTypes.string,
+    markerPresent: PropTypes.bool,
   }).isRequired,
   globalOptions: PropTypes.shape({
     backgroundColor: PropTypes.string,

@@ -1,31 +1,30 @@
 import React, { PropTypes } from 'react';
-import { uniqueId } from 'lodash';
+import SyntaxHighlighter from 'react-syntax-highlighter';
+import { atomOneDark } from 'react-syntax-highlighter/dist/styles';
 import { connect } from 'react-redux';
 import { toggleExportModal } from '../actions/actions';
 
 const ExportModal = (props) => {
-  const { exportModal } = props;
-  const { blocks } = props.emailPreview;
+  const { exportModal, emailPreview } = props;
 
   function closeModal(e) {
     e.stopPropagation();
     props.dispatch(toggleExportModal());
   }
 
-  const stringifiedBlocks = blocks.map((block) => {
-    const json = JSON.stringify(block);
-    return (
-      <p key={uniqueId()}>{json}</p>
-    );
-  });
-
+  const highlightedCode = (<SyntaxHighlighter
+    language="html"
+    style={atomOneDark}
+  >{emailPreview.code}</SyntaxHighlighter>);
   let whatToShow = null;
 
   if (exportModal.isShowing) {
     whatToShow = (
       <aside className="export-modal" onClick={closeModal}>
         <div className="export-modal__inner">
-          {stringifiedBlocks}
+          <div className="export-modal__code-block">
+            {highlightedCode}
+          </div>
           <button className="export-modal__btn" onClick={closeModal}>Close</button>
         </div>
       </aside>
