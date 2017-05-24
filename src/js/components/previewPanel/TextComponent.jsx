@@ -13,6 +13,14 @@ const TextComponent = (props) => {
     const componentInfo = {
       componentId,
       blockId,
+      componentOptions: {
+        color,
+        fontSize,
+        lineHeight,
+        fontFamily,
+        textAlign,
+        innerContent,
+      },
     };
     dispatch(selectComponent(componentInfo));
   }

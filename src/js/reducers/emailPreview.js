@@ -110,14 +110,13 @@ export function emailPreview(state = emailPreviewState, action) {
 
     case SELECT_COMPONENT:
       let newSelected;
-      if ((action.info === null)) {
-        newSelected = null;
-      } else if (state.selected && (action.info.blockId === state.selected.blockId) && (action.info.componentId === state.selected.componentId)) {
+      if ((action.info === null) || (state.selected && (action.info.componentId === state.selected.componentId))) {
         newSelected = null;
       } else {
         newSelected = {
           blockId: action.info.blockId,
           componentId: action.info.componentId,
+          componentOptions: action.info.componentOptions,
         }
       }
       return Object.assign({}, state, {

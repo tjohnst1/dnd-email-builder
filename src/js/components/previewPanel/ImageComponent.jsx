@@ -12,6 +12,11 @@ const ImageComponent = (props) => {
     const componentInfo = {
       componentId,
       blockId,
+      componentOptions: {
+        link,
+        src,
+        width
+      },
     };
     dispatch(selectComponent(componentInfo));
   }

@@ -34200,7 +34200,12 @@ var ImageComponent = function ImageComponent(props) {
     e.stopPropagation();
     var componentInfo = {
       componentId: componentId,
-      blockId: blockId
+      blockId: blockId,
+      componentOptions: {
+        link: link,
+        src: src,
+        width: width
+      }
     };
     dispatch((0, _actions.selectComponent)(componentInfo));
   }
@@ -34390,7 +34395,15 @@ var TextComponent = function TextComponent(props) {
     e.stopPropagation();
     var componentInfo = {
       componentId: componentId,
-      blockId: blockId
+      blockId: blockId,
+      componentOptions: {
+        color: color,
+        fontSize: fontSize,
+        lineHeight: lineHeight,
+        fontFamily: fontFamily,
+        textAlign: textAlign,
+        innerContent: innerContent
+      }
     };
     dispatch((0, _actions.selectComponent)(componentInfo));
   }
@@ -34880,14 +34893,13 @@ function emailPreview() {
 
     case _actions.SELECT_COMPONENT:
       var newSelected = void 0;
-      if (action.info === null) {
-        newSelected = null;
-      } else if (state.selected && action.info.blockId === state.selected.blockId && action.info.componentId === state.selected.componentId) {
+      if (action.info === null || state.selected && action.info.componentId === state.selected.componentId) {
         newSelected = null;
       } else {
         newSelected = {
           blockId: action.info.blockId,
-          componentId: action.info.componentId
+          componentId: action.info.componentId,
+          componentOptions: action.info.componentOptions
         };
       }
       return Object.assign({}, state, {
