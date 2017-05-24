@@ -5,24 +5,24 @@ import { uniqueId, flow } from 'lodash';
 import { connect } from 'react-redux';
 import DroppedBlock from './DroppedBlock';
 import Divider from './Divider';
-import { selectBlock, moveBlock, clearMarkerFromPreview,
+import { selectComponent, moveBlock, clearMarkerFromPreview,
   moveMarker, addBlockToPreview } from '../../actions/actions';
 
 export class EmailPreview extends Component {
   constructor(props) {
     super(props);
-    this.handleSelectBlockInPreview = this.handleSelectBlockInPreview.bind(this);
+    this.handleSelectComponent = this.handleSelectComponent.bind(this);
     this.handleMoveBlock = this.handleMoveBlock.bind(this);
     this.handleMoveMarker = this.handleMoveMarker.bind(this);
     this.handleClearMarkerFromPreview = this.handleClearMarkerFromPreview.bind(this);
     this.handleAddBlockToPreview = this.handleAddBlockToPreview.bind(this);
   }
 
-  handleSelectBlockInPreview(e) {
+  handleSelectComponent(e) {
     e.stopPropagation();
     // prevent unnecessary actions from being dispatched
-    if (this.props.emailPreview.selectedBlock !== null) {
-      this.props.dispatch(selectBlock(null));
+    if (this.props.emailPreview.selected !== null) {
+      this.props.dispatch(selectComponent(null));
     }
   }
 
@@ -30,8 +30,8 @@ export class EmailPreview extends Component {
     this.props.dispatch(addBlockToPreview(blockId, index));
   }
 
-  handleMoveBlock(sourcePreviewId) {
-    this.props.dispatch(moveBlock(sourcePreviewId));
+  handleMoveBlock(sourceBlockId) {
+    this.props.dispatch(moveBlock(sourceBlockId));
   }
 
   handleMoveMarker(index) {
@@ -66,7 +66,7 @@ export class EmailPreview extends Component {
               globalOptions={globalOptions}
               id={block.id}
               index={i}
-              previewId={block.previewId}
+              blockId={block.blockId}
               handleAddBlockToPreview={this.handleAddBlockToPreview}
               handleMoveBlock={this.handleMoveBlock}
               handleMoveMarker={this.handleMoveMarker}
@@ -92,7 +92,7 @@ export class EmailPreview extends Component {
         className={classes}
         style={styles}
         ref={this.refFunc}
-        onClick={this.handleSelectBlockInPreview}
+        onClick={this.handleSelectComponent}
       >
         { blocksToRender.length > 0 ?
           blocksToRender : <p className="preview-panel--empty">Insert Content Here</p>
@@ -105,7 +105,7 @@ export class EmailPreview extends Component {
 EmailPreview.propTypes = {
   emailPreview: PropTypes.shape({
     blocks: PropTypes.array,
-    selectedBlock: PropTypes.string,
+    selected: PropTypes.object,
     code: PropTypes.string,
     markerPresent: PropTypes.bool,
   }).isRequired,

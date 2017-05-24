@@ -13,7 +13,7 @@ export const MOVE_BLOCK_IN_PREVIEW = 'MOVE_BLOCKS_IN_PREVIEW';
 export const CLEAR_MARKER_FROM_PREVIEW = 'CLEAR_MARKER_FROM_PREVIEW';
 export const MOVE_MARKER = 'MOVE_MARKER';
 export const TOGGLE_EXPORT_MODAL = 'TOGGLE_EXPORT_MODAL';
-export const SELECT_BLOCK = 'SELECT_BLOCK';
+export const SELECT_COMPONENT = 'SELECT_COMPONENT';
 
 import database from '../store/firebase'
 
@@ -85,7 +85,7 @@ export function addBlockToPreview(blockId) {
   return (dispatch, getState) => {
     const blockPrototype = getState().blocks.all.filter((block) => block.id === blockId)[0]
     const blockToAdd = Object.assign({}, blockPrototype, {
-      previewId: uniqueId(),
+      blockId: uniqueId(),
     });
     dispatch(actuallyAddBlockToPreview(blockToAdd));
   };
@@ -111,10 +111,10 @@ export function removeBlockFromPreview(index) {
   };
 }
 
-export function moveBlock(sourcePreviewId) {
+export function moveBlock(sourceBlockId) {
   return {
     type: MOVE_BLOCK_IN_PREVIEW,
-    sourcePreviewId,
+    sourceBlockId,
   };
 }
 
@@ -137,9 +137,9 @@ export function toggleExportModal() {
   };
 }
 
-export function selectBlock(index) {
+export function selectComponent(info) {
   return {
-    type: SELECT_BLOCK,
-    index,
+    type: SELECT_COMPONENT,
+    info,
   };
 }

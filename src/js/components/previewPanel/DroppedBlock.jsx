@@ -12,7 +12,7 @@ class DroppedBlock extends Component {
 
   render() {
     const { category, content, globalOptions, connectDragSource,
-      connectDropTarget, previewId } = this.props;
+      connectDropTarget, blockId } = this.props;
 
     let blockToRender;
 
@@ -22,7 +22,7 @@ class DroppedBlock extends Component {
         blockToRender = (<OneColumnBlock
           content={content}
           globalOptions={globalOptions}
-          previewId={previewId}
+          blockId={blockId}
         />);
         break;
     }
@@ -44,7 +44,7 @@ DroppedBlock.propTypes = {
   connectDropTarget: PropTypes.func.isRequired,
   connectDragSource: PropTypes.func.isRequired,
   category: PropTypes.string.isRequired,
-  previewId: PropTypes.string.isRequired,
+  blockId: PropTypes.string.isRequired,
 };
 
 DroppedBlock.defaultProps = {
@@ -54,9 +54,9 @@ DroppedBlock.defaultProps = {
 // specify which information to collect on drag
 const source = {
   beginDrag(props) {
-    const { previewId, index } = props;
+    const { blockId, index } = props;
     return {
-      previewId,
+      blockId,
       index,
     };
   },
@@ -79,13 +79,13 @@ function collectSource(c) {
 // specify what to do when hovering/dropping on a block
 const target = {
   hover(props, monitor, component) {
-    const { index, previewId } = props;
-    const dragId = monitor.getItem().previewId;
+    const { index, blockId } = props;
+    const dragId = monitor.getItem().blockId;
 
     let targetIndex;
 
     // make sure the module being dragged isn't over itself
-    if (dragId === previewId) {
+    if (dragId === blockId) {
       return;
     }
 
@@ -118,11 +118,11 @@ const target = {
 
     // check to see where the block was dragged from and act accordingly
     if (itemType === 'PREVIEW_PANEL_BLOCK') {
-      const targetPreviewId = props.previewId;
-      const sourcePreviewId = monitor.getItem().previewId;
+      const targetBlockId = props.blockId;
+      const sourceBlockId = monitor.getItem().blockId;
 
-      if (sourcePreviewId !== targetPreviewId) {
-        props.handleMoveBlock(sourcePreviewId);
+      if (sourceBlockId !== targetBlockId) {
+        props.handleMoveBlock(sourceBlockId);
       } else {
         props.handleClearMarkerFromPreview();
       }

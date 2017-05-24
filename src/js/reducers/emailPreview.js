@@ -1,14 +1,14 @@
 import generateEmailCode from '../data/contentGenerators';
 import { CHANGE_GLOBAL_WIDTH, CHANGE_BACKGROUND_COLOR, ADD_BLOCK_TO_PREVIEW,
   REMOVE_BLOCK_FROM_PREVIEW, MOVE_BLOCK_IN_PREVIEW, CLEAR_MARKER_FROM_PREVIEW,
-  MOVE_MARKER, REMOVE_ALL_BLOCKS_IN_PREVIEW, SELECT_BLOCK } from '../actions/actions';
+  MOVE_MARKER, REMOVE_ALL_BLOCKS_IN_PREVIEW, SELECT_COMPONENT } from '../actions/actions';
 
 
 const emailPreviewState = {
   blocks: [],
   markerPresent: false,
   code: '',
-  selectedBlock: null,
+  selected: null,
 }
 
 export function emailPreview(state = emailPreviewState, action) {
@@ -27,7 +27,7 @@ export function emailPreview(state = emailPreviewState, action) {
       return Object.assign({}, state, {
         markerPresent: true,
         blocks: temp,
-        selectedBlock: null,
+        selected: null,
       });
 
     case ADD_BLOCK_TO_PREVIEW:
@@ -50,7 +50,7 @@ export function emailPreview(state = emailPreviewState, action) {
         markerPresent: false,
         blocks: temp,
         code: generateEmailCode(temp),
-        selectedBlock: null,
+        selected: null,
       });
 
     case REMOVE_BLOCK_FROM_PREVIEW:
@@ -60,7 +60,7 @@ export function emailPreview(state = emailPreviewState, action) {
       return Object.assign({}, state, {
           blocks: temp,
           code: generateEmailCode(temp),
-          selectedBlock: null,
+          selected: null,
         }
       );
 
@@ -69,16 +69,16 @@ export function emailPreview(state = emailPreviewState, action) {
         markerPresent: false,
         blocks: [],
         code: '',
-        selectedBlock: null,
+        selected: null,
       });
 
     case MOVE_BLOCK_IN_PREVIEW:
-      const { sourcePreviewId } = action;
+      const { sourceBlockId } = action;
       let blockToMove;
 
       // find the block by preview id and remove it
       temp = blocks.slice().filter((block) => {
-        if (block.previewId === sourcePreviewId) {
+        if (block.blockId === sourceBlockId) {
           blockToMove = block;
           return false;
         }
@@ -97,7 +97,7 @@ export function emailPreview(state = emailPreviewState, action) {
           markerPresent: false,
           blocks: temp,
           code: generateEmailCode(temp),
-          selectedBlock: null,
+          selected: null,
         }
       );
 
@@ -108,15 +108,20 @@ export function emailPreview(state = emailPreviewState, action) {
           block.id !== 'preview-panel-marker'),
       });
 
-    case SELECT_BLOCK:
-      let newSelectedBlock;
-      if (action.index === state.selectedBlock) {
-        newSelectedBlock = null;
+    case SELECT_COMPONENT:
+      let newSelected;
+      if ((action.info === null)) {
+        newSelected = null;
+      } else if (state.selected && (action.info.blockId === state.selected.blockId) && (action.info.componentId === state.selected.componentId)) {
+        newSelected = null;
       } else {
-        newSelectedBlock = action.index;
+        newSelected = {
+          blockId: action.info.blockId,
+          componentId: action.info.componentId,
+        }
       }
       return Object.assign({}, state, {
-        selectedBlock: newSelectedBlock,
+        selected: newSelected,
       });
 
     default:
