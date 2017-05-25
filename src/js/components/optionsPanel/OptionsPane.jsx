@@ -5,6 +5,7 @@ import classNames from 'classnames';
 import { SketchPicker } from 'react-color';
 import { switchCategory, fetchEmailBlocksIfNeeded, changeGlobalWidth,
   changeBackgroundColor, clearMarkerFromPreview } from '../../actions/actions';
+import ComponentSettings from './ComponentSettings';
 import Button from './Button';
 import Block from './Block';
 
@@ -60,7 +61,7 @@ export class OptionsPane extends Component {
   }
 
   render() {
-    const { tabs, currentCategory, blocks, globalOptions } = this.props;
+    const { tabs, currentCategory, blocks, globalOptions, selected } = this.props;
 
     let innerContent;
 
@@ -132,6 +133,7 @@ export class OptionsPane extends Component {
                 /> : null }
               </div>
             </div>
+            <ComponentSettings componentOptions={selected.componentOptions} />
           </div>
         );
         break;
@@ -168,20 +170,28 @@ OptionsPane.propTypes = {
     backgroundColor: PropTypes.string,
   }).isRequired,
   dispatch: PropTypes.func.isRequired,
+  selected: PropTypes.shape({
+    componentId: PropTypes.string,
+    blockId: PropTypes.string,
+    componentOptions: PropTypes.object,
+  }),
 };
 
 OptionsPane.defaultProps = {
   currentCategory: null,
+  selected: null,
 };
 
 function mapStateToProps(state) {
   const { tabs, currentCategory, blocks, dispatch, globalOptions } = state;
+  const { selected } = state.emailPreview;
   return {
     tabs,
     currentCategory,
     blocks,
     globalOptions,
     dispatch,
+    selected,
   };
 }
 

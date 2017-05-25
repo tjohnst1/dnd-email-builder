@@ -20,6 +20,7 @@ const TextComponent = (props) => {
         fontFamily,
         textAlign,
         innerContent,
+        type: 'text',
       },
     };
     dispatch(selectComponent(componentInfo));

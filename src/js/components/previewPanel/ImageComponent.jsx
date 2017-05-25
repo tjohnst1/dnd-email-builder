@@ -15,7 +15,8 @@ const ImageComponent = (props) => {
       componentOptions: {
         link,
         src,
-        width
+        width,
+        type: 'image',
       },
     };
     dispatch(selectComponent(componentInfo));
