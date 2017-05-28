@@ -1,9 +1,24 @@
 function generateTextTD(options) {
-  return `<td class={options.classNames} style="padding: ${options.padding}; font-family: ${options.fontFamily}; font-size: ${options.fontSize}; line-height: ${options.lineHeight}; text-align: ${options.textAlign}; color: ${options.color}">${options.innerContent}</td>`;
+  const defaultOptions = {
+    fontFamily: 'Helvetica, Arial, sana-serif',
+    lineHeight: '14px',
+    fontSize: '14px',
+    textAlign: 'center',
+    innerContent: '',
+    padding: '0',
+  };
+  const optionsToApply = Object.assign({}, defaultOptions, options);
+  return `<td style="padding: ${optionsToApply.padding}; font-family: ${optionsToApply.fontFamily}; font-size: ${optionsToApply.fontSize}; line-height: ${optionsToApply.lineHeight}; text-align: ${optionsToApply.textAlign}; color: ${optionsToApply.color}">${optionsToApply.innerContent}</td>`;
 }
 
 function generateImageTD(options) {
-  return `<td class={options.classNames} style="padding: ${options.padding}; font-size: 0; display: block; border: 0;"><img src="${options.src}" style="display: block; border: 0;"></td>`;
+  const defaultOptions = {
+    padding: '0',
+    src: '',
+    width: '576px',
+  }
+  const optionsToApply = Object.assign({}, defaultOptions, options);
+  return `<td style="padding: ${optionsToApply.padding}; font-size: 0; display: block; border: 0;"><img src="${optionsToApply.src}" style="display: block; border: 0;"></td>`;
 }
 
 function generateOneColumnWrapper(blockName, innerContent) {
