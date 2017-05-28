@@ -110,15 +110,13 @@ export class OptionsPane extends Component {
       case 'Styles':
         innerContent = (
           <div className="style-item-container">
-            <div className="style-item">
-              <IncrementingNumberInput
-                incrementValueFunc={this.handleIncreaseGlobalWidth}
-                textChangeFunc={this.handleChangeGlobalWidth}
-                decrementValueFunc={this.handleDecreaseGlobalWidth}
-                startingValue={globalOptions.width}
-                inputName="Global Width"
-              />
-            </div>
+            <IncrementingNumberInput
+              incrementValueFunc={this.handleIncreaseGlobalWidth}
+              textChangeFunc={this.handleChangeGlobalWidth}
+              decrementValueFunc={this.handleDecreaseGlobalWidth}
+              initialValue={globalOptions.width}
+              inputName="Global Width"
+            />
             <div className="style-item">
               <label
                 className="style-item__label"

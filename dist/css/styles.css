@@ -501,16 +501,34 @@ main {
   display: block;
   width: 100%;
   padding: 10px 20px;
+  margin: 0;
   border-top: 1px solid #d8d8d8;
   font-size: 12px; }
   .style-item .style-item__label, .style-item .style-item__input {
     display: inline-block;
-    width: 50%;
     vertical-align: middle; }
+  .style-item .style-item__label {
+    width: 40%; }
   .style-item .style-item__input {
+    width: 60%;
     text-align: right; }
+    .style-item .style-item__input select, .style-item .style-item__input input {
+      width: 100%; }
   .style-item:first-of-type {
     border: none; }
+
+.component-settings {
+  border: 1px solid #d8d8d8;
+  border-radius: 15px;
+  padding: 10px; }
+  .component-settings .style-item {
+    padding: 15px 10px; }
+    .component-settings .style-item:last-of-type {
+      padding: 15px 10px 5px; }
+
+.component-settings__title {
+  margin: 0;
+  text-align: center; }
 
 .color-picker {
   position: relative; }
@@ -522,6 +540,7 @@ main {
 
 .color-input {
   height: 25px;
+  width: 110px;
   border: 1px solid #d8d8d8;
   padding: 3px 10px 3px 5px;
   background: #ffffff; }
@@ -541,7 +560,7 @@ main {
 
 .incrementing-number-input {
   height: 25px;
-  width: 50px;
+  width: 60px !important;
   display: inline-block;
   border: 0;
   background: #eee;

@@ -2,12 +2,12 @@ import React, { PropTypes } from 'react';
 import { lowerCase, kebabCase } from 'lodash';
 
 const IncrementingNumberInput = (props) => {
-  const { inputName, startingValue, textChangeFunc,
+  const { inputName, initialValue, textChangeFunc,
   incrementValueFunc, decrementValueFunc } = props;
   const inputId = kebabCase(lowerCase(inputName));
 
   return (
-    <div>
+    <div className="style-item">
       <label className="style-item__label" htmlFor={inputId}>{inputName}</label>
       <div className="style-item__input">
         <button
@@ -16,7 +16,7 @@ const IncrementingNumberInput = (props) => {
         >-</button>
         <input
           type="text"
-          value={startingValue}
+          value={initialValue}
           onChange={textChangeFunc}
           className="incrementing-number-input"
           id={inputId}
@@ -36,7 +36,7 @@ IncrementingNumberInput.propTypes = {
   decrementValueFunc: PropTypes.func.isRequired,
   incrementValueFunc: PropTypes.func.isRequired,
   textChangeFunc: PropTypes.func.isRequired,
-  startingValue: PropTypes.number.isRequired,
+  initialValue: PropTypes.number.isRequired,
 };
 
 export default IncrementingNumberInput;

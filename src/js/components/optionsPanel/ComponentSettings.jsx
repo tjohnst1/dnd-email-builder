@@ -17,53 +17,53 @@ const ComponentSettings = (props) => {
     case 'image':
       componentValues = (
         <div>
+          <p className="component-settings__title">Image Styles</p>
           <TextInput
             inputName="Link Source"
-            startingValue={componentOptions.src}
-            textChangeFunc={handleOnChange(componentInfo, 'src')}
+            initialValue={componentOptions.src}
+            onChangeFunc={handleOnChange(componentInfo, 'src')}
           />
-          <div className="style-item">
-            <IncrementingNumberInput
-              incrementValueFunc={handleOnClick(componentInfo, 'width', Number(componentOptions.width) + 5)}
-              textChangeFunc={handleOnChange(componentInfo, 'width')}
-              decrementValueFunc={handleOnClick(componentInfo, 'width', Number(componentOptions.width) - 5)}
-              startingValue={Number(componentOptions.width)}
-              inputName="Width"
-            />
-          </div>
+          <IncrementingNumberInput
+            incrementValueFunc={handleOnClick(componentInfo, 'width', Number(componentOptions.width) + 5)}
+            textChangeFunc={handleOnChange(componentInfo, 'width')}
+            decrementValueFunc={handleOnClick(componentInfo, 'width', Number(componentOptions.width) - 5)}
+            initialValue={Number(componentOptions.width)}
+            inputName="Width"
+          />
         </div>
       );
       break;
     case 'text': {
       const fontFamilyOptions = ['Helvetica, Arial, Sans Serif', 'Times New Roman, serif'];
       const textAlignOptions = ['Left', 'Center', 'Right'];
-      // <div>
-      //   <label htmlFor="text-color">Color</label>
-      //   <input type="text" id="text-color" value={componentOptions.color} />
-      // </div>
       componentValues = (
         <div>
+          <p className="component-settings__title">Text Styles</p>
           <DropDownInput
             inputName="Font Family"
+            initialValue={componentOptions.fontFamily}
+            onChangeFunc={handleOnChange(componentInfo, 'fontFamily')}
             options={fontFamilyOptions}
           />
           <TextInput
             inputName="Line Height"
-            startingValue={componentOptions.lineHeight}
+            initialValue={componentOptions.lineHeight}
             textChangeFunc={handleOnChange(componentInfo, 'lineHeight')}
           />
           <TextInput
             inputName="Font Size"
-            startingValue={componentOptions.fontSize}
+            initialValue={componentOptions.fontSize}
             textChangeFunc={handleOnChange(componentInfo, 'fontSize')}
           />
           <DropDownInput
             inputName="Text Align"
+            initialValue={componentOptions.fontFamily}
             options={textAlignOptions}
+            onChangeFunc={handleOnChange(componentInfo, 'fontFamily')}
           />
           <TextInput
             inputName="Inner Content"
-            startingValue={componentOptions.innerContent}
+            initialValue={componentOptions.innerContent}
             textChangeFunc={handleOnChange(componentInfo, 'innerContent')}
           />
         </div>
@@ -75,7 +75,7 @@ const ComponentSettings = (props) => {
   }
 
   return (
-    <div className="style-item">
+    <div className="component-settings">
       { componentValues }
     </div>
   );

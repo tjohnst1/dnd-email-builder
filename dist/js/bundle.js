@@ -26566,7 +26566,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var IncrementingNumberInput = function IncrementingNumberInput(props) {
   var inputName = props.inputName,
-      startingValue = props.startingValue,
+      initialValue = props.initialValue,
       textChangeFunc = props.textChangeFunc,
       incrementValueFunc = props.incrementValueFunc,
       decrementValueFunc = props.decrementValueFunc;
@@ -26575,7 +26575,7 @@ var IncrementingNumberInput = function IncrementingNumberInput(props) {
 
   return _react2.default.createElement(
     'div',
-    null,
+    { className: 'style-item' },
     _react2.default.createElement(
       'label',
       { className: 'style-item__label', htmlFor: inputId },
@@ -26594,7 +26594,7 @@ var IncrementingNumberInput = function IncrementingNumberInput(props) {
       ),
       _react2.default.createElement('input', {
         type: 'text',
-        value: startingValue,
+        value: initialValue,
         onChange: textChangeFunc,
         className: 'incrementing-number-input',
         id: inputId
@@ -26616,7 +26616,7 @@ IncrementingNumberInput.propTypes = {
   decrementValueFunc: _react.PropTypes.func.isRequired,
   incrementValueFunc: _react.PropTypes.func.isRequired,
   textChangeFunc: _react.PropTypes.func.isRequired,
-  startingValue: _react.PropTypes.number.isRequired
+  initialValue: _react.PropTypes.number.isRequired
 };
 
 exports.default = IncrementingNumberInput;
@@ -33439,56 +33439,62 @@ var ComponentSettings = function ComponentSettings(props) {
       componentValues = _react2.default.createElement(
         'div',
         null,
+        _react2.default.createElement(
+          'p',
+          { className: 'component-settings__title' },
+          'Image Styles'
+        ),
         _react2.default.createElement(_TextInput2.default, {
           inputName: 'Link Source',
-          startingValue: componentOptions.src,
-          textChangeFunc: handleOnChange(componentInfo, 'src')
+          initialValue: componentOptions.src,
+          onChangeFunc: handleOnChange(componentInfo, 'src')
         }),
-        _react2.default.createElement(
-          'div',
-          { className: 'style-item' },
-          _react2.default.createElement(_IncrementingNumberInput2.default, {
-            incrementValueFunc: handleOnClick(componentInfo, 'width', Number(componentOptions.width) + 5),
-            textChangeFunc: handleOnChange(componentInfo, 'width'),
-            decrementValueFunc: handleOnClick(componentInfo, 'width', Number(componentOptions.width) - 5),
-            startingValue: Number(componentOptions.width),
-            inputName: 'Width'
-          })
-        )
+        _react2.default.createElement(_IncrementingNumberInput2.default, {
+          incrementValueFunc: handleOnClick(componentInfo, 'width', Number(componentOptions.width) + 5),
+          textChangeFunc: handleOnChange(componentInfo, 'width'),
+          decrementValueFunc: handleOnClick(componentInfo, 'width', Number(componentOptions.width) - 5),
+          initialValue: Number(componentOptions.width),
+          inputName: 'Width'
+        })
       );
       break;
     case 'text':
       {
         var fontFamilyOptions = ['Helvetica, Arial, Sans Serif', 'Times New Roman, serif'];
         var textAlignOptions = ['Left', 'Center', 'Right'];
-        // <div>
-        //   <label htmlFor="text-color">Color</label>
-        //   <input type="text" id="text-color" value={componentOptions.color} />
-        // </div>
         componentValues = _react2.default.createElement(
           'div',
           null,
+          _react2.default.createElement(
+            'p',
+            { className: 'component-settings__title' },
+            'Text Styles'
+          ),
           _react2.default.createElement(_DropDownInput2.default, {
             inputName: 'Font Family',
+            initialValue: componentOptions.fontFamily,
+            onChangeFunc: handleOnChange(componentInfo, 'fontFamily'),
             options: fontFamilyOptions
           }),
           _react2.default.createElement(_TextInput2.default, {
             inputName: 'Line Height',
-            startingValue: componentOptions.lineHeight,
+            initialValue: componentOptions.lineHeight,
             textChangeFunc: handleOnChange(componentInfo, 'lineHeight')
           }),
           _react2.default.createElement(_TextInput2.default, {
             inputName: 'Font Size',
-            startingValue: componentOptions.fontSize,
+            initialValue: componentOptions.fontSize,
             textChangeFunc: handleOnChange(componentInfo, 'fontSize')
           }),
           _react2.default.createElement(_DropDownInput2.default, {
             inputName: 'Text Align',
-            options: textAlignOptions
+            initialValue: componentOptions.fontFamily,
+            options: textAlignOptions,
+            onChangeFunc: handleOnChange(componentInfo, 'fontFamily')
           }),
           _react2.default.createElement(_TextInput2.default, {
             inputName: 'Inner Content',
-            startingValue: componentOptions.innerContent,
+            initialValue: componentOptions.innerContent,
             textChangeFunc: handleOnChange(componentInfo, 'innerContent')
           })
         );
@@ -33500,7 +33506,7 @@ var ComponentSettings = function ComponentSettings(props) {
 
   return _react2.default.createElement(
     'div',
-    { className: 'style-item' },
+    { className: 'component-settings' },
     componentValues
   );
 };
@@ -33538,7 +33544,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var DropDownInput = function DropDownInput(props) {
   var inputName = props.inputName,
-      options = props.options;
+      options = props.options,
+      onChangeFunc = props.onChangeFunc,
+      initialValue = props.initialValue;
 
   var optionItems = options.map(function (optionItem) {
     return _react2.default.createElement(
@@ -33554,23 +33562,29 @@ var DropDownInput = function DropDownInput(props) {
 
   return _react2.default.createElement(
     'div',
-    null,
+    { className: 'style-item' },
     _react2.default.createElement(
       'label',
-      { htmlFor: selectId },
+      { className: 'style-item__label', htmlFor: selectId },
       inputName
     ),
     _react2.default.createElement(
-      'select',
-      { id: selectId },
-      optionItems
+      'div',
+      { className: 'style-item__input' },
+      _react2.default.createElement(
+        'select',
+        { id: selectId, onChange: onChangeFunc, value: initialValue },
+        optionItems
+      )
     )
   );
 };
 
 DropDownInput.propTypes = {
   inputName: _react.PropTypes.string.isRequired,
-  options: _react.PropTypes.arrayOf(_react.PropTypes.string).isRequired
+  options: _react.PropTypes.arrayOf(_react.PropTypes.string).isRequired,
+  onChangeFunc: _react.PropTypes.func.isRequired,
+  initialValue: _react.PropTypes.string.isRequired
 };
 
 exports.default = DropDownInput;
@@ -33767,17 +33781,13 @@ var OptionsPane = exports.OptionsPane = function (_Component) {
           innerContent = _react2.default.createElement(
             'div',
             { className: 'style-item-container' },
-            _react2.default.createElement(
-              'div',
-              { className: 'style-item' },
-              _react2.default.createElement(_IncrementingNumberInput2.default, {
-                incrementValueFunc: this.handleIncreaseGlobalWidth,
-                textChangeFunc: this.handleChangeGlobalWidth,
-                decrementValueFunc: this.handleDecreaseGlobalWidth,
-                startingValue: globalOptions.width,
-                inputName: 'Global Width'
-              })
-            ),
+            _react2.default.createElement(_IncrementingNumberInput2.default, {
+              incrementValueFunc: this.handleIncreaseGlobalWidth,
+              textChangeFunc: this.handleChangeGlobalWidth,
+              decrementValueFunc: this.handleDecreaseGlobalWidth,
+              initialValue: globalOptions.width,
+              inputName: 'Global Width'
+            }),
             _react2.default.createElement(
               'div',
               { className: 'style-item' },
@@ -34031,14 +34041,14 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var TextInput = function TextInput(props) {
   var inputName = props.inputName,
-      startingValue = props.startingValue,
+      initialValue = props.initialValue,
       textChangeFunc = props.textChangeFunc;
 
   var inputId = (0, _lodash.kebabCase)((0, _lodash.lowerCase)(inputName));
 
   return _react2.default.createElement(
     'div',
-    null,
+    { className: 'style-item' },
     _react2.default.createElement(
       'label',
       { className: 'style-item__label', htmlFor: inputId },
@@ -34047,12 +34057,7 @@ var TextInput = function TextInput(props) {
     _react2.default.createElement(
       'div',
       { className: 'style-item__input' },
-      _react2.default.createElement('input', {
-        type: 'text',
-        value: startingValue,
-        onChange: textChangeFunc,
-        id: inputId
-      })
+      _react2.default.createElement('input', { type: 'text', value: initialValue, onChange: textChangeFunc, id: inputId })
     )
   );
 };
@@ -34060,7 +34065,7 @@ var TextInput = function TextInput(props) {
 TextInput.propTypes = {
   inputName: _react.PropTypes.string.isRequired,
   textChangeFunc: _react.PropTypes.func.isRequired,
-  startingValue: _react.PropTypes.string.isRequired
+  initialValue: _react.PropTypes.string.isRequired
 };
 
 exports.default = TextInput;

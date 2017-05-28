@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import { lowerCase, kebabCase, uniqueId } from 'lodash';
 
 const DropDownInput = (props) => {
-  const { inputName, options } = props;
+  const { inputName, options, onChangeFunc, initialValue } = props;
   const optionItems = options.map(optionItem => (
     <option
       value={optionItem}
@@ -12,11 +12,13 @@ const DropDownInput = (props) => {
   const selectId = kebabCase(lowerCase(inputName));
 
   return (
-    <div>
-      <label htmlFor={selectId}>{inputName}</label>
-      <select id={selectId}>
-        {optionItems}
-      </select>
+    <div className="style-item">
+      <label className="style-item__label" htmlFor={selectId}>{inputName}</label>
+      <div className="style-item__input">
+        <select id={selectId} onChange={onChangeFunc} value={initialValue}>
+          {optionItems}
+        </select>
+      </div>
     </div>
   );
 };
@@ -25,6 +27,8 @@ const DropDownInput = (props) => {
 DropDownInput.propTypes = {
   inputName: PropTypes.string.isRequired,
   options: PropTypes.arrayOf(PropTypes.string).isRequired,
+  onChangeFunc: PropTypes.func.isRequired,
+  initialValue: PropTypes.string.isRequired,
 };
 
 export default DropDownInput;
