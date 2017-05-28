@@ -48,12 +48,12 @@ const ComponentSettings = (props) => {
           <TextInput
             inputName="Line Height"
             initialValue={componentOptions.lineHeight}
-            textChangeFunc={handleOnChange(componentInfo, 'lineHeight')}
+            onChangeFunc={handleOnChange(componentInfo, 'lineHeight')}
           />
           <TextInput
             inputName="Font Size"
             initialValue={componentOptions.fontSize}
-            textChangeFunc={handleOnChange(componentInfo, 'fontSize')}
+            onChangeFunc={handleOnChange(componentInfo, 'fontSize')}
           />
           <DropDownInput
             inputName="Text Align"
@@ -64,7 +64,7 @@ const ComponentSettings = (props) => {
           <TextInput
             inputName="Inner Content"
             initialValue={componentOptions.innerContent}
-            textChangeFunc={handleOnChange(componentInfo, 'innerContent')}
+            onChangeFunc={handleOnChange(componentInfo, 'innerContent')}
           />
         </div>
       );

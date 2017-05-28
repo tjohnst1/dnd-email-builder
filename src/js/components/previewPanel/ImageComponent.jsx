@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
-import { selectComponent } from '../../actions/actions';
+import { selectComponent, switchTab } from '../../actions/actions';
 
 const ImageComponent = (props) => {
   const { blockId, dispatch, selected } = props;
@@ -20,6 +20,7 @@ const ImageComponent = (props) => {
       },
     };
     dispatch(selectComponent(componentInfo));
+    dispatch(switchTab('Styles'));
   }
 
   let imgElement;

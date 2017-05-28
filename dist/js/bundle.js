@@ -33479,12 +33479,12 @@ var ComponentSettings = function ComponentSettings(props) {
           _react2.default.createElement(_TextInput2.default, {
             inputName: 'Line Height',
             initialValue: componentOptions.lineHeight,
-            textChangeFunc: handleOnChange(componentInfo, 'lineHeight')
+            onChangeFunc: handleOnChange(componentInfo, 'lineHeight')
           }),
           _react2.default.createElement(_TextInput2.default, {
             inputName: 'Font Size',
             initialValue: componentOptions.fontSize,
-            textChangeFunc: handleOnChange(componentInfo, 'fontSize')
+            onChangeFunc: handleOnChange(componentInfo, 'fontSize')
           }),
           _react2.default.createElement(_DropDownInput2.default, {
             inputName: 'Text Align',
@@ -33495,7 +33495,7 @@ var ComponentSettings = function ComponentSettings(props) {
           _react2.default.createElement(_TextInput2.default, {
             inputName: 'Inner Content',
             initialValue: componentOptions.innerContent,
-            textChangeFunc: handleOnChange(componentInfo, 'innerContent')
+            onChangeFunc: handleOnChange(componentInfo, 'innerContent')
           })
         );
         break;
@@ -34042,7 +34042,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var TextInput = function TextInput(props) {
   var inputName = props.inputName,
       initialValue = props.initialValue,
-      textChangeFunc = props.textChangeFunc;
+      onChangeFunc = props.onChangeFunc;
 
   var inputId = (0, _lodash.kebabCase)((0, _lodash.lowerCase)(inputName));
 
@@ -34057,14 +34057,14 @@ var TextInput = function TextInput(props) {
     _react2.default.createElement(
       'div',
       { className: 'style-item__input' },
-      _react2.default.createElement('input', { type: 'text', value: initialValue, onChange: textChangeFunc, id: inputId })
+      _react2.default.createElement('input', { type: 'text', value: initialValue, onChange: onChangeFunc, id: inputId })
     )
   );
 };
 
 TextInput.propTypes = {
   inputName: _react.PropTypes.string.isRequired,
-  textChangeFunc: _react.PropTypes.func.isRequired,
+  onChangeFunc: _react.PropTypes.func.isRequired,
   initialValue: _react.PropTypes.string.isRequired
 };
 
@@ -34562,6 +34562,7 @@ var ImageComponent = function ImageComponent(props) {
       }
     };
     dispatch((0, _actions.selectComponent)(componentInfo));
+    dispatch((0, _actions.switchTab)('Styles'));
   }
 
   var imgElement = void 0;
@@ -34760,6 +34761,7 @@ var TextComponent = function TextComponent(props) {
       }
     };
     dispatch((0, _actions.selectComponent)(componentInfo));
+    dispatch((0, _actions.switchTab)('Styles'));
   }
 
   var styles = {

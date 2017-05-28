@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
-import { selectComponent } from '../../actions/actions';
+import { selectComponent, switchTab } from '../../actions/actions';
 
 const TextComponent = (props) => {
   const { blockId, dispatch, selected } = props;
@@ -24,6 +24,7 @@ const TextComponent = (props) => {
       },
     };
     dispatch(selectComponent(componentInfo));
+    dispatch(switchTab('Styles'));
   }
 
   const styles = {
