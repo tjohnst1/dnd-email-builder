@@ -1,7 +1,8 @@
 import generateEmailCode from '../data/contentGenerators';
 import { CHANGE_GLOBAL_WIDTH, CHANGE_BACKGROUND_COLOR, ADD_BLOCK_TO_PREVIEW,
   REMOVE_BLOCK_FROM_PREVIEW, MOVE_BLOCK_IN_PREVIEW, CLEAR_MARKER_FROM_PREVIEW,
-  MOVE_MARKER, REMOVE_ALL_BLOCKS_IN_PREVIEW, SELECT_COMPONENT } from '../actions/actions';
+  MOVE_MARKER, REMOVE_ALL_BLOCKS_IN_PREVIEW, SELECT_COMPONENT,
+  UPDATE_COMPONENT_VALUE } from '../actions/actions';
 
 
 const emailPreviewState = {
@@ -122,6 +123,32 @@ export function emailPreview(state = emailPreviewState, action) {
       return Object.assign({}, state, {
         selected: newSelected,
       });
+
+    case UPDATE_COMPONENT_VALUE:
+      const { componentInfo, property, value } = action;
+      let updatedComponent;
+      temp = blocks.slice().map((block) => {
+        // find the block in question
+        if (block.blockId === componentInfo.blockId) {
+          // find the relevant component in the block
+          block.content.map((component) => {
+            if (component.componentId === componentInfo.componentId) {
+              // update the value
+              component[property] = value;
+            }
+            updatedComponent = component;
+            return component;
+          })
+        }
+        return block;
+      });
+
+      return Object.assign({}, state, {
+        blocks: temp,
+        code: generateEmailCode(temp),
+        selected: Object.assign({}, state.selected, {componentOptions: updatedComponent}),
+      }
+    );
 
     default:
       return state;

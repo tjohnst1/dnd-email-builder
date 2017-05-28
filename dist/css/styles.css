@@ -539,7 +539,7 @@ main {
   margin: 0 0 0 10px;
   vertical-align: middle; }
 
-.global-width {
+.incrementing-number-input {
   height: 25px;
   width: 50px;
   display: inline-block;
@@ -550,17 +550,17 @@ main {
   margin: 0;
   vertical-align: top; }
 
-.global-width__button {
+.incrementing-number-input__button {
   border: 0;
   border-radius: 0;
   height: 25px;
   width: 25px;
   display: inline-block;
   vertical-align: top; }
-  .global-width__button:first-of-type {
+  .incrementing-number-input__button:first-of-type {
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px; }
-  .global-width__button:last-of-type {
+  .incrementing-number-input__button:last-of-type {
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px; }
 

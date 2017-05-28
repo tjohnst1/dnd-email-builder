@@ -4,7 +4,8 @@ import { uniqueId } from 'lodash';
 import classNames from 'classnames';
 import { SketchPicker } from 'react-color';
 import { switchCategory, fetchEmailBlocksIfNeeded, changeGlobalWidth,
-  changeBackgroundColor, clearMarkerFromPreview } from '../../actions/actions';
+  changeBackgroundColor, clearMarkerFromPreview, updateComponentValue } from '../../actions/actions';
+import IncrementingNumberInput from './IncrementingNumberInput';
 import ComponentSettings from './ComponentSettings';
 import Button from './Button';
 import Block from './Block';
@@ -19,6 +20,8 @@ export class OptionsPane extends Component {
     this.handleChangeBackgroundColor = this.handleChangeBackgroundColor.bind(this);
     this.handleClearMarkerFromPreview = this.handleClearMarkerFromPreview.bind(this);
     this.toggleColorPicker = this.toggleColorPicker.bind(this);
+    this.handleOnClick = this.handleOnClick.bind(this);
+    this.handleOnChange = this.handleOnChange.bind(this);
     this.state = {
       showColorPicker: false,
     };
@@ -52,6 +55,18 @@ export class OptionsPane extends Component {
 
   handleClearMarkerFromPreview() {
     this.props.dispatch(clearMarkerFromPreview());
+  }
+
+  handleOnChange(componentInfo, category) {
+    return (e) => {
+      this.props.dispatch(updateComponentValue(componentInfo, category, e.target.value));
+    };
+  }
+
+  handleOnClick(componentInfo, category, value) {
+    return () => {
+      this.props.dispatch(updateComponentValue(componentInfo, category, value));
+    };
   }
 
   toggleColorPicker() {
@@ -96,24 +111,13 @@ export class OptionsPane extends Component {
         innerContent = (
           <div className="style-item-container">
             <div className="style-item">
-              <label className="style-item__label" htmlFor="global-width">Global Width</label>
-              <div className="style-item__input">
-                <button
-                  className="global-width__button"
-                  onClick={this.handleDecreaseGlobalWidth}
-                >-</button>
-                <input
-                  type="text"
-                  value={globalOptions.width}
-                  onChange={this.handleChangeGlobalWidth}
-                  className="global-width"
-                  id="global-width"
-                />
-                <button
-                  className="global-width__button"
-                  onClick={this.handleIncreaseGlobalWidth}
-                >+</button>
-              </div>
+              <IncrementingNumberInput
+                incrementValueFunc={this.handleIncreaseGlobalWidth}
+                textChangeFunc={this.handleChangeGlobalWidth}
+                decrementValueFunc={this.handleDecreaseGlobalWidth}
+                startingValue={globalOptions.width}
+                inputName="Global Width"
+              />
             </div>
             <div className="style-item">
               <label
@@ -133,7 +137,13 @@ export class OptionsPane extends Component {
                 /> : null }
               </div>
             </div>
-            <ComponentSettings componentOptions={selected.componentOptions} />
+            { selected ?
+              <ComponentSettings
+                selected={selected}
+                handleOnClick={this.handleOnClick}
+                handleOnChange={this.handleOnChange}
+              /> : null
+            }
           </div>
         );
         break;

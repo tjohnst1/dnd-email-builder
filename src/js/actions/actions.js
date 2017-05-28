@@ -1,4 +1,4 @@
-import { isEmpty, uniqueId } from 'lodash';
+import { isEmpty, uniqueId, cloneDeep } from 'lodash';
 
 export const SWITCH_TAB = 'SWITCH_TAB';
 export const SWITCH_CATEGORY = 'SWITCH_CATEGORY';
@@ -14,6 +14,7 @@ export const CLEAR_MARKER_FROM_PREVIEW = 'CLEAR_MARKER_FROM_PREVIEW';
 export const MOVE_MARKER = 'MOVE_MARKER';
 export const TOGGLE_EXPORT_MODAL = 'TOGGLE_EXPORT_MODAL';
 export const SELECT_COMPONENT = 'SELECT_COMPONENT';
+export const UPDATE_COMPONENT_VALUE = 'UPDATE_COMPONENT_VALUE';
 
 import database from '../store/firebase'
 
@@ -81,12 +82,27 @@ export function changeGlobalWidth(width) {
   };
 }
 
+export function updateComponentValue(componentInfo, property, value) {
+  return {
+    type: UPDATE_COMPONENT_VALUE,
+    componentInfo,
+    property,
+    value,
+  }
+}
+
 export function addBlockToPreview(blockId) {
   return (dispatch, getState) => {
-    const blockPrototype = getState().blocks.all.filter((block) => block.id === blockId)[0]
-    const blockToAdd = Object.assign({}, blockPrototype, {
-      blockId: uniqueId(),
-    });
+    const newBlockId = uniqueId();
+    const clonedState = cloneDeep(getState())
+    let blockToAdd = clonedState.blocks.all.filter((block) => block.id === blockId)[0];
+    blockToAdd.blockId = newBlockId;
+    blockToAdd.content = blockToAdd.content.map((component, i) => {
+      const newComponent = component;
+      newComponent.componentId = `${newBlockId}-${i + 1}`;
+      return newComponent;
+    })
+
     dispatch(actuallyAddBlockToPreview(blockToAdd));
   };
 }

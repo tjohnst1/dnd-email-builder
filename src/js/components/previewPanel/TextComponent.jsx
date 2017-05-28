@@ -4,8 +4,8 @@ import classNames from 'classnames';
 import { selectComponent } from '../../actions/actions';
 
 const TextComponent = (props) => {
-  const { blockId, componentId, dispatch, selected } = props;
-  const { color, fontSize, lineHeight,
+  const { blockId, dispatch, selected } = props;
+  const { color, fontSize, lineHeight, componentId,
     fontFamily, textAlign, innerContent } = props.content[0];
 
   function handleSelectComponent(e) {
@@ -53,9 +53,9 @@ TextComponent.propTypes = {
       fontFamily: PropTypes.string.isRequired,
       textAlign: PropTypes.string.isRequired,
       innerContent: PropTypes.string.isRequired,
+      componentId: PropTypes.string.isRequired,
     }),
   ).isRequired,
-  componentId: PropTypes.string.isRequired,
   blockId: PropTypes.string.isRequired,
   dispatch: PropTypes.func.isRequired,
   selected: PropTypes.shape({

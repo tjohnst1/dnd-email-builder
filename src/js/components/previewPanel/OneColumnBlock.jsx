@@ -5,14 +5,13 @@ import TextComponent from './TextComponent';
 const OneColumnBlock = (props) => {
   const { content, globalOptions, blockId } = props;
   const { type } = content[0];
-  const componentId = `${blockId}-1`;
 
   let component;
 
   if (type === 'image') {
-    component = <ImageComponent content={content} blockId={blockId} componentId={componentId} />;
+    component = <ImageComponent content={content} blockId={blockId} />;
   } else if (type === 'text') {
-    component = (<TextComponent content={content} blockId={blockId} componentId={componentId} />);
+    component = (<TextComponent content={content} blockId={blockId} />);
   }
 
   const styles = {

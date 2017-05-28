@@ -4,8 +4,8 @@ import classNames from 'classnames';
 import { selectComponent } from '../../actions/actions';
 
 const ImageComponent = (props) => {
-  const { blockId, componentId, dispatch, selected } = props;
-  const { link, src, width } = props.content[0];
+  const { blockId, dispatch, selected } = props;
+  const { link, src, width, componentId } = props.content[0];
 
   function handleSelectComponent(e) {
     e.stopPropagation();
@@ -68,10 +68,10 @@ ImageComponent.propTypes = {
     PropTypes.shape({
       link: PropTypes.shape.isRequired,
       src: PropTypes.string.isRequired,
-      width: PropTypes.string.isRequired,
+      width: PropTypes.number.isRequired,
+      componentId: PropTypes.string.isRequired,
     }),
   ).isRequired,
-  componentId: PropTypes.string.isRequired,
   blockId: PropTypes.string.isRequired,
   dispatch: PropTypes.func.isRequired,
   selected: PropTypes.shape({
