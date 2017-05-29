@@ -690,16 +690,16 @@ body {
   width: 70%;
   background: #39464a;
   margin: 0 auto;
-  height: 77%;
+  padding: 1rem;
   border-radius: 1rem;
   text-align: center; }
 
 .export-modal__code-block {
-  text-align: left;
-  margin: 1rem;
-  height: 90%; }
+  text-align: left; }
   .export-modal__code-block pre, .export-modal__code-block code {
-    height: 100%;
+    margin: 0;
+    min-height: 300px;
+    height: 50vh;
     width: 100%;
     overflow: auto;
     font-size: 1.4rem; }
@@ -708,6 +708,7 @@ body {
   border: 0;
   padding: 0.5rem 1rem;
   border-radius: 0.5rem;
+  margin: 1rem 0 0 0;
   font-size: 1.2rem;
   background: #232B2D;
   color: #d8d8d8;
