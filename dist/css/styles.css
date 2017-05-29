@@ -385,6 +385,9 @@ body {
   padding: 0;
   margin: 0; }
 
+*:focus {
+  outline: none; }
+
 .panel-container {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -708,7 +711,7 @@ body {
   border: 0;
   padding: 0.5rem 1rem;
   border-radius: 0.5rem;
-  margin: 1rem 0 0 0;
+  margin: 1rem 0.5rem 0;
   font-size: 1.2rem;
   background: #232B2D;
   color: #d8d8d8;

@@ -17,6 +17,10 @@ body {
   margin: 0;
 }
 
+*:focus {
+    outline: none;
+}
+
 .panel-container {
   display: flex;
   height: 100%;
