@@ -7,7 +7,7 @@ import { switchCategory, fetchEmailBlocksIfNeeded, changeGlobalWidth,
   changeBackgroundColor, clearMarkerFromPreview, updateComponentValue } from '../../actions/actions';
 import IncrementingNumberInput from './IncrementingNumberInput';
 import ComponentSettings from './ComponentSettings';
-import Button from './Button';
+import MenuItem from './MenuItem';
 import Block from './Block';
 
 export class OptionsPane extends Component {
@@ -88,12 +88,13 @@ export class OptionsPane extends Component {
       case 'Blocks':
         if (blocks.all.length > 0) {
           if (currentCategory === null) {
-            innerContent = blocks.categories.map(category => <Button
+            innerContent = blocks.categories.map(category => <MenuItem
               icon={category.image}
               text={category.name}
               handleSwitchCategory={this.handleSwitchCategory(category.name)}
               key={uniqueId()}
             />);
+            innerContent.unshift((<p className="options-pane__category" key={uniqueId()}>Categories</p>))
           } else {
             const blocksByCategory = blocks.all
               .filter(block => block.category === currentCategory);
@@ -121,7 +122,7 @@ export class OptionsPane extends Component {
               <label
                 className="style-item__label"
                 htmlFor="background-color"
-              >Background Color:</label>
+              >Background Color</label>
               <div className="style-item__input color-picker">
                 <button className="color-input" onClick={this.toggleColorPicker}>
                   <div className="color-input__swatch" style={csInnerStyles} />
@@ -151,7 +152,6 @@ export class OptionsPane extends Component {
 
     const classes = classNames({
       'options-pane': true,
-      'options-pane--columns': currentCategory !== null,
     });
 
     return (

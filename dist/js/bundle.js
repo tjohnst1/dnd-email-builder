@@ -32923,10 +32923,6 @@ var _configureStore = __webpack_require__(253);
 
 var _configureStore2 = _interopRequireDefault(_configureStore);
 
-var _MenuBar = __webpack_require__(244);
-
-var _MenuBar2 = _interopRequireDefault(_MenuBar);
-
 var _OptionsPanel = __webpack_require__(245);
 
 var _OptionsPanel2 = _interopRequireDefault(_OptionsPanel);
@@ -32950,7 +32946,6 @@ var App = function App() {
     _react2.default.createElement(
       'main',
       null,
-      _react2.default.createElement(_MenuBar2.default, null),
       _react2.default.createElement(
         _reactDnd.DragDropContextProvider,
         { backend: _reactDndHtml5Backend2.default },
@@ -33351,48 +33346,7 @@ Block.propTypes = {
 exports.default = (0, _reactDnd.DragSource)('BLOCK', blockSource, collect)(Block);
 
 /***/ }),
-/* 230 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _react = __webpack_require__(1);
-
-var _react2 = _interopRequireDefault(_react);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var Button = function Button(props) {
-  var icon = props.icon,
-      text = props.text,
-      handleSwitchCategory = props.handleSwitchCategory;
-
-  return _react2.default.createElement(
-    "button",
-    { className: "options-panel-button", onClick: handleSwitchCategory },
-    _react2.default.createElement("img", { className: "options-panel-button__img", src: icon, alt: text }),
-    _react2.default.createElement(
-      "p",
-      null,
-      text
-    )
-  );
-};
-
-Button.propTypes = {
-  icon: _react.PropTypes.string.isRequired,
-  text: _react.PropTypes.string.isRequired,
-  handleSwitchCategory: _react.PropTypes.func.isRequired
-};
-
-exports.default = Button;
-
-/***/ }),
+/* 230 */,
 /* 231 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -33627,9 +33581,9 @@ var _ComponentSettings = __webpack_require__(231);
 
 var _ComponentSettings2 = _interopRequireDefault(_ComponentSettings);
 
-var _Button = __webpack_require__(230);
+var _MenuItem = __webpack_require__(888);
 
-var _Button2 = _interopRequireDefault(_Button);
+var _MenuItem2 = _interopRequireDefault(_MenuItem);
 
 var _Block = __webpack_require__(229);
 
@@ -33754,13 +33708,18 @@ var OptionsPane = exports.OptionsPane = function (_Component) {
           if (blocks.all.length > 0) {
             if (currentCategory === null) {
               innerContent = blocks.categories.map(function (category) {
-                return _react2.default.createElement(_Button2.default, {
+                return _react2.default.createElement(_MenuItem2.default, {
                   icon: category.image,
                   text: category.name,
                   handleSwitchCategory: _this5.handleSwitchCategory(category.name),
                   key: (0, _lodash.uniqueId)()
                 });
               });
+              innerContent.unshift(_react2.default.createElement(
+                'p',
+                { className: 'options-pane__category', key: (0, _lodash.uniqueId)() },
+                'Categories'
+              ));
             } else {
               var blocksByCategory = blocks.all.filter(function (block) {
                 return block.category === currentCategory;
@@ -33797,7 +33756,7 @@ var OptionsPane = exports.OptionsPane = function (_Component) {
                   className: 'style-item__label',
                   htmlFor: 'background-color'
                 },
-                'Background Color:'
+                'Background Color'
               ),
               _react2.default.createElement(
                 'div',
@@ -33836,8 +33795,7 @@ var OptionsPane = exports.OptionsPane = function (_Component) {
       }
 
       var classes = (0, _classnames2.default)({
-        'options-pane': true,
-        'options-pane--columns': currentCategory !== null
+        'options-pane': true
       });
 
       return _react2.default.createElement(
@@ -34436,7 +34394,7 @@ var EmailPreview = exports.EmailPreview = function (_Component) {
       };
 
       var classes = (0, _classnames2.default)({
-        'center-block': true,
+        'email-preview': true,
         hovering: isOver && blocksToRender.length === 0
       });
 
@@ -34946,31 +34904,16 @@ var MenuBar = function MenuBar(props) {
 
   return _react2.default.createElement(
     'section',
-    { className: 'menu-bar container' },
+    { className: 'menu-bar' },
     _react2.default.createElement(
-      'h1',
-      { className: 'menu-bar__logo' },
-      'Envelope'
+      'button',
+      { className: 'menu-bar__option', onClick: handleRemoveAllBlocks },
+      'Clear'
     ),
     _react2.default.createElement(
-      'div',
-      null,
-      _react2.default.createElement(
-        'button',
-        {
-          className: 'menu-bar__button button',
-          onClick: handleToggleExportModal
-        },
-        'Export'
-      ),
-      _react2.default.createElement(
-        'button',
-        {
-          className: 'menu-bar__button button',
-          onClick: handleRemoveAllBlocks
-        },
-        'Clear'
-      )
+      'button',
+      { className: 'menu-bar__option button', onClick: handleToggleExportModal },
+      'Export'
     )
   );
 };
@@ -35044,12 +34987,17 @@ var _EmailPreview = __webpack_require__(239);
 
 var _EmailPreview2 = _interopRequireDefault(_EmailPreview);
 
+var _MenuBar = __webpack_require__(244);
+
+var _MenuBar2 = _interopRequireDefault(_MenuBar);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var PreviewPanel = function PreviewPanel() {
   return _react2.default.createElement(
     'section',
     { className: 'preview-panel' },
+    _react2.default.createElement(_MenuBar2.default, null),
     _react2.default.createElement(_EmailPreview2.default, null)
   );
 };
@@ -94605,6 +94553,50 @@ __webpack_require__(884);
 exports.setImmediate = setImmediate;
 exports.clearImmediate = clearImmediate;
 
+
+/***/ }),
+/* 888 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _lodash = __webpack_require__(25);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var MenuItem = function MenuItem(props) {
+  var text = props.text,
+      icon = props.icon,
+      handleSwitchCategory = props.handleSwitchCategory;
+
+  return _react2.default.createElement(
+    'button',
+    { className: 'options-pane__item', onClick: handleSwitchCategory },
+    _react2.default.createElement('img', { src: icon, alt: text }),
+    _react2.default.createElement(
+      'p',
+      null,
+      (0, _lodash.startCase)(text)
+    )
+  );
+};
+
+MenuItem.propTypes = {
+  icon: _react.PropTypes.string.isRequired,
+  text: _react.PropTypes.string.isRequired,
+  handleSwitchCategory: _react.PropTypes.func.isRequired
+};
+
+exports.default = MenuItem;
 
 /***/ })
 /******/ ]);

@@ -83,7 +83,7 @@ export class EmailPreview extends Component {
     };
 
     const classes = classNames({
-      'center-block': true,
+      'email-preview': true,
       hovering: isOver && (blocksToRender.length === 0),
     });
 

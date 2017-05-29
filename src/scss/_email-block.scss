@@ -1,0 +1,19 @@
+.center-block {
+  margin: 0 auto;
+  display: block;
+}
+
+.img {
+  max-width: 100%;
+  display: block;
+}
+
+.width-90 {
+  width: 90%;
+}
+
+@media screen and (max-width: 640px) {
+  .w100 {
+    width: 100%;
+  }
+}

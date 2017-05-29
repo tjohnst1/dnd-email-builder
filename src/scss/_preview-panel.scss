@@ -1,16 +1,11 @@
 .preview-panel {
-  margin: 10px;
+  width: 75%;
   display: flex;
-  flex: 1;
-  border-radius: 5px;
-  overflow: hidden;
+  flex-direction: column;
 }
 
-.preview-panel .center-block {
-  width: 100%;
+.email-preview {
   height: 100%;
-  position: relative;
-  overflow: hidden;
   &.hovering {
     border: 5px solid $blue;
   }
@@ -22,28 +17,7 @@
 
 .preview-panel--empty {
   text-align: center;
-  width: 100%;
+  width: 70%;
   position: absolute;
   top: 50%;
-}
-
-.img {
-  max-width: 100%;
-  display: block;
-}
-
-.center-block {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.width-90 {
-  width: 90%;
-}
-
-@media screen and (max-width: 640px) {
-  .w100 {
-    width: 100%;
-  }
 }

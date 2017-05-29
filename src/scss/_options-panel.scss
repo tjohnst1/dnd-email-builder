@@ -1,54 +1,115 @@
 .options-panel {
-  display: flex;
-  flex-direction: column;
-  width: 30%;
-  max-width: 350px;
-  padding: 10px;
-  background: $lightgrey;
+  width: 25%;
+  min-width: 350px;
+  padding: 0;
+  background: $darkgrey;
 }
+
 .tabs {
-  display: flex;
-  width: 100%;
   padding: 0;
   margin: 0;
-  li {
-    list-style: none;
-    text-align: center;
-    flex: 1;
-    &:first-of-type button {
-      border-top-left-radius: 6px;
-      border-bottom-left-radius: 6px;
-      border-right: none;
-    }
-    &:last-of-type button {
-      border-top-right-radius: 6px;
-      border-bottom-right-radius: 6px;
-      border-left: none;
-    }
-    button {
-      width: 100%;
-      border-radius: 0;
-      border: 0;
-      padding: 10px;
-      transition: all 300ms;
-      color: $offwhite;
-      background: $offwhite;
-      color: $grey;
-      border: 2px solid $grey;
-      cursor: pointer;
-      font-size: 12px;
-      font-weight: 300;
-      &:hover {
-        background: $green;
-        color: $offwhite;
-      }
-    }
-    &.active button {
+  text-align: left;
+}
+
+.tab {
+  list-style: none;
+  display: inline-block;
+  width: 50%;
+  button {
+    width: 100%;
+    padding: 1rem 1.5rem;
+    border: 0;
+    color: $lightgrey;
+    background: lighten($darkgrey, 10%);
+    font-weight: 700;
+    cursor: pointer;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    &:hover {
       background: $green;
-      border: 2px solid $green;
       color: $offwhite;
-      border: 2px solid darken($green, 10%);
     }
+  }
+  &.active button {
+    background: $darkgrey;
+    color: $offwhite;
+  }
+}
+
+.options-pane {
+  background: #ffffff;
+  background: $darkgrey;
+  padding: 1rem;
+}
+
+.options-pane__category {
+  color: $grey;
+  text-transform: uppercase;
+  font-size: 1rem;
+  font-weight: 700;
+  border-bottom: 1px solid lighten($darkgrey, 10%);
+  padding: 1rem 0;
+  margin: 0.1rem 0 1rem 0;
+  border-top: 1px solid lighten($darkgrey, 10%);
+}
+
+.options-pane__item {
+  border-radius: 0;
+  color: $lightgrey;
+  background: white;
+  cursor: pointer;
+  width: 100%;
+  border: 0;
+  padding: 1rem 0;
+  font-size: 1.4rem;
+  background: none;
+  text-align: left;
+  font-weight: 700;
+  img {
+    width: 2rem;
+    display: inline-block;
+    vertical-align: middle;
+  }
+  p {
+    display: inline-block;
+    margin: 0 0 0 1rem;
+  }
+  &:hover {
+    color: white;
+    fill: white;
+  }
+}
+
+.email-block {
+  display: inline-block;
+  width: 48%;
+  margin: 1%;
+  cursor: move;
+  cursor: grab;
+  background: lighten($darkgrey, 10%);
+  color: $lightgrey;
+  border-radius: 5px;
+  overflow: hidden;
+  padding: 5px;
+  img, p {
+    display: block;
+    padding: 0;
+    margin: 0;
+  }
+  img {
+    max-width: 100%;
+    width: 40%;
+    margin: 0 auto;
+  }
+  p {
+    font-size: 12px;
+    text-align: center;
+    margin-top: 5px;
+    font-weight: 700;
+    text-transform: capitalize;
+  }
+  &:active {
+    cursor: grabbing;
   }
 }
 
@@ -59,9 +120,9 @@
 .style-item {
   display: block;
   width: 100%;
-  padding: 10px 20px;
+  padding: 1rem 2rem;
   margin: 0;
-  border-top: 1px solid $lightgrey;
+  border-top: 1px solid lighten($darkgrey, 10%);
   font-size: 12px;
   .style-item__label, .style-item__input {
     display: inline-block;
@@ -69,6 +130,8 @@
   }
   .style-item__label {
     width: 40%;
+    color: darken($lightgrey, 10%);
+    font-weight: 700;
   }
   .style-item__input {
     width: 60%;
@@ -83,27 +146,44 @@
 }
 
 .component-settings {
-  border: 1px solid $lightgrey;
+  background: lighten($darkgrey, 20%);
   border-radius: 15px;
-  padding: 10px;
+  padding: 1rem;
   .style-item {
-    padding: 15px 10px;
+    padding: 15px 1rem;
     &:last-of-type {
-      padding: 15px 10px 5px;
+      padding: 15px 1rem 5px;
     }
+  }
+  .style-item__label {
+    color: $lightgrey;
+  }
+  select, input {
+    background: $offwhite;
+    border: 0;
+    padding: 0.5rem 1rem;
+    font-size: 1.2rem;
+    font-weight: 500;
+  }
+  .incrementing-number-input {
+    color: $darkgrey;
   }
 }
 
 .component-settings__title {
   margin: 0;
   text-align: center;
+  text-transform: uppercase;
+  font-size: 1rem;
+  font-weight: 700;
+  color: $darkgrey;
 }
 
 .color-picker {
   position: relative;
   .sketch-picker {
     position: absolute;
-    top: 20px;
+    top: 2rem;
     right: 0;
     z-index: 99;
   }
@@ -112,9 +192,10 @@
 .color-input {
   height: 25px;
   width: 110px;
-  border: 1px solid $lightgrey;
-  padding: 3px 10px 3px 5px;
-  background: #ffffff;
+  background: lighten($darkgrey, 20%);
+  border: 0;
+  padding: 0.3rem 1rem 0.3rem 0.5rem;
+  border-radius: 5px;
 }
 
 .color-input__swatch {
@@ -128,8 +209,10 @@
 
 .color-input__text {
   display: inline-block;
-  margin: 0 0 0 10px;
+  margin: 0 0 0 1rem;
   vertical-align: middle;
+  font-size: 1.2rem;
+  color: $lightgrey;
 }
 
 .incrementing-number-input {
@@ -137,7 +220,9 @@
   width: 60px !important;
   display: inline-block;
   border: 0;
-  background: #eee;
+  background: lighten($darkgrey, 20%);
+  font-size: 1.2rem;
+  color: $lightgrey;
   text-align: center;
   padding: 0;
   margin: 0;
@@ -151,6 +236,10 @@
   width: 25px;
   display: inline-block;
   vertical-align: top;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: $darkgrey;
+  background: darken($lightgrey, 10%);
   &:first-of-type {
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
@@ -158,98 +247,5 @@
   &:last-of-type {
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
-  }
-}
-
-.options-pane {
-  margin: 10px 0 0 0;
-  background: #ffffff;
-  border-radius: 5px;
-  overflow: hidden;
-  padding: 10px;
-  display: flex;
-  justify-content: space-between;
-  flex: 1;
-  align-items: flex-start;
-}
-
-.options-pane--columns {
-  flex-direction: column;
-  justify-content: flex-start;
-}
-
-.options-panel-button {
-  border-radius: 0;
-  border: 0;
-  background: white;
-  width: 49%;
-  display: inline-block;
-  padding: 10px;
-  cursor: pointer;
-  border: 1px solid $lightgrey;
-  box-shadow: 0px 2px 0px $lightgrey;
-  border-radius: 5px;
-  transition: all 300ms;
-  &:active {
-    box-shadow: 0px 0px 0px $lightgrey;
-  }
-  &:focus {
-    outline: 0;
-  }
-  img, p {
-    display: block;
-    padding: 0;
-    margin: 0;
-  }
-  img {
-    max-width: 100%;
-  }
-  p {
-    margin-top: 5px;
-    font-weight: 500;
-    text-transform: capitalize;
-  }
-}
-
-.email-block {
-  display: block;
-  margin: 10px 0 0 0;
-  cursor: move;
-  cursor: grab;
-  border: 1px solid $lightgrey;
-  border-radius: 5px;
-  overflow: hidden;
-  padding: 5px;
-  img, p {
-    display: block;
-    padding: 0;
-    margin: 0;
-  }
-  img {
-    max-width: 100%;
-  }
-  p {
-    font-size: 12px;
-    text-align: center;
-    margin-top: 5px;
-    font-weight: 700;
-    text-transform: capitalize;
-  }
-  &:first-of-type {
-    margin: 0;
-  }
-  &:active {
-    cursor: grabbing;
-  }
-}
-
-@media (max-width: 768px) {
-  .options-pane {
-    display: block;
-    padding: 10px;
-  }
-  .options-panel-button {
-    width: 100%;
-    margin: 10px 0 0 0;
   }
 }
