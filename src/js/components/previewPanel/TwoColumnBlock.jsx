@@ -2,17 +2,18 @@ import React, { PropTypes } from 'react';
 import ImageComponent from './ImageComponent';
 import TextComponent from './TextComponent';
 
-const OneColumnBlock = (props) => {
+const TwoColumnBlock = (props) => {
   const { content, globalOptions, blockId } = props;
-  const { type } = content[0];
 
-  let component;
+  let components = [];
 
-  if (type === 'image') {
-    component = <ImageComponent content={content[0]} blockId={blockId} />;
-  } else if (type === 'text') {
-    component = (<TextComponent content={content[0]} blockId={blockId} />);
-  }
+  content.forEach((componentContent) => {
+    if (componentContent.type === 'image') {
+      components.push(<div className="width-50"><ImageComponent content={componentContent} blockId={blockId} /></div>);
+    } else if (componentContent.type === 'text') {
+      components.push(<div className="width-50"><TextComponent content={componentContent} blockId={blockId} /></div>);
+    }
+  })
 
   const styles = {
     paddingTop: '20px',
@@ -23,13 +24,13 @@ const OneColumnBlock = (props) => {
   return (
     <div className="w100" style={styles}>
       <div className="center-block width-90">
-        {component}
+        {components}
       </div>
     </div>
   );
 };
 
-OneColumnBlock.propTypes = {
+TwoColumnBlock.propTypes = {
   content: PropTypes.arrayOf(PropTypes.object).isRequired,
   globalOptions: PropTypes.shape({
     backgroundColor: PropTypes.string,
@@ -38,4 +39,4 @@ OneColumnBlock.propTypes = {
   blockId: PropTypes.string.isRequired,
 };
 
-export default OneColumnBlock;
+export default TwoColumnBlock;

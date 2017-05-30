@@ -96,8 +96,7 @@ export class OptionsPane extends Component {
             />);
             innerContent.unshift((<p className="options-pane__category" key={uniqueId()}>Categories</p>))
           } else {
-            const blocksByCategory = blocks.all
-              .filter(block => block.category === currentCategory);
+            const blocksByCategory = blocks.all.filter(block => block.category === currentCategory);
             innerContent = blocksByCategory.map(block => <Block
               name={block.name}
               image={block.image}

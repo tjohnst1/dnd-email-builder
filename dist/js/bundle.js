@@ -34191,6 +34191,10 @@ var _OneColumnBlock = __webpack_require__(242);
 
 var _OneColumnBlock2 = _interopRequireDefault(_OneColumnBlock);
 
+var _TwoColumnBlock = __webpack_require__(893);
+
+var _TwoColumnBlock2 = _interopRequireDefault(_TwoColumnBlock);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -34233,13 +34237,22 @@ var DroppedBlock = function (_Component) {
 
       // render the correct block based on the category provided
       switch (category) {
-        default:
+        case 'two-column':
+          blockToRender = _react2.default.createElement(_TwoColumnBlock2.default, {
+            content: content,
+            globalOptions: globalOptions,
+            blockId: blockId
+          });
+          break;
+        case 'one-column':
           blockToRender = _react2.default.createElement(_OneColumnBlock2.default, {
             content: content,
             globalOptions: globalOptions,
             blockId: blockId
           });
           break;
+        default:
+          blockToRender = null;
       }
 
       return connectDragSource(connectDropTarget(_react2.default.createElement(
@@ -34607,11 +34620,11 @@ var ImageComponent = function ImageComponent(props) {
   var blockId = props.blockId,
       dispatch = props.dispatch,
       selected = props.selected;
-  var _props$content$ = props.content[0],
-      link = _props$content$.link,
-      src = _props$content$.src,
-      width = _props$content$.width,
-      componentId = _props$content$.componentId;
+  var _props$content = props.content,
+      link = _props$content.link,
+      src = _props$content.src,
+      width = _props$content.width,
+      componentId = _props$content.componentId;
 
 
   function handleSelectComponent(e) {
@@ -34672,12 +34685,12 @@ var ImageComponent = function ImageComponent(props) {
 };
 
 ImageComponent.propTypes = {
-  content: _react.PropTypes.arrayOf(_react.PropTypes.shape({
+  content: _react.PropTypes.shape({
     link: _react.PropTypes.shape.isRequired,
     src: _react.PropTypes.string.isRequired,
     width: _react.PropTypes.number.isRequired,
     componentId: _react.PropTypes.string.isRequired
-  })).isRequired,
+  }).isRequired,
   blockId: _react.PropTypes.string.isRequired,
   dispatch: _react.PropTypes.func.isRequired,
   selected: _react.PropTypes.shape({
@@ -34738,9 +34751,9 @@ var OneColumnBlock = function OneColumnBlock(props) {
   var component = void 0;
 
   if (type === 'image') {
-    component = _react2.default.createElement(_ImageComponent2.default, { content: content, blockId: blockId });
+    component = _react2.default.createElement(_ImageComponent2.default, { content: content[0], blockId: blockId });
   } else if (type === 'text') {
-    component = _react2.default.createElement(_TextComponent2.default, { content: content, blockId: blockId });
+    component = _react2.default.createElement(_TextComponent2.default, { content: content[0], blockId: blockId });
   }
 
   var styles = {
@@ -34800,14 +34813,14 @@ var TextComponent = function TextComponent(props) {
   var blockId = props.blockId,
       dispatch = props.dispatch,
       selected = props.selected;
-  var _props$content$ = props.content[0],
-      color = _props$content$.color,
-      fontSize = _props$content$.fontSize,
-      lineHeight = _props$content$.lineHeight,
-      componentId = _props$content$.componentId,
-      fontFamily = _props$content$.fontFamily,
-      textAlign = _props$content$.textAlign,
-      innerContent = _props$content$.innerContent;
+  var _props$content = props.content,
+      color = _props$content.color,
+      fontSize = _props$content.fontSize,
+      lineHeight = _props$content.lineHeight,
+      componentId = _props$content.componentId,
+      fontFamily = _props$content.fontFamily,
+      textAlign = _props$content.textAlign,
+      innerContent = _props$content.innerContent;
 
 
   function handleSelectComponent(e) {
@@ -34850,7 +34863,7 @@ var TextComponent = function TextComponent(props) {
 };
 
 TextComponent.propTypes = {
-  content: _react.PropTypes.arrayOf(_react.PropTypes.shape({
+  content: _react.PropTypes.shape({
     color: _react.PropTypes.string.isRequired,
     fontSize: _react.PropTypes.string.isRequired,
     lineHeight: _react.PropTypes.string.isRequired,
@@ -34858,7 +34871,7 @@ TextComponent.propTypes = {
     textAlign: _react.PropTypes.string.isRequired,
     innerContent: _react.PropTypes.string.isRequired,
     componentId: _react.PropTypes.string.isRequired
-  })).isRequired,
+  }).isRequired,
   blockId: _react.PropTypes.string.isRequired,
   dispatch: _react.PropTypes.func.isRequired,
   selected: _react.PropTypes.shape({
@@ -35173,25 +35186,38 @@ function generateImageTD(options) {
   return '<td style="padding: ' + optionsToApply.padding + '; font-size: 0; display: block; border: 0;"><img src="' + optionsToApply.src + '" style="display: block; border: 0;"></td>';
 }
 
-function generateOneColumnWrapper(blockName, innerContent) {
-  return '<!-- /// ' + blockName + ' -->\n    <table style="margin: 0 auto;" class="w100" align="center" width="640" cellpadding="0" cellspacing="0" border="0">\n      <tr>\n        <td>\n          <table style="margin: 0 auto;" width="90%" align="center" cellpadding="0" cellspacing="0" border="0">\n            <tr>\n              <td>\n                <table width="100%" align="center" cellpadding="0" cellspacing="0" border="0">\n                  <tr>\n                    ' + innerContent + '\n                  </tr>\n                </table>\n              </td>\n            </tr>\n          </table>\n        </td>\n      </tr>\n    </table>\n    <!-- ' + blockName + ' /// -->\r\n';
+function generateOneColumnWrapper(blockName, blockContent) {
+  return '<!-- /// ' + blockName + ' -->\n    <table style="margin: 0 auto;" class="w100" align="center" width="640" cellpadding="0" cellspacing="0" border="0">\n      <tr>\n        <td>\n          <table style="margin: 0 auto;" width="90%" align="center" cellpadding="0" cellspacing="0" border="0">\n            <tr>\n              <td>\n                <table width="100%" align="center" cellpadding="0" cellspacing="0" border="0">\n                  <tr>\n                    ' + blockContent + '\n                  </tr>\n                </table>\n              </td>\n            </tr>\n          </table>\n        </td>\n      </tr>\n    </table>\n    <!-- ' + blockName + ' /// -->\r\n';
+}
+
+function generateTwoColumnWrapper(blockName, blockContent) {
+  return '<!-- /// ' + blockName + ' -->\n    <table style="margin: 0 auto;" class="w100" align="center" width="640" cellpadding="0" cellspacing="0" border="0">\n      <tr>\n        <td>\n          <table style="margin: 0 auto;" width="90%" align="center" cellpadding="0" cellspacing="0" border="0">\n            <tr>\n              <td style="padding-top: 20px;">\n                <table width="100%" align="center" cellpadding="0" cellspacing="0" border="0">\n                  <tr>\n                    <td>\n                      <table class="col50" width="288" align="left" cellpadding="0" cellspacing="0" border="0">\n                        <tr>\n                          <td>\n                            <table class="w100m" width="95%" align="left" cellpadding="0" cellspacing="0" border="0">\n                              <tr>\n                                <td class="w100" width="260">\n                                  <table style="margin: 0 auto; max-width: 260px;" width="100%" align="center" cellpadding="0" cellspacing="0" border="0">\n                                    <tr>\n                                      ' + blockContent[0] + '\n                                    </tr>\n                                  </table>\n                                </td>\n                                <td class="hidem">&nbsp;</td>\n                              </tr>\n                            </table>\n                          </td>\n                        </tr>\n                      </table>\n                      <!--[if mso]>\n                      </td>\n                      <td align="left" valign="top">\n                      <![endif]-->\n                      <table class="col50" width="288" align="left" cellpadding="0" cellspacing="0" border="0">\n                        <tr>\n                          ' + blockContent[1] + '\n                        </tr>\n                      </table>\n                    </td>\n                  </tr>\n                </table>\n              </td>\n            </tr>\n          </table>\n        </td>\n      </tr>\n    </table>\n    <!-- ' + blockName + ' /// -->\r\n';
 }
 
 function generateEmailCode(blocks) {
   var innerContent = '';
+  var blockContent;
 
   blocks.forEach(function (block) {
     switch (block.category) {
-      // 'one-column'
+      case 'two-column':
+        blockContent = block.content.map(function (content) {
+          if (content.type === 'image') {
+            return generateImageTD(content);
+          }
+          return generateTextTD(content);
+        });
+        innerContent += generateTwoColumnWrapper(block.name, blockContent);
+        break;
       default:
-        var blockName = block.name;
-        var blockContent = block.content.map(function (content) {
+        blockContent = block.content.map(function (content) {
           if (content.type === 'image') {
             return generateImageTD(content);
           }
           return generateTextTD(content);
         }).join('');
-        innerContent += generateOneColumnWrapper(blockName, blockContent);
+        innerContent += generateOneColumnWrapper(block.name, blockContent);
+        break;
     }
   });
 
@@ -94920,6 +94946,83 @@ module.exports = function () {
   };
 };
 
+
+/***/ }),
+/* 893 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _ImageComponent = __webpack_require__(241);
+
+var _ImageComponent2 = _interopRequireDefault(_ImageComponent);
+
+var _TextComponent = __webpack_require__(243);
+
+var _TextComponent2 = _interopRequireDefault(_TextComponent);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var TwoColumnBlock = function TwoColumnBlock(props) {
+  var content = props.content,
+      globalOptions = props.globalOptions,
+      blockId = props.blockId;
+
+
+  var components = [];
+
+  content.forEach(function (componentContent) {
+    if (componentContent.type === 'image') {
+      components.push(_react2.default.createElement(
+        'div',
+        { className: 'width-50' },
+        _react2.default.createElement(_ImageComponent2.default, { content: componentContent, blockId: blockId })
+      ));
+    } else if (componentContent.type === 'text') {
+      components.push(_react2.default.createElement(
+        'div',
+        { className: 'width-50' },
+        _react2.default.createElement(_TextComponent2.default, { content: componentContent, blockId: blockId })
+      ));
+    }
+  });
+
+  var styles = {
+    paddingTop: '20px',
+    margin: '0 auto',
+    width: globalOptions.width + 'px'
+  };
+
+  return _react2.default.createElement(
+    'div',
+    { className: 'w100', style: styles },
+    _react2.default.createElement(
+      'div',
+      { className: 'center-block width-90' },
+      components
+    )
+  );
+};
+
+TwoColumnBlock.propTypes = {
+  content: _react.PropTypes.arrayOf(_react.PropTypes.object).isRequired,
+  globalOptions: _react.PropTypes.shape({
+    backgroundColor: _react.PropTypes.string,
+    width: _react.PropTypes.number
+  }).isRequired,
+  blockId: _react.PropTypes.string.isRequired
+};
+
+exports.default = TwoColumnBlock;
 
 /***/ })
 /******/ ]);

@@ -2,6 +2,7 @@ import React, { PropTypes, Component } from 'react';
 import { DragSource, DropTarget } from 'react-dnd';
 import { flow } from 'lodash';
 import OneColumnBlock from './OneColumnBlock';
+import TwoColumnBlock from './TwoColumnBlock';
 
 class DroppedBlock extends Component {
   getNode() {
@@ -18,13 +19,22 @@ class DroppedBlock extends Component {
 
     // render the correct block based on the category provided
     switch (category) {
-      default:
+      case 'two-column':
+        blockToRender = (<TwoColumnBlock
+          content={content}
+          globalOptions={globalOptions}
+          blockId={blockId}
+        />);
+        break;
+      case 'one-column':
         blockToRender = (<OneColumnBlock
           content={content}
           globalOptions={globalOptions}
           blockId={blockId}
         />);
         break;
+      default:
+        blockToRender = null;
     }
 
     return connectDragSource(connectDropTarget((

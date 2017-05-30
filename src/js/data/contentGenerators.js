@@ -21,7 +21,7 @@ function generateImageTD(options) {
   return `<td style="padding: ${optionsToApply.padding}; font-size: 0; display: block; border: 0;"><img src="${optionsToApply.src}" style="display: block; border: 0;"></td>`;
 }
 
-function generateOneColumnWrapper(blockName, innerContent) {
+function generateOneColumnWrapper(blockName, blockContent) {
   return `<!-- /// ${blockName} -->
     <table style="margin: 0 auto;" class="w100" align="center" width="640" cellpadding="0" cellspacing="0" border="0">
       <tr>
@@ -31,7 +31,7 @@ function generateOneColumnWrapper(blockName, innerContent) {
               <td>
                 <table width="100%" align="center" cellpadding="0" cellspacing="0" border="0">
                   <tr>
-                    ${innerContent}
+                    ${blockContent}
                   </tr>
                 </table>
               </td>
@@ -43,22 +43,81 @@ function generateOneColumnWrapper(blockName, innerContent) {
     <!-- ${blockName} /// -->\r\n`;
 }
 
+function generateTwoColumnWrapper(blockName, blockContent) {
+  return `<!-- /// ${blockName} -->
+    <table style="margin: 0 auto;" class="w100" align="center" width="640" cellpadding="0" cellspacing="0" border="0">
+      <tr>
+        <td>
+          <table style="margin: 0 auto;" width="90%" align="center" cellpadding="0" cellspacing="0" border="0">
+            <tr>
+              <td style="padding-top: 20px;">
+                <table width="100%" align="center" cellpadding="0" cellspacing="0" border="0">
+                  <tr>
+                    <td>
+                      <table class="col50" width="288" align="left" cellpadding="0" cellspacing="0" border="0">
+                        <tr>
+                          <td>
+                            <table class="w100m" width="95%" align="left" cellpadding="0" cellspacing="0" border="0">
+                              <tr>
+                                <td class="w100" width="260">
+                                  <table style="margin: 0 auto; max-width: 260px;" width="100%" align="center" cellpadding="0" cellspacing="0" border="0">
+                                    <tr>
+                                      ${blockContent[0]}
+                                    </tr>
+                                  </table>
+                                </td>
+                                <td class="hidem">&nbsp;</td>
+                              </tr>
+                            </table>
+                          </td>
+                        </tr>
+                      </table>
+                      <!--[if mso]>
+                      </td>
+                      <td align="left" valign="top">
+                      <![endif]-->
+                      <table class="col50" width="288" align="left" cellpadding="0" cellspacing="0" border="0">
+                        <tr>
+                          ${blockContent[1]}
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+    <!-- ${blockName} /// -->\r\n`
+}
+
 export default function generateEmailCode(blocks) {
   let innerContent = '';
+  var blockContent;
 
   blocks.forEach((block) => {
     switch (block.category) {
-      // 'one-column'
+      case 'two-column':
+        blockContent = block.content.map((content) => {
+          if (content.type === 'image') {
+            return generateImageTD(content);
+          }
+          return generateTextTD(content);
+        });
+        innerContent += generateTwoColumnWrapper(block.name, blockContent);
+        break;
       default:
-        const blockName = block.name;
-        const blockContent = block.content.map((content) => {
+        blockContent = block.content.map((content) => {
           if (content.type === 'image') {
             return generateImageTD(content);
           }
           return generateTextTD(content);
         })
         .join('');
-        innerContent += generateOneColumnWrapper(blockName, blockContent)
+        innerContent += generateOneColumnWrapper(block.name, blockContent);
+        break;
     }
   });
 

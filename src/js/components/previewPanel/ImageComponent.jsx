@@ -5,7 +5,7 @@ import { selectComponent, switchTab } from '../../actions/actions';
 
 const ImageComponent = (props) => {
   const { blockId, dispatch, selected } = props;
-  const { link, src, width, componentId } = props.content[0];
+  const { link, src, width, componentId } = props.content;
 
   function handleSelectComponent(e) {
     e.stopPropagation();
@@ -65,14 +65,12 @@ const ImageComponent = (props) => {
 };
 
 ImageComponent.propTypes = {
-  content: PropTypes.arrayOf(
-    PropTypes.shape({
-      link: PropTypes.shape.isRequired,
-      src: PropTypes.string.isRequired,
-      width: PropTypes.number.isRequired,
-      componentId: PropTypes.string.isRequired,
-    }),
-  ).isRequired,
+  content: PropTypes.shape({
+    link: PropTypes.shape.isRequired,
+    src: PropTypes.string.isRequired,
+    width: PropTypes.number.isRequired,
+    componentId: PropTypes.string.isRequired,
+  }).isRequired,
   blockId: PropTypes.string.isRequired,
   dispatch: PropTypes.func.isRequired,
   selected: PropTypes.shape({

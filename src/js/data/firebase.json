@@ -2,7 +2,7 @@
   "blocks": [
     {
       "name": "Preheader",
-      "image": "img/modules/one-column/preheader.png",
+      "image": "img/modules/one-column/preheader.svg",
       "category": "one-column",
       "id": "m1",
       "content": [{
@@ -17,7 +17,7 @@
     },
     {
       "name": "Full Width Image",
-      "image": "img/modules/one-column/full-width-image.png",
+      "image": "img/modules/one-column/full-width-image.svg",
       "category": "one-column",
       "id": "m2",
       "content": [{
@@ -29,7 +29,7 @@
     },
     {
       "name": "Paragraph Text",
-      "image": "img/modules/one-column/paragraph-text.png",
+      "image": "img/modules/one-column/paragraph-text.svg",
       "category": "one-column",
       "id": "m3",
       "content": [{
@@ -44,49 +44,97 @@
     },
     {
       "name": "CTA",
-      "image": "img/modules/one-column/cta.png",
+      "image": "img/modules/one-column/cta.svg",
       "category": "one-column",
       "id": "m4",
       "content": []
     },
     {
       "name": "Footer",
-      "image": "img/modules/one-column/footer.png",
+      "image": "img/modules/one-column/footer.svg",
       "category": "one-column",
       "id": "m5",
       "content": []
     },
     {
       "name": "Text Left, Image Right",
-      "image": "img/modules/two-column/text-left-image-right.png",
-      "type": "two-column",
+      "image": "img/modules/two-column/text-left-image-right.svg",
+      "category": "two-column",
       "id": "m6",
-      "content": []
+      "content": [
+        {
+          "type": "text",
+          "color": "#1d1d1d",
+          "fontFamily": "Helvetica, Arial, sans-serif",
+          "fontSize": "14px",
+          "lineHeight": "16px",
+          "textAlign": "left",
+          "innerContent": "lorem ipsum"
+        },
+        {
+          "type": "image",
+          "link": true,
+          "src": "http://placehold.it/200x200",
+          "width": 200
+        }
+      ]
     },
     {
       "name": "Logo Nav",
-      "image": "img/modules/two-column/logo-nav.png",
-      "type": "two-column",
+      "image": "img/modules/two-column/logo-nav.svg",
+      "category": "two-column",
       "id": "m7",
-      "content": []
+      "content": [
+        {
+          "type": "image",
+          "link": true,
+          "src": "http://placehold.it/200x200",
+          "width": 200
+        },
+        {
+          "type": "text",
+          "color": "#1d1d1d",
+          "fontFamily": "Helvetica, Arial, sans-serif",
+          "fontSize": "14px",
+          "lineHeight": "16px",
+          "textAlign": "left",
+          "innerContent": "lorem ipsum"
+        }
+      ]
     },
     {
       "name": "Image Left, Text Right",
-      "image": "img/modules/two-column/image-left-text-right.png",
-      "type": "two-column",
+      "image": "img/modules/two-column/image-left-text-right.svg",
+      "category": "two-column",
       "id": "m8",
-      "content": []
+      "content": [
+        {
+          "type": "image",
+          "link": true,
+          "src": "http://placehold.it/200x200",
+          "width": 200
+        },
+        {
+          "type": "text",
+          "color": "#1d1d1d",
+          "fontFamily": "Helvetica, Arial, sans-serif",
+          "fontSize": "14px",
+          "lineHeight": "16px",
+          "textAlign": "left",
+          "innerContent": "lorem ipsum"
+        }
+      ]
     }
   ],
   "categories": [
     {
       "name": "one-column",
-      "image": "img/modules/one-column/one-column.png",
+      "image": "img/modules/one-column/one-column.svg",
       "modules": ["m1", "m2", "m3", "m4", "m5"]
     },
     {
       "name": "two-column",
-      "image": "img/modules/two-column/two-column.png",
+      "image": "img/modules/two-column/two-column.svg",
       "modules": ["m6", "m7", "m8"]
     }
   ]
