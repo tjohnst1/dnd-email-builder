@@ -57,9 +57,9 @@ const ComponentSettings = (props) => {
           />
           <DropDownInput
             inputName="Text Align"
-            initialValue={componentOptions.fontFamily}
+            initialValue={componentOptions.textAlign.toUpperCase()}
             options={textAlignOptions}
-            onChangeFunc={handleOnChange(componentInfo, 'fontFamily')}
+            onChangeFunc={handleOnChange(componentInfo, 'textAlign')}
           />
           <TextInput
             inputName="Inner Content"

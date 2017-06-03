@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import { selectComponent, switchTab } from '../../actions/actions';
 
 const ImageComponent = (props) => {
-  const { blockId, dispatch, selected } = props;
+  const { blockId, dispatch, selected, tabs } = props;
   const { link, src, width, componentId } = props.content;
 
   function handleSelectComponent(e) {
@@ -20,7 +20,11 @@ const ImageComponent = (props) => {
       },
     };
     dispatch(selectComponent(componentInfo));
-    dispatch(switchTab('Styles'));
+
+    // switch over to the styles tab if it's not already showing
+    if (tabs.selected !== 'Styles') {
+      dispatch(switchTab('Styles'));
+    }
   }
 
   let imgElement;
@@ -84,12 +88,13 @@ ImageComponent.defaultProps = {
 };
 
 function mapStateToProps(state) {
-  const { dispatch } = state;
+  const { dispatch, tabs } = state;
   const { selected } = state.emailPreview;
 
   return {
     dispatch,
     selected,
+    tabs,
   };
 }
 

@@ -5,7 +5,7 @@ import TextComponent from './TextComponent';
 const TwoColumnBlock = (props) => {
   const { content, globalOptions, blockId } = props;
 
-  let components = [];
+  const components = [];
 
   content.forEach((componentContent) => {
     if (componentContent.type === 'image') {
@@ -13,7 +13,7 @@ const TwoColumnBlock = (props) => {
     } else if (componentContent.type === 'text') {
       components.push(<div className="width-50"><TextComponent content={componentContent} blockId={blockId} /></div>);
     }
-  })
+  });
 
   const styles = {
     paddingTop: '20px',

@@ -12,7 +12,7 @@ const DropDownInput = (props) => {
   const selectId = kebabCase(lowerCase(inputName));
 
   return (
-    <div className="style-item">
+    <div className="style-item drop-down">
       <label className="style-item__label" htmlFor={selectId}>{inputName}</label>
       <div className="style-item__input">
         <select id={selectId} onChange={onChangeFunc} value={initialValue}>

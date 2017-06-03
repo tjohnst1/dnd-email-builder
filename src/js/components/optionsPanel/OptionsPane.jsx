@@ -94,7 +94,7 @@ export class OptionsPane extends Component {
               handleSwitchCategory={this.handleSwitchCategory(category.name)}
               key={uniqueId()}
             />);
-            innerContent.unshift((<p className="options-pane__category" key={uniqueId()}>Categories</p>))
+            innerContent.unshift((<p className="options-pane__category" key={uniqueId()}>Categories</p>));
           } else {
             const blocksByCategory = blocks.all.filter(block => block.category === currentCategory);
             innerContent = blocksByCategory.map(block => <Block

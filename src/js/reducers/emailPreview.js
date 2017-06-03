@@ -135,8 +135,8 @@ export function emailPreview(state = emailPreviewState, action) {
             if (component.componentId === componentInfo.componentId) {
               // update the value
               component[property] = value;
+              updatedComponent = component;
             }
-            updatedComponent = component;
             return component;
           })
         }

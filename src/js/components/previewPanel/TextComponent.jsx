@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import { selectComponent, switchTab } from '../../actions/actions';
 
 const TextComponent = (props) => {
-  const { blockId, dispatch, selected } = props;
+  const { blockId, dispatch, selected, tabs } = props;
   const { color, fontSize, lineHeight, componentId,
     fontFamily, textAlign, innerContent } = props.content;
 
@@ -24,7 +24,11 @@ const TextComponent = (props) => {
       },
     };
     dispatch(selectComponent(componentInfo));
-    dispatch(switchTab('Styles'));
+
+    // switch over to the styles tab if it's not already showing
+    if (tabs.selected !== 'Styles') {
+      dispatch(switchTab('Styles'));
+    }
   }
 
   const styles = {
@@ -68,12 +72,13 @@ TextComponent.defaultProps = {
 };
 
 function mapStateToProps(state) {
-  const { dispatch } = state;
+  const { dispatch, tabs } = state;
   const { selected } = state.emailPreview;
 
   return {
     dispatch,
     selected,
+    tabs,
   };
 }
 

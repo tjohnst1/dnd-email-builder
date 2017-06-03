@@ -143,6 +143,18 @@
   &:first-of-type {
     border: none;
   }
+  &.drop-down {
+    position: relative;
+    .style-item__input:after {
+      content: '▼';
+      color: darken($lightgrey, 10%);
+      font-weight: 700;
+      position: absolute;
+      right: 1.75rem;
+      top: 45%;
+      font-size: 7px;
+    }
+  }
 }
 
 .component-settings {
@@ -158,15 +170,21 @@
   .style-item__label {
     color: $lightgrey;
   }
+  .incrementing-number-input {
+    color: $darkgrey;
+    border-radius: 0;
+  }
   select, input {
     background: $offwhite;
     border: 0;
     padding: 0.5rem 1rem;
     font-size: 1.2rem;
     font-weight: 500;
+    border-radius: 5px;
+    -webkit-appearance: none;
   }
-  .incrementing-number-input {
-    color: $darkgrey;
+  select {
+    padding: 0.5rem 1.5rem 0.5rem 1rem;
   }
 }
 

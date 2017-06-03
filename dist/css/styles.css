@@ -1,3 +1,4 @@
+@charset "UTF-8";
 @import url("https://fonts.googleapis.com/css?family=Raleway:200,400,700");
 /*! normalize.css v6.0.0 | MIT License | github.com/necolas/normalize.css */
 /* Document
@@ -566,6 +567,16 @@ body {
       width: 100%; }
   .style-item:first-of-type {
     border: none; }
+  .style-item.drop-down {
+    position: relative; }
+    .style-item.drop-down .style-item__input:after {
+      content: '▼';
+      color: #bfbfbf;
+      font-weight: 700;
+      position: absolute;
+      right: 1.75rem;
+      top: 45%;
+      font-size: 7px; }
 
 .component-settings {
   background: #506266;
@@ -577,14 +588,19 @@ body {
       padding: 15px 1rem 5px; }
   .component-settings .style-item__label {
     color: #d8d8d8; }
+  .component-settings .incrementing-number-input {
+    color: #232B2D;
+    border-radius: 0; }
   .component-settings select, .component-settings input {
     background: #FBFBFF;
     border: 0;
     padding: 0.5rem 1rem;
     font-size: 1.2rem;
-    font-weight: 500; }
-  .component-settings .incrementing-number-input {
-    color: #232B2D; }
+    font-weight: 500;
+    border-radius: 5px;
+    -webkit-appearance: none; }
+  .component-settings select {
+    padding: 0.5rem 1.5rem 0.5rem 1rem; }
 
 .component-settings__title {
   margin: 0;
