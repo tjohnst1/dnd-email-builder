@@ -111,7 +111,7 @@ EmailPreview.propTypes = {
   }).isRequired,
   globalOptions: PropTypes.shape({
     backgroundColor: PropTypes.string,
-    width: PropTypes.number,
+    width: PropTypes.string,
   }).isRequired,
   dispatch: PropTypes.func.isRequired,
   connectDropTarget: PropTypes.func.isRequired,

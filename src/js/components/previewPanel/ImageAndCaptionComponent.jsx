@@ -3,10 +3,11 @@ import { connect } from 'react-redux';
 import classNames from 'classnames';
 import { selectComponent, switchTab } from '../../actions/actions';
 
-const ImageComponent = (props) => {
+const ImageAndCaptionComponent = (props) => {
   const { blockId, dispatch, selected, tabs } = props;
-  const { link, src, width, paddingTop, paddingRight,
-    paddingBottom, paddingLeft, background, componentId } = props.content;
+  const { color, fontSize, lineHeight, componentId,
+    fontFamily, textAlign, innerContent, paddingLeft, paddingRight,
+    paddingBottom, paddingTop, link, src, width } = props.content;
 
   function handleSelectComponent(e) {
     e.stopPropagation();
@@ -17,12 +18,17 @@ const ImageComponent = (props) => {
         link,
         src,
         width,
+        color,
+        fontSize,
+        lineHeight,
+        fontFamily,
+        textAlign,
+        innerContent,
         paddingTop,
         paddingBottom,
         paddingLeft,
         paddingRight,
-        background,
-        type: 'image',
+        type: 'image-and-caption',
       },
     };
     dispatch(selectComponent(componentInfo));
@@ -33,53 +39,50 @@ const ImageComponent = (props) => {
     }
   }
 
-  let imgElement;
-
-  const imgLinkClasses = classNames({
-    selected: selected && (selected.componentId === componentId),
-  });
-
-  const imgClasses = classNames({
-    selected: selected && (selected.componentId === componentId),
-    img: true,
-  });
-
-  const imgStyles = {
+  const styles = {
     margin: '0 auto',
-    padding: `${paddingTop} ${paddingRight} ${paddingBottom} ${paddingLeft}`,
-    width,
+    color,
+    fontSize,
+    lineHeight,
+    fontFamily,
+    textAlign,
+    paddingTop,
+    paddingRight,
+    paddingLeft,
+    paddingBottom,
   };
 
-  if (link) {
-    imgElement = (
-      <a href="#" className={imgLinkClasses} style={{ display: 'block' }} onClick={handleSelectComponent}>
-        <img className="img" src={src} alt="placeholder img" style={imgStyles} />
-      </a>
-    );
-  } else {
-    imgElement = (<img
-      className={imgClasses}
-      src={src}
-      style={imgStyles}
-      alt="placeholder img"
-      onClick={handleSelectComponent}
-    />);
-  }
+  const classes = classNames({
+    selected: selected && (selected.componentId === componentId),
+  });
 
-  return imgElement;
+  return (
+    <div className={classes} style={styles} onClick={handleSelectComponent}>
+      <img className="img" src={src} alt="placeholder img" />
+      <p>{ innerContent }</p>
+    </div>
+  );
 };
 
-ImageComponent.propTypes = {
+ImageAndCaptionComponent.propTypes = {
   content: PropTypes.shape({
     link: PropTypes.shape.isRequired,
     src: PropTypes.string.isRequired,
     width: PropTypes.string.isRequired,
+    color: PropTypes.string.isRequired,
+    fontSize: PropTypes.string.isRequired,
+    lineHeight: PropTypes.string.isRequired,
+    fontFamily: PropTypes.string.isRequired,
+    textAlign: PropTypes.string.isRequired,
+    innerContent: PropTypes.string.isRequired,
     componentId: PropTypes.string.isRequired,
-    paddingTop: PropTypes.string.isRequired,
-    paddingBottom: PropTypes.string.isRequired,
     paddingLeft: PropTypes.string.isRequired,
     paddingRight: PropTypes.string.isRequired,
-    background: PropTypes.string.isRequired,
+    paddingTop: PropTypes.string.isRequired,
+    paddingBottom: PropTypes.string.isRequired,
+  }).isRequired,
+  tabs: PropTypes.shape({
+    selected: PropTypes.string,
   }).isRequired,
   blockId: PropTypes.string.isRequired,
   dispatch: PropTypes.func.isRequired,
@@ -89,7 +92,7 @@ ImageComponent.propTypes = {
   }),
 };
 
-ImageComponent.defaultProps = {
+ImageAndCaptionComponent.defaultProps = {
   selected: null,
 };
 
@@ -104,4 +107,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(ImageComponent);
+export default connect(mapStateToProps)(ImageAndCaptionComponent);

@@ -8,6 +8,7 @@
       "content": [{
         "type": "text",
         "color": "#828282",
+        "background": "#ffffff",
         "fontFamily": "Helvetica, Arial, sans-serif",
         "fontSize": "10px",
         "lineHeight": "12px",
@@ -28,6 +29,7 @@
         "type": "image",
         "link": true,
         "src": "http://placehold.it/576x200",
+        "background": "#ffffff",
         "width": "576px",
         "paddingLeft": "0px",
         "paddingRight": "0px",
@@ -43,6 +45,7 @@
       "content": [{
         "type": "text",
         "color": "#1d1d1d",
+        "background": "#ffffff",
         "fontFamily": "Helvetica, Arial, sans-serif",
         "fontSize": "14px",
         "lineHeight": "16px",
@@ -59,24 +62,84 @@
       "image": "img/modules/one-column/cta.svg",
       "category": "one-column",
       "id": "m4",
-      "content": []
+      "content": [{
+        "type": "button",
+        "color": "#1d1d1d",
+        "background": "#ffffff",
+        "fontFamily": "Helvetica, Arial, sans-serif",
+        "fontSize": "14px",
+        "lineHeight": "16px",
+        "textAlign": "left",
+        "innerContent": "lorem ipsum",
+        "paddingLeft": "0px",
+        "paddingRight": "0px",
+        "paddingTop": "0px",
+        "paddingBottom": "0px"
+      }]
+    },
+    {
+      "name": "Image and Caption",
+      "image": "img/modules/one-column/image-and-caption.svg",
+      "category": "one-column",
+      "id": "m5",
+      "content": [{
+        "type": "image-and-caption",
+        "link": true,
+        "src": "http://placehold.it/200x200",
+        "width": "200px",
+        "color": "#1d1d1d",
+        "background": "#ffffff",
+        "fontFamily": "Helvetica, Arial, sans-serif",
+        "fontSize": "14px",
+        "lineHeight": "16px",
+        "textAlign": "left",
+        "innerContent": "lorem ipsum",
+        "paddingLeft": "0px",
+        "paddingRight": "0px",
+        "paddingTop": "0px",
+        "paddingBottom": "0px"
+      }]
+    },
+    {
+      "name": "Image and Caption Card",
+      "image": "img/modules/one-column/image-and-caption-card.svg",
+      "category": "one-column",
+      "id": "m6",
+      "content": [{
+        "type": "image-and-caption",
+        "link": true,
+        "src": "http://placehold.it/200x200",
+        "width": "200px",
+        "color": "#1d1d1d",
+        "background": "#ffffff",
+        "fontFamily": "Helvetica, Arial, sans-serif",
+        "fontSize": "14px",
+        "lineHeight": "16px",
+        "textAlign": "left",
+        "innerContent": "lorem ipsum",
+        "paddingLeft": "0px",
+        "paddingRight": "0px",
+        "paddingTop": "0px",
+        "paddingBottom": "0px"
+      }]
     },
     {
       "name": "Footer",
       "image": "img/modules/one-column/footer.svg",
       "category": "one-column",
-      "id": "m5",
+      "id": "m7",
       "content": []
     },
     {
       "name": "Text Left, Image Right",
       "image": "img/modules/two-column/text-left-image-right.svg",
       "category": "two-column",
-      "id": "m6",
+      "id": "m8",
       "content": [
         {
           "type": "text",
           "color": "#1d1d1d",
+          "background": "#ffffff",
           "fontFamily": "Helvetica, Arial, sans-serif",
           "fontSize": "14px",
           "lineHeight": "16px",
@@ -90,39 +153,9 @@
         {
           "type": "image",
           "link": true,
+          "background": "#ffffff",
           "src": "http://placehold.it/200x200",
           "width": "200px",
-          "paddingLeft": "0px",
-          "paddingRight": "0px",
-          "paddingTop": "0px",
-          "paddingBottom": "0px"
-        }
-      ]
-    },
-    {
-      "name": "Logo Nav",
-      "image": "img/modules/two-column/logo-nav.svg",
-      "category": "two-column",
-      "id": "m7",
-      "content": [
-        {
-          "type": "image",
-          "link": true,
-          "src": "http://placehold.it/200x200",
-          "width": "200px",
-          "paddingLeft": "0px",
-          "paddingRight": "0px",
-          "paddingTop": "0px",
-          "paddingBottom": "0px"
-        },
-        {
-          "type": "text",
-          "color": "#1d1d1d",
-          "fontFamily": "Helvetica, Arial, sans-serif",
-          "fontSize": "14px",
-          "lineHeight": "16px",
-          "textAlign": "left",
-          "innerContent": "lorem ipsum",
           "paddingLeft": "0px",
           "paddingRight": "0px",
           "paddingTop": "0px",
@@ -134,13 +167,14 @@
       "name": "Image Left, Text Right",
       "image": "img/modules/two-column/image-left-text-right.svg",
       "category": "two-column",
-      "id": "m8",
+      "id": "m9",
       "content": [
         {
           "type": "image",
           "link": true,
           "src": "http://placehold.it/200x200",
           "width": "200px",
+          "background": "#ffffff",
           "paddingLeft": "0px",
           "paddingRight": "0px",
           "paddingTop": "0px",
@@ -149,6 +183,93 @@
         {
           "type": "text",
           "color": "#1d1d1d",
+          "background": "#ffffff",
+          "fontFamily": "Helvetica, Arial, sans-serif",
+          "fontSize": "14px",
+          "lineHeight": "16px",
+          "textAlign": "left",
+          "innerContent": "lorem ipsum",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        }
+      ]
+    },
+    {
+      "name": "Image and Caption",
+      "image": "img/modules/two-column/image-and-caption.svg",
+      "category": "two-column",
+      "id": "m10",
+      "content": [
+        {
+          "type": "image-and-caption",
+          "link": true,
+          "src": "http://placehold.it/200x200",
+          "width": "200px",
+          "background": "#ffffff",
+          "color": "#1d1d1d",
+          "background": "#ffffff",
+          "fontFamily": "Helvetica, Arial, sans-serif",
+          "fontSize": "14px",
+          "lineHeight": "16px",
+          "textAlign": "left",
+          "innerContent": "lorem ipsum",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "type": "image-and-caption",
+          "link": true,
+          "src": "http://placehold.it/200x200",
+          "width": "200px",
+          "color": "#1d1d1d",
+          "background": "#ffffff",
+          "fontFamily": "Helvetica, Arial, sans-serif",
+          "fontSize": "14px",
+          "lineHeight": "16px",
+          "textAlign": "left",
+          "innerContent": "lorem ipsum",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        }
+      ]
+    },
+    {
+      "name": "Image and Caption Cards",
+      "image": "img/modules/two-column/image-and-caption-cards.svg",
+      "category": "two-column",
+      "id": "m11",
+      "content": [
+        {
+          "type": "image-and-caption",
+          "link": true,
+          "src": "http://placehold.it/200x200",
+          "width": "200px",
+          "background": "#ffffff",
+          "color": "#1d1d1d",
+          "background": "#ffffff",
+          "fontFamily": "Helvetica, Arial, sans-serif",
+          "fontSize": "14px",
+          "lineHeight": "16px",
+          "textAlign": "left",
+          "innerContent": "lorem ipsum",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "type": "image-and-caption",
+          "link": true,
+          "src": "http://placehold.it/200x200",
+          "width": "200px",
+          "color": "#1d1d1d",
+          "background": "#ffffff",
           "fontFamily": "Helvetica, Arial, sans-serif",
           "fontSize": "14px",
           "lineHeight": "16px",
@@ -166,12 +287,12 @@
     {
       "name": "one-column",
       "image": "img/modules/one-column/one-column.svg",
-      "modules": ["m1", "m2", "m3", "m4", "m5"]
+      "modules": ["m1", "m2", "m3", "m4", "m5", "m6", "m7"]
     },
     {
       "name": "two-column",
       "image": "img/modules/two-column/two-column.svg",
-      "modules": ["m6", "m7", "m8"]
+      "modules": ["m8", "m9", "m10", "m11"]
     }
   ]
 }

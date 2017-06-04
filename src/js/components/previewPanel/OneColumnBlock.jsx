@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import ImageComponent from './ImageComponent';
 import TextComponent from './TextComponent';
+import ImageAndCaptionComponent from './ImageAndCaptionComponent';
 
 const OneColumnBlock = (props) => {
   const { content, globalOptions, blockId } = props;
@@ -12,12 +13,14 @@ const OneColumnBlock = (props) => {
     component = <ImageComponent content={content[0]} blockId={blockId} />;
   } else if (type === 'text') {
     component = (<TextComponent content={content[0]} blockId={blockId} />);
+  } else if (type === 'image-and-caption') {
+    component = (<ImageAndCaptionComponent content={content[0]} blockId={blockId} />);
   }
 
   const styles = {
     paddingTop: '20px',
     margin: '0 auto',
-    width: `${globalOptions.width}px`,
+    width: globalOptions.width,
   };
 
   return (
@@ -33,7 +36,7 @@ OneColumnBlock.propTypes = {
   content: PropTypes.arrayOf(PropTypes.object).isRequired,
   globalOptions: PropTypes.shape({
     backgroundColor: PropTypes.string,
-    width: PropTypes.number,
+    width: PropTypes.string,
   }).isRequired,
   blockId: PropTypes.string.isRequired,
 };

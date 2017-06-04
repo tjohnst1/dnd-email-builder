@@ -49,7 +49,7 @@ DroppedBlock.propTypes = {
   content: PropTypes.arrayOf(PropTypes.object).isRequired,
   globalOptions: PropTypes.shape({
     backgroundColor: PropTypes.string,
-    width: PropTypes.number,
+    width: PropTypes.string,
   }).isRequired,
   connectDropTarget: PropTypes.func.isRequired,
   connectDragSource: PropTypes.func.isRequired,

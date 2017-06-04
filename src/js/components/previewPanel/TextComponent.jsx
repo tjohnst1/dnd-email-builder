@@ -7,7 +7,7 @@ const TextComponent = (props) => {
   const { blockId, dispatch, selected, tabs } = props;
   const { color, fontSize, lineHeight, componentId,
     fontFamily, textAlign, innerContent, paddingLeft, paddingRight,
-    paddingBottom, paddingTop } = props.content;
+    paddingBottom, paddingTop, background } = props.content;
 
   function handleSelectComponent(e) {
     e.stopPropagation();
@@ -25,6 +25,7 @@ const TextComponent = (props) => {
         paddingBottom,
         paddingLeft,
         paddingRight,
+        background,
         type: 'text',
       },
     };

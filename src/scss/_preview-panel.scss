@@ -6,6 +6,7 @@
 
 .email-preview {
   height: 100%;
+  overflow: scroll;
   &.hovering {
     border: 5px solid $blue;
   }

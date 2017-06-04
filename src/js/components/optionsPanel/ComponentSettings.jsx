@@ -15,15 +15,15 @@ const ComponentSettings = (props) => {
     blockId: selected.blockId,
     componentId: selected.componentId,
   };
+  const paddingValues = {
+    top: componentOptions.paddingTop,
+    left: componentOptions.paddingLeft,
+    bottom: componentOptions.paddingBottom,
+    right: componentOptions.paddingRight,
+  };
 
   switch (componentOptions.type) {
     case 'image':
-      const paddingValues = {
-        top: componentOptions.paddingTop,
-        left: componentOptions.paddingLeft,
-        bottom: componentOptions.paddingBottom,
-        right: componentOptions.paddingRight,
-      };
       componentValues = (
         <div>
           <p className="component-settings__title">Image Styles</p>
@@ -61,12 +61,6 @@ const ComponentSettings = (props) => {
     case 'text': {
       const fontFamilyOptions = ['Helvetica, Arial, Sans Serif', 'Times New Roman, serif'];
       const textAlignOptions = ['Left', 'Center', 'Right'];
-      const paddingValues = {
-        top: componentOptions.paddingTop,
-        left: componentOptions.paddingLeft,
-        bottom: componentOptions.paddingBottom,
-        right: componentOptions.paddingRight,
-      };
       componentValues = (
         <div>
           <p className="component-settings__title">Text Styles</p>

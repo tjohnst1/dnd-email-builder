@@ -101,6 +101,7 @@ export class OptionsPane extends Component {
             innerContent = blocksByCategory.map(block => <Block
               name={block.name}
               image={block.image}
+              category={currentCategory}
               id={block.id}
               key={uniqueId()}
               handleClearMarkerFromPreview={this.handleClearMarkerFromPreview}
@@ -174,7 +175,7 @@ OptionsPane.propTypes = {
     categories: PropTypes.array,
   }).isRequired,
   globalOptions: PropTypes.shape({
-    width: PropTypes.number,
+    width: PropTypes.string,
     backgroundColor: PropTypes.string,
   }).isRequired,
   dispatch: PropTypes.func.isRequired,
