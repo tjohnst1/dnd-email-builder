@@ -5,6 +5,7 @@ import classNames from 'classnames';
 import { SketchPicker } from 'react-color';
 import { switchCategory, fetchEmailBlocksIfNeeded, changeGlobalWidth,
   changeBackgroundColor, clearMarkerFromPreview, updateComponentValue } from '../../actions/actions';
+import { adjustPx } from '../../utilities/utilities';
 import IncrementingNumberInput from './IncrementingNumberInput';
 import ComponentSettings from './ComponentSettings';
 import MenuItem from './MenuItem';
@@ -38,15 +39,15 @@ export class OptionsPane extends Component {
   }
 
   handleDecreaseGlobalWidth() {
-    this.props.dispatch(changeGlobalWidth(this.props.globalOptions.width - 5));
+    this.props.dispatch(changeGlobalWidth(adjustPx(this.props.globalOptions.width, -5)));
   }
 
   handleIncreaseGlobalWidth() {
-    this.props.dispatch(changeGlobalWidth(this.props.globalOptions.width + 5));
+    this.props.dispatch(changeGlobalWidth(adjustPx(this.props.globalOptions.width, 5)));
   }
 
   handleChangeGlobalWidth(e) {
-    this.props.dispatch(changeGlobalWidth(Number(e.target.value)));
+    this.props.dispatch(changeGlobalWidth(e.target.value));
   }
 
   handleChangeBackgroundColor(color) {

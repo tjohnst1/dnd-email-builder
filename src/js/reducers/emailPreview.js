@@ -156,7 +156,7 @@ export function emailPreview(state = emailPreviewState, action) {
 }
 
 const globalOptionsIntialState = {
-  width: 640,
+  width: '640px',
   backgroundColor: "#ffffff",
 }
 

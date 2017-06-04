@@ -5,7 +5,8 @@ import { selectComponent, switchTab } from '../../actions/actions';
 
 const ImageComponent = (props) => {
   const { blockId, dispatch, selected, tabs } = props;
-  const { link, src, width, componentId } = props.content;
+  const { link, src, width, paddingTop, paddingRight,
+    paddingBottom, paddingLeft, componentId } = props.content;
 
   function handleSelectComponent(e) {
     e.stopPropagation();
@@ -16,6 +17,10 @@ const ImageComponent = (props) => {
         link,
         src,
         width,
+        paddingTop,
+        paddingBottom,
+        paddingLeft,
+        paddingRight,
         type: 'image',
       },
     };
@@ -38,21 +43,16 @@ const ImageComponent = (props) => {
     img: true,
   });
 
+  const imgStyles = {
+    margin: '0 auto',
+    padding: `${paddingTop} ${paddingRight} ${paddingBottom} ${paddingLeft}`,
+    width,
+  };
+
   if (link) {
     imgElement = (
-      <a
-        href="#"
-        className={imgLinkClasses}
-        style={{ display: 'block' }}
-        onClick={handleSelectComponent}
-      >
-        <img
-          className="img"
-          src={src}
-          width={width}
-          alt="placeholder img"
-          style={{ margin: '0 auto' }}
-        />
+      <a href="#" className={imgLinkClasses} style={{ display: 'block' }} onClick={handleSelectComponent}>
+        <img className="img" src={src} alt="placeholder img" style={imgStyles} />
       </a>
     );
   } else {
@@ -74,6 +74,10 @@ ImageComponent.propTypes = {
     src: PropTypes.string.isRequired,
     width: PropTypes.number.isRequired,
     componentId: PropTypes.string.isRequired,
+    paddingTop: PropTypes.string.isRequired,
+    paddingBottom: PropTypes.string.isRequired,
+    paddingLeft: PropTypes.string.isRequired,
+    paddingRight: PropTypes.string.isRequired,
   }).isRequired,
   blockId: PropTypes.string.isRequired,
   dispatch: PropTypes.func.isRequired,

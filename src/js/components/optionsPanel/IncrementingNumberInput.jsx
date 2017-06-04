@@ -10,10 +10,6 @@ const IncrementingNumberInput = (props) => {
     <div className="style-item">
       <label className="style-item__label" htmlFor={inputId}>{inputName}</label>
       <div className="style-item__input">
-        <button
-          className="incrementing-number-input__button"
-          onClick={decrementValueFunc}
-        >-</button>
         <input
           type="text"
           value={initialValue}
@@ -21,6 +17,10 @@ const IncrementingNumberInput = (props) => {
           className="incrementing-number-input"
           id={inputId}
         />
+        <button
+          className="incrementing-number-input__button"
+          onClick={decrementValueFunc}
+        >-</button>
         <button
           className="incrementing-number-input__button"
           onClick={incrementValueFunc}
@@ -36,7 +36,7 @@ IncrementingNumberInput.propTypes = {
   decrementValueFunc: PropTypes.func.isRequired,
   incrementValueFunc: PropTypes.func.isRequired,
   textChangeFunc: PropTypes.func.isRequired,
-  initialValue: PropTypes.number.isRequired,
+  initialValue: PropTypes.string.isRequired,
 };
 
 export default IncrementingNumberInput;

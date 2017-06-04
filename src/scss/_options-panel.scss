@@ -235,21 +235,21 @@
 
 .incrementing-number-input {
   height: 25px;
-  width: 60px !important;
   display: inline-block;
   border: 0;
+  border-top-left-radius: 5px !important;
+  border-bottom-left-radius: 5px !important;
   background: lighten($darkgrey, 20%);
   font-size: 1.2rem;
   color: $lightgrey;
-  text-align: center;
-  padding: 0;
+  padding: 0.5rem 1rem;
   margin: 0;
   vertical-align: top;
+  width: calc(100% - 50px) !important;
 }
 
 .incrementing-number-input__button {
   border: 0;
-  border-radius: 0;
   height: 25px;
   width: 25px;
   display: inline-block;
@@ -258,10 +258,7 @@
   font-weight: 700;
   color: $darkgrey;
   background: darken($lightgrey, 10%);
-  &:first-of-type {
-    border-top-left-radius: 5px;
-    border-bottom-left-radius: 5px;
-  }
+  border-left: 2px solid lighten($darkgrey, 20%);
   &:last-of-type {
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;

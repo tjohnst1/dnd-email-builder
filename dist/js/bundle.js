@@ -26584,6 +26584,13 @@ var IncrementingNumberInput = function IncrementingNumberInput(props) {
     _react2.default.createElement(
       'div',
       { className: 'style-item__input' },
+      _react2.default.createElement('input', {
+        type: 'text',
+        value: initialValue,
+        onChange: textChangeFunc,
+        className: 'incrementing-number-input',
+        id: inputId
+      }),
       _react2.default.createElement(
         'button',
         {
@@ -26592,13 +26599,6 @@ var IncrementingNumberInput = function IncrementingNumberInput(props) {
         },
         '-'
       ),
-      _react2.default.createElement('input', {
-        type: 'text',
-        value: initialValue,
-        onChange: textChangeFunc,
-        className: 'incrementing-number-input',
-        id: inputId
-      }),
       _react2.default.createElement(
         'button',
         {
@@ -26616,7 +26616,7 @@ IncrementingNumberInput.propTypes = {
   decrementValueFunc: _react.PropTypes.func.isRequired,
   incrementValueFunc: _react.PropTypes.func.isRequired,
   textChangeFunc: _react.PropTypes.func.isRequired,
-  initialValue: _react.PropTypes.number.isRequired
+  initialValue: _react.PropTypes.string.isRequired
 };
 
 exports.default = IncrementingNumberInput;
@@ -26655,6 +26655,10 @@ var ImageComponent = function ImageComponent(props) {
       link = _props$content.link,
       src = _props$content.src,
       width = _props$content.width,
+      paddingTop = _props$content.paddingTop,
+      paddingRight = _props$content.paddingRight,
+      paddingBottom = _props$content.paddingBottom,
+      paddingLeft = _props$content.paddingLeft,
       componentId = _props$content.componentId;
 
 
@@ -26667,6 +26671,10 @@ var ImageComponent = function ImageComponent(props) {
         link: link,
         src: src,
         width: width,
+        paddingTop: paddingTop,
+        paddingBottom: paddingBottom,
+        paddingLeft: paddingLeft,
+        paddingRight: paddingRight,
         type: 'image'
       }
     };
@@ -26689,22 +26697,17 @@ var ImageComponent = function ImageComponent(props) {
     img: true
   });
 
+  var imgStyles = {
+    margin: '0 auto',
+    padding: paddingTop + ' ' + paddingRight + ' ' + paddingBottom + ' ' + paddingLeft,
+    width: width
+  };
+
   if (link) {
     imgElement = _react2.default.createElement(
       'a',
-      {
-        href: '#',
-        className: imgLinkClasses,
-        style: { display: 'block' },
-        onClick: handleSelectComponent
-      },
-      _react2.default.createElement('img', {
-        className: 'img',
-        src: src,
-        width: width,
-        alt: 'placeholder img',
-        style: { margin: '0 auto' }
-      })
+      { href: '#', className: imgLinkClasses, style: { display: 'block' }, onClick: handleSelectComponent },
+      _react2.default.createElement('img', { className: 'img', src: src, alt: 'placeholder img', style: imgStyles })
     );
   } else {
     imgElement = _react2.default.createElement('img', {
@@ -26724,7 +26727,11 @@ ImageComponent.propTypes = {
     link: _react.PropTypes.shape.isRequired,
     src: _react.PropTypes.string.isRequired,
     width: _react.PropTypes.number.isRequired,
-    componentId: _react.PropTypes.string.isRequired
+    componentId: _react.PropTypes.string.isRequired,
+    paddingTop: _react.PropTypes.string.isRequired,
+    paddingBottom: _react.PropTypes.string.isRequired,
+    paddingLeft: _react.PropTypes.string.isRequired,
+    paddingRight: _react.PropTypes.string.isRequired
   }).isRequired,
   blockId: _react.PropTypes.string.isRequired,
   dispatch: _react.PropTypes.func.isRequired,
@@ -26790,7 +26797,11 @@ var TextComponent = function TextComponent(props) {
       componentId = _props$content.componentId,
       fontFamily = _props$content.fontFamily,
       textAlign = _props$content.textAlign,
-      innerContent = _props$content.innerContent;
+      innerContent = _props$content.innerContent,
+      paddingLeft = _props$content.paddingLeft,
+      paddingRight = _props$content.paddingRight,
+      paddingBottom = _props$content.paddingBottom,
+      paddingTop = _props$content.paddingTop;
 
 
   function handleSelectComponent(e) {
@@ -26805,6 +26816,10 @@ var TextComponent = function TextComponent(props) {
         fontFamily: fontFamily,
         textAlign: textAlign,
         innerContent: innerContent,
+        paddingTop: paddingTop,
+        paddingBottom: paddingBottom,
+        paddingLeft: paddingLeft,
+        paddingRight: paddingRight,
         type: 'text'
       }
     };
@@ -26822,7 +26837,11 @@ var TextComponent = function TextComponent(props) {
     fontSize: fontSize,
     lineHeight: lineHeight,
     fontFamily: fontFamily,
-    textAlign: textAlign
+    textAlign: textAlign,
+    paddingTop: paddingTop,
+    paddingRight: paddingRight,
+    paddingLeft: paddingLeft,
+    paddingBottom: paddingBottom
   };
 
   var classes = (0, _classnames2.default)({
@@ -26844,7 +26863,14 @@ TextComponent.propTypes = {
     fontFamily: _react.PropTypes.string.isRequired,
     textAlign: _react.PropTypes.string.isRequired,
     innerContent: _react.PropTypes.string.isRequired,
-    componentId: _react.PropTypes.string.isRequired
+    componentId: _react.PropTypes.string.isRequired,
+    paddingLeft: _react.PropTypes.string.isRequired,
+    paddingRight: _react.PropTypes.string.isRequired,
+    paddingTop: _react.PropTypes.string.isRequired,
+    paddingBottom: _react.PropTypes.string.isRequired
+  }).isRequired,
+  tabs: _react.PropTypes.shape({
+    selected: _react.PropTypes.string
   }).isRequired,
   blockId: _react.PropTypes.string.isRequired,
   dispatch: _react.PropTypes.func.isRequired,
@@ -33676,6 +33702,8 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _lodash = __webpack_require__(21);
+
 var _DropDownInput = __webpack_require__(234);
 
 var _DropDownInput2 = _interopRequireDefault(_DropDownInput);
@@ -33684,9 +33712,15 @@ var _TextInput = __webpack_require__(239);
 
 var _TextInput2 = _interopRequireDefault(_TextInput);
 
+var _utilities = __webpack_require__(895);
+
 var _IncrementingNumberInput = __webpack_require__(127);
 
 var _IncrementingNumberInput2 = _interopRequireDefault(_IncrementingNumberInput);
+
+var _PaddingInput = __webpack_require__(894);
+
+var _PaddingInput2 = _interopRequireDefault(_PaddingInput);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -33705,6 +33739,12 @@ var ComponentSettings = function ComponentSettings(props) {
 
   switch (componentOptions.type) {
     case 'image':
+      var paddingValues = {
+        top: componentOptions.paddingTop,
+        left: componentOptions.paddingLeft,
+        bottom: componentOptions.paddingBottom,
+        right: componentOptions.paddingRight
+      };
       componentValues = _react2.default.createElement(
         'div',
         null,
@@ -33719,11 +33759,27 @@ var ComponentSettings = function ComponentSettings(props) {
           onChangeFunc: handleOnChange(componentInfo, 'src')
         }),
         _react2.default.createElement(_IncrementingNumberInput2.default, {
-          incrementValueFunc: handleOnClick(componentInfo, 'width', Number(componentOptions.width) + 5),
+          incrementValueFunc: handleOnClick(componentInfo, 'width', (0, _utilities.adjustPx)(componentOptions.width, 1)),
           textChangeFunc: handleOnChange(componentInfo, 'width'),
-          decrementValueFunc: handleOnClick(componentInfo, 'width', Number(componentOptions.width) - 5),
-          initialValue: Number(componentOptions.width),
+          decrementValueFunc: handleOnClick(componentInfo, 'width', (0, _utilities.adjustPx)(componentOptions.width, -1)),
+          initialValue: componentOptions.width,
           inputName: 'Width'
+        }),
+        _react2.default.createElement(_PaddingInput2.default, {
+          inputName: 'Padding',
+          initialValues: paddingValues,
+          incrementPaddingTop: handleOnClick(componentInfo, 'paddingTop', (0, _utilities.adjustPx)(componentOptions.paddingTop, 1)),
+          decrementPaddingTop: handleOnClick(componentInfo, 'paddingTop', (0, _utilities.adjustPx)(componentOptions.paddingTop, -1)),
+          updatePaddingTop: handleOnChange(componentInfo, 'paddingTop'),
+          incrementPaddingLeft: handleOnClick(componentInfo, 'paddingLeft', (0, _utilities.adjustPx)(componentOptions.paddingLeft, 1)),
+          decrementPaddingLeft: handleOnClick(componentInfo, 'paddingLeft', (0, _utilities.adjustPx)(componentOptions.paddingLeft, -1)),
+          updatePaddingLeft: handleOnChange(componentInfo, 'paddingLeft'),
+          incrementPaddingBottom: handleOnClick(componentInfo, 'paddingBottom', (0, _utilities.adjustPx)(componentOptions.paddingBottom, 1)),
+          decrementPaddingBottom: handleOnClick(componentInfo, 'paddingBottom', (0, _utilities.adjustPx)(componentOptions.paddingBottom, -1)),
+          updatePaddingBottom: handleOnChange(componentInfo, 'paddingBottom'),
+          incrementPaddingRight: handleOnClick(componentInfo, 'paddingRight', (0, _utilities.adjustPx)(componentOptions.paddingRight, 1)),
+          decrementPaddingRight: handleOnClick(componentInfo, 'paddingRight', (0, _utilities.adjustPx)(componentOptions.paddingRight, -1)),
+          updatePaddingRight: handleOnChange(componentInfo, 'paddingRight')
         })
       );
       break;
@@ -33731,6 +33787,12 @@ var ComponentSettings = function ComponentSettings(props) {
       {
         var fontFamilyOptions = ['Helvetica, Arial, Sans Serif', 'Times New Roman, serif'];
         var textAlignOptions = ['Left', 'Center', 'Right'];
+        var _paddingValues = {
+          top: componentOptions.paddingTop,
+          left: componentOptions.paddingLeft,
+          bottom: componentOptions.paddingBottom,
+          right: componentOptions.paddingRight
+        };
         componentValues = _react2.default.createElement(
           'div',
           null,
@@ -33745,19 +33807,23 @@ var ComponentSettings = function ComponentSettings(props) {
             onChangeFunc: handleOnChange(componentInfo, 'fontFamily'),
             options: fontFamilyOptions
           }),
-          _react2.default.createElement(_TextInput2.default, {
-            inputName: 'Line Height',
+          _react2.default.createElement(_IncrementingNumberInput2.default, {
+            incrementValueFunc: handleOnClick(componentInfo, 'lineHeight', (0, _utilities.adjustPx)(componentOptions.lineHeight, 1)),
+            textChangeFunc: handleOnChange(componentInfo, 'lineHeight'),
+            decrementValueFunc: handleOnClick(componentInfo, 'lineHeight', (0, _utilities.adjustPx)(componentOptions.lineHeight, -1)),
             initialValue: componentOptions.lineHeight,
-            onChangeFunc: handleOnChange(componentInfo, 'lineHeight')
+            inputName: 'Line Height'
           }),
-          _react2.default.createElement(_TextInput2.default, {
-            inputName: 'Font Size',
+          _react2.default.createElement(_IncrementingNumberInput2.default, {
+            incrementValueFunc: handleOnClick(componentInfo, 'fontSize', (0, _utilities.adjustPx)(componentOptions.fontSize, 1)),
+            textChangeFunc: handleOnChange(componentInfo, 'fontSize'),
+            decrementValueFunc: handleOnClick(componentInfo, 'fontSize', (0, _utilities.adjustPx)(componentOptions.fontSize, -1)),
             initialValue: componentOptions.fontSize,
-            onChangeFunc: handleOnChange(componentInfo, 'fontSize')
+            inputName: 'Font Size'
           }),
           _react2.default.createElement(_DropDownInput2.default, {
             inputName: 'Text Align',
-            initialValue: componentOptions.textAlign.toUpperCase(),
+            initialValue: (0, _lodash.capitalize)(componentOptions.textAlign),
             options: textAlignOptions,
             onChangeFunc: handleOnChange(componentInfo, 'textAlign')
           }),
@@ -33765,6 +33831,22 @@ var ComponentSettings = function ComponentSettings(props) {
             inputName: 'Inner Content',
             initialValue: componentOptions.innerContent,
             onChangeFunc: handleOnChange(componentInfo, 'innerContent')
+          }),
+          _react2.default.createElement(_PaddingInput2.default, {
+            inputName: 'Padding',
+            initialValues: _paddingValues,
+            incrementPaddingTop: handleOnClick(componentInfo, 'paddingTop', (0, _utilities.adjustPx)(componentOptions.paddingTop, 1)),
+            decrementPaddingTop: handleOnClick(componentInfo, 'paddingTop', (0, _utilities.adjustPx)(componentOptions.paddingTop, -1)),
+            updatePaddingTop: handleOnChange(componentInfo, 'paddingTop'),
+            incrementPaddingLeft: handleOnClick(componentInfo, 'paddingLeft', (0, _utilities.adjustPx)(componentOptions.paddingLeft, 1)),
+            decrementPaddingLeft: handleOnClick(componentInfo, 'paddingLeft', (0, _utilities.adjustPx)(componentOptions.paddingLeft, -1)),
+            updatePaddingLeft: handleOnChange(componentInfo, 'paddingLeft'),
+            incrementPaddingBottom: handleOnClick(componentInfo, 'paddingBottom', (0, _utilities.adjustPx)(componentOptions.paddingBottom, 1)),
+            decrementPaddingBottom: handleOnClick(componentInfo, 'paddingBottom', (0, _utilities.adjustPx)(componentOptions.paddingBottom, -1)),
+            updatePaddingBottom: handleOnChange(componentInfo, 'paddingBottom'),
+            incrementPaddingRight: handleOnClick(componentInfo, 'paddingRight', (0, _utilities.adjustPx)(componentOptions.paddingRight, 1)),
+            decrementPaddingRight: handleOnClick(componentInfo, 'paddingRight', (0, _utilities.adjustPx)(componentOptions.paddingRight, -1)),
+            updatePaddingRight: handleOnChange(componentInfo, 'paddingRight')
           })
         );
         break;
@@ -33932,6 +34014,8 @@ var _reactColor = __webpack_require__(674);
 
 var _actions = __webpack_require__(18);
 
+var _utilities = __webpack_require__(895);
+
 var _IncrementingNumberInput = __webpack_require__(127);
 
 var _IncrementingNumberInput2 = _interopRequireDefault(_IncrementingNumberInput);
@@ -33996,17 +34080,17 @@ var OptionsPane = exports.OptionsPane = function (_Component) {
   }, {
     key: 'handleDecreaseGlobalWidth',
     value: function handleDecreaseGlobalWidth() {
-      this.props.dispatch((0, _actions.changeGlobalWidth)(this.props.globalOptions.width - 5));
+      this.props.dispatch((0, _actions.changeGlobalWidth)((0, _utilities.adjustPx)(this.props.globalOptions.width, -5)));
     }
   }, {
     key: 'handleIncreaseGlobalWidth',
     value: function handleIncreaseGlobalWidth() {
-      this.props.dispatch((0, _actions.changeGlobalWidth)(this.props.globalOptions.width + 5));
+      this.props.dispatch((0, _actions.changeGlobalWidth)((0, _utilities.adjustPx)(this.props.globalOptions.width, 5)));
     }
   }, {
     key: 'handleChangeGlobalWidth',
     value: function handleChangeGlobalWidth(e) {
-      this.props.dispatch((0, _actions.changeGlobalWidth)(Number(e.target.value)));
+      this.props.dispatch((0, _actions.changeGlobalWidth)(e.target.value));
     }
   }, {
     key: 'handleChangeBackgroundColor',
@@ -35261,20 +35345,27 @@ function generateTextTD(options) {
     fontSize: '14px',
     textAlign: 'center',
     innerContent: '',
-    padding: '0'
+    paddingTop: '0px',
+    paddingRight: '0px',
+    paddingBottom: '0px',
+    paddingLeft: '0px'
   };
   var optionsToApply = Object.assign({}, defaultOptions, options);
-  return '<td style="padding: ' + optionsToApply.padding + '; font-family: ' + optionsToApply.fontFamily + '; font-size: ' + optionsToApply.fontSize + '; line-height: ' + optionsToApply.lineHeight + '; text-align: ' + optionsToApply.textAlign + '; color: ' + optionsToApply.color + '">' + optionsToApply.innerContent + '</td>';
+  return '<td style="padding: ' + optionsToApply.paddingTop + ', ' + optionsToApply.paddingRight + ', ' + optionsToApply.paddingBottom + ', ' + optionsToApply.paddingLeft + '; font-family: ' + optionsToApply.fontFamily + '; font-size: ' + optionsToApply.fontSize + '; line-height: ' + optionsToApply.lineHeight + '; text-align: ' + optionsToApply.textAlign + '; color: ' + optionsToApply.color + '">' + optionsToApply.innerContent + '</td>';
 }
 
 function generateImageTD(options) {
   var defaultOptions = {
     padding: '0',
     src: '',
-    width: '576px'
+    width: '576px',
+    paddingTop: '0px',
+    paddingRight: '0px',
+    paddingBottom: '0px',
+    paddingLeft: '0px'
   };
   var optionsToApply = Object.assign({}, defaultOptions, options);
-  return '<td style="padding: ' + optionsToApply.padding + '; font-size: 0; display: block; border: 0;"><img src="' + optionsToApply.src + '" style="display: block; border: 0;"></td>';
+  return '<td style="padding: ' + optionsToApply.paddingTop + ', ' + optionsToApply.paddingRight + ', ' + optionsToApply.paddingBottom + ', ' + optionsToApply.paddingLeft + '; font-size: 0; display: block; border: 0;"><img src="' + optionsToApply.src + '" width="' + optionsToApply.width + '" style="display: block; border: 0;"></td>';
 }
 
 function generateOneColumnWrapper(blockName, blockContent) {
@@ -35511,7 +35602,7 @@ function emailPreview() {
 }
 
 var globalOptionsIntialState = {
-  width: 640,
+  width: '640px',
   backgroundColor: "#ffffff"
 };
 
@@ -95037,6 +95128,133 @@ module.exports = function () {
   };
 };
 
+
+/***/ }),
+/* 894 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _lodash = __webpack_require__(21);
+
+var _IncrementingNumberInput = __webpack_require__(127);
+
+var _IncrementingNumberInput2 = _interopRequireDefault(_IncrementingNumberInput);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var PaddingInput = function PaddingInput(props) {
+  var incrementPaddingTop = props.incrementPaddingTop,
+      updatePaddingTop = props.updatePaddingTop,
+      decrementPaddingTop = props.decrementPaddingTop,
+      incrementPaddingBottom = props.incrementPaddingBottom,
+      updatePaddingBottom = props.updatePaddingBottom,
+      decrementPaddingBottom = props.decrementPaddingBottom,
+      incrementPaddingLeft = props.incrementPaddingLeft,
+      updatePaddingLeft = props.updatePaddingLeft,
+      decrementPaddingLeft = props.decrementPaddingLeft,
+      incrementPaddingRight = props.incrementPaddingRight,
+      updatePaddingRight = props.updatePaddingRight,
+      decrementPaddingRight = props.decrementPaddingRight,
+      initialValues = props.initialValues,
+      inputName = props.inputName;
+
+  var inputId = (0, _lodash.kebabCase)((0, _lodash.lowerCase)(inputName));
+
+  return _react2.default.createElement(
+    'div',
+    { className: 'style-item' },
+    _react2.default.createElement(
+      'label',
+      { className: 'style-item__label', htmlFor: inputId },
+      inputName
+    ),
+    _react2.default.createElement(
+      'div',
+      { id: inputName },
+      _react2.default.createElement(_IncrementingNumberInput2.default, {
+        incrementValueFunc: incrementPaddingTop,
+        textChangeFunc: updatePaddingTop,
+        decrementValueFunc: decrementPaddingTop,
+        initialValue: initialValues.top,
+        inputName: 'Top'
+      }),
+      _react2.default.createElement(_IncrementingNumberInput2.default, {
+        incrementValueFunc: incrementPaddingRight,
+        textChangeFunc: updatePaddingRight,
+        decrementValueFunc: decrementPaddingRight,
+        initialValue: initialValues.right,
+        inputName: 'Right'
+      }),
+      _react2.default.createElement(_IncrementingNumberInput2.default, {
+        incrementValueFunc: incrementPaddingBottom,
+        textChangeFunc: updatePaddingBottom,
+        decrementValueFunc: decrementPaddingBottom,
+        initialValue: initialValues.bottom,
+        inputName: 'Bottom'
+      }),
+      _react2.default.createElement(_IncrementingNumberInput2.default, {
+        incrementValueFunc: incrementPaddingLeft,
+        textChangeFunc: updatePaddingLeft,
+        decrementValueFunc: decrementPaddingLeft,
+        initialValue: initialValues.left,
+        inputName: 'Left'
+      })
+    )
+  );
+};
+
+PaddingInput.propTypes = {
+  incrementPaddingTop: _react.PropTypes.func.isRequired,
+  updatePaddingTop: _react.PropTypes.func.isRequired,
+  decrementPaddingTop: _react.PropTypes.func.isRequired,
+  incrementPaddingBottom: _react.PropTypes.func.isRequired,
+  updatePaddingBottom: _react.PropTypes.func.isRequired,
+  decrementPaddingBottom: _react.PropTypes.func.isRequired,
+  incrementPaddingLeft: _react.PropTypes.func.isRequired,
+  updatePaddingLeft: _react.PropTypes.func.isRequired,
+  decrementPaddingLeft: _react.PropTypes.func.isRequired,
+  incrementPaddingRight: _react.PropTypes.func.isRequired,
+  updatePaddingRight: _react.PropTypes.func.isRequired,
+  decrementPaddingRight: _react.PropTypes.func.isRequired,
+  initialValues: _react.PropTypes.shape({
+    top: _react.PropTypes.string.isRequired,
+    bottom: _react.PropTypes.string.isRequired,
+    left: _react.PropTypes.string.isRequired,
+    right: _react.PropTypes.string.isRequired
+  }).isRequired,
+  inputName: _react.PropTypes.string.isRequired
+};
+
+exports.default = PaddingInput;
+
+/***/ }),
+/* 895 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.adjustPx = adjustPx;
+function adjustPx(val, step) {
+  var num = Number(val.match(/\d+/)[0]);
+  if (step !== 0) {
+    return num + step + "px";
+  }
+  return val;
+}
 
 /***/ })
 /******/ ]);

@@ -12,7 +12,11 @@
         "fontSize": "10px",
         "lineHeight": "12px",
         "textAlign": "center",
-        "innerContent": "This is some text."
+        "innerContent": "This is some text.",
+        "paddingLeft": "0px",
+        "paddingRight": "0px",
+        "paddingTop": "0px",
+        "paddingBottom": "0px"
       }]
     },
     {
@@ -24,7 +28,11 @@
         "type": "image",
         "link": true,
         "src": "http://placehold.it/576x200",
-        "width": 576
+        "width": "576px",
+        "paddingLeft": "0px",
+        "paddingRight": "0px",
+        "paddingTop": "0px",
+        "paddingBottom": "0px"
       }]
     },
     {
@@ -39,7 +47,11 @@
         "fontSize": "14px",
         "lineHeight": "16px",
         "textAlign": "left",
-        "innerContent": "lorem ipsum"
+        "innerContent": "lorem ipsum",
+        "paddingLeft": "0px",
+        "paddingRight": "0px",
+        "paddingTop": "0px",
+        "paddingBottom": "0px"
       }]
     },
     {
@@ -69,13 +81,21 @@
           "fontSize": "14px",
           "lineHeight": "16px",
           "textAlign": "left",
-          "innerContent": "lorem ipsum"
+          "innerContent": "lorem ipsum",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
         },
         {
           "type": "image",
           "link": true,
           "src": "http://placehold.it/200x200",
-          "width": 200
+          "width": "200px",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
         }
       ]
     },
@@ -89,7 +109,11 @@
           "type": "image",
           "link": true,
           "src": "http://placehold.it/200x200",
-          "width": 200
+          "width": "200px",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
         },
         {
           "type": "text",
@@ -98,7 +122,11 @@
           "fontSize": "14px",
           "lineHeight": "16px",
           "textAlign": "left",
-          "innerContent": "lorem ipsum"
+          "innerContent": "lorem ipsum",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
         }
       ]
     },
@@ -112,7 +140,11 @@
           "type": "image",
           "link": true,
           "src": "http://placehold.it/200x200",
-          "width": 200
+          "width": "200px",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
         },
         {
           "type": "text",
@@ -121,7 +153,11 @@
           "fontSize": "14px",
           "lineHeight": "16px",
           "textAlign": "left",
-          "innerContent": "lorem ipsum"
+          "innerContent": "lorem ipsum",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
         }
       ]
     }

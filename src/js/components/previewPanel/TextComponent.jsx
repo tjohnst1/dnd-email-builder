@@ -6,7 +6,8 @@ import { selectComponent, switchTab } from '../../actions/actions';
 const TextComponent = (props) => {
   const { blockId, dispatch, selected, tabs } = props;
   const { color, fontSize, lineHeight, componentId,
-    fontFamily, textAlign, innerContent } = props.content;
+    fontFamily, textAlign, innerContent, paddingLeft, paddingRight,
+    paddingBottom, paddingTop } = props.content;
 
   function handleSelectComponent(e) {
     e.stopPropagation();
@@ -20,6 +21,10 @@ const TextComponent = (props) => {
         fontFamily,
         textAlign,
         innerContent,
+        paddingTop,
+        paddingBottom,
+        paddingLeft,
+        paddingRight,
         type: 'text',
       },
     };
@@ -38,6 +43,10 @@ const TextComponent = (props) => {
     lineHeight,
     fontFamily,
     textAlign,
+    paddingTop,
+    paddingRight,
+    paddingLeft,
+    paddingBottom,
   };
 
   const classes = classNames({
@@ -58,6 +67,13 @@ TextComponent.propTypes = {
     textAlign: PropTypes.string.isRequired,
     innerContent: PropTypes.string.isRequired,
     componentId: PropTypes.string.isRequired,
+    paddingLeft: PropTypes.string.isRequired,
+    paddingRight: PropTypes.string.isRequired,
+    paddingTop: PropTypes.string.isRequired,
+    paddingBottom: PropTypes.string.isRequired,
+  }).isRequired,
+  tabs: PropTypes.shape({
+    selected: PropTypes.string,
   }).isRequired,
   blockId: PropTypes.string.isRequired,
   dispatch: PropTypes.func.isRequired,
