@@ -2,11 +2,11 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { uniqueId } from 'lodash';
 import classNames from 'classnames';
-import { SketchPicker } from 'react-color';
 import { switchCategory, fetchEmailBlocksIfNeeded, changeGlobalWidth,
   changeBackgroundColor, clearMarkerFromPreview, updateComponentValue } from '../../actions/actions';
 import { adjustPx } from '../../utilities/utilities';
 import IncrementingNumberInput from './IncrementingNumberInput';
+import ColorInput from './ColorInput';
 import ComponentSettings from './ComponentSettings';
 import MenuItem from './MenuItem';
 import Block from './Block';
@@ -20,12 +20,8 @@ export class OptionsPane extends Component {
     this.handleIncreaseGlobalWidth = this.handleIncreaseGlobalWidth.bind(this);
     this.handleChangeBackgroundColor = this.handleChangeBackgroundColor.bind(this);
     this.handleClearMarkerFromPreview = this.handleClearMarkerFromPreview.bind(this);
-    this.toggleColorPicker = this.toggleColorPicker.bind(this);
     this.handleOnClick = this.handleOnClick.bind(this);
     this.handleOnChange = this.handleOnChange.bind(this);
-    this.state = {
-      showColorPicker: false,
-    };
   }
 
   componentDidMount() {
@@ -59,6 +55,17 @@ export class OptionsPane extends Component {
   }
 
   handleOnChange(componentInfo, category) {
+    if (category === 'background') {
+      return (color) => {
+        this.props.dispatch(updateComponentValue(componentInfo, category, color.hex));
+      };
+    }
+    return (e) => {
+      this.props.dispatch(updateComponentValue(componentInfo, category, e.target.value));
+    };
+  }
+
+  handleColorChange(componentInfo, category) {
     return (e) => {
       this.props.dispatch(updateComponentValue(componentInfo, category, e.target.value));
     };
@@ -70,20 +77,10 @@ export class OptionsPane extends Component {
     };
   }
 
-  toggleColorPicker() {
-    this.setState({
-      showColorPicker: !this.state.showColorPicker,
-    });
-  }
-
   render() {
     const { tabs, currentCategory, blocks, globalOptions, selected } = this.props;
 
     let innerContent;
-
-    const csInnerStyles = {
-      background: globalOptions.backgroundColor,
-    };
 
     switch (tabs.selected) {
       case 'Blocks':
@@ -119,24 +116,12 @@ export class OptionsPane extends Component {
               initialValue={globalOptions.width}
               inputName="Global Width"
             />
-            <div className="style-item">
-              <label
-                className="style-item__label"
-                htmlFor="background-color"
-              >Background Color</label>
-              <div className="style-item__input color-picker">
-                <button className="color-input" onClick={this.toggleColorPicker}>
-                  <div className="color-input__swatch" style={csInnerStyles} />
-                  <p className="color-input__text">{globalOptions.backgroundColor}</p>
-                </button>
-                { this.state.showColorPicker ? <SketchPicker
-                  disableAlpha
-                  color={globalOptions.backgroundColor}
-                  onChange={this.handleChangeBackgroundColor}
-                  id="background-color"
-                /> : null }
-              </div>
-            </div>
+            <ColorInput
+              classes="dark"
+              changeColor={this.handleChangeBackgroundColor}
+              initialValue={globalOptions.backgroundColor}
+              inputName="Background Color"
+            />
             { selected ?
               <ComponentSettings
                 selected={selected}

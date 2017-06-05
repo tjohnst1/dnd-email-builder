@@ -11,7 +11,7 @@ function generateTextTD(options) {
     paddingLeft: '0px',
   };
   const optionsToApply = Object.assign({}, defaultOptions, options);
-  return `<td style="padding: ${optionsToApply.paddingTop}, ${optionsToApply.paddingRight}, ${optionsToApply.paddingBottom}, ${optionsToApply.paddingLeft}; font-family: ${optionsToApply.fontFamily}; font-size: ${optionsToApply.fontSize}; line-height: ${optionsToApply.lineHeight}; text-align: ${optionsToApply.textAlign}; color: ${optionsToApply.color}">${optionsToApply.innerContent}</td>`;
+  return `<td style="padding: ${optionsToApply.paddingTop}, ${optionsToApply.paddingRight}, ${optionsToApply.paddingBottom}, ${optionsToApply.paddingLeft}; background: ${optionsToApply.background}; font-family: ${optionsToApply.fontFamily}; font-size: ${optionsToApply.fontSize}; line-height: ${optionsToApply.lineHeight}; text-align: ${optionsToApply.textAlign}; color: ${optionsToApply.color}">${optionsToApply.innerContent}</td>`;
 }
 
 function generateImageTD(options) {
@@ -25,7 +25,7 @@ function generateImageTD(options) {
     paddingLeft: '0px',
   }
   const optionsToApply = Object.assign({}, defaultOptions, options);
-  return `<td style="padding: ${optionsToApply.paddingTop}, ${optionsToApply.paddingRight}, ${optionsToApply.paddingBottom}, ${optionsToApply.paddingLeft}; font-size: 0; display: block; border: 0;"><img src="${optionsToApply.src}" width="${optionsToApply.width}" style="display: block; border: 0;"></td>`;
+  return `<td style="padding: ${optionsToApply.paddingTop}, ${optionsToApply.paddingRight}, ${optionsToApply.paddingBottom}, ${optionsToApply.paddingLeft}; background: ${optionsToApply.background}; font-size: 0; display: block; border: 0;"><img src="${optionsToApply.src}" width="${optionsToApply.width}" style="display: block; border: 0;"></td>`;
 }
 
 function generateOneColumnWrapper(blockName, blockContent) {

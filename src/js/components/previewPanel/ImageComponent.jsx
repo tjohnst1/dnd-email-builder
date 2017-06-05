@@ -47,6 +47,7 @@ const ImageComponent = (props) => {
   const imgStyles = {
     margin: '0 auto',
     padding: `${paddingTop} ${paddingRight} ${paddingBottom} ${paddingLeft}`,
+    background,
     width,
   };
 

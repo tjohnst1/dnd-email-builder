@@ -623,11 +623,16 @@ body {
 
 .color-input {
   height: 25px;
-  width: 110px;
-  background: #506266;
   border: 0;
   padding: 0.3rem 1rem 0.3rem 0.5rem;
-  border-radius: 5px; }
+  border-radius: 5px;
+  text-align: left;
+  background: #FBFBFF;
+  width: 100%; }
+  .color-input.dark {
+    background: #506266; }
+    .color-input.dark .color-input__text {
+      color: #d8d8d8; }
 
 .color-input__swatch {
   width: 25px;
@@ -642,7 +647,7 @@ body {
   margin: 0 0 0 1rem;
   vertical-align: middle;
   font-size: 1.2rem;
-  color: #d8d8d8; }
+  color: #232B2D; }
 
 .incrementing-number-input {
   height: 25px;

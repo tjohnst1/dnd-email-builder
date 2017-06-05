@@ -48,6 +48,7 @@ const TextComponent = (props) => {
     paddingRight,
     paddingLeft,
     paddingBottom,
+    background,
   };
 
   const classes = classNames({

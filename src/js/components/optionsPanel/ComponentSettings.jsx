@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 import { capitalize } from 'lodash';
 import DropDownInput from './DropDownInput';
 import TextInput from './TextInput';
+import ColorInput from './ColorInput';
 import { adjustPx } from '../../utilities/utilities';
 import IncrementingNumberInput from './IncrementingNumberInput';
 import PaddingInput from './PaddingInput';
@@ -54,6 +55,11 @@ const ComponentSettings = (props) => {
             incrementPaddingRight={handleOnClick(componentInfo, 'paddingRight', adjustPx(componentOptions.paddingRight, 1))}
             decrementPaddingRight={handleOnClick(componentInfo, 'paddingRight', adjustPx(componentOptions.paddingRight, -1))}
             updatePaddingRight={handleOnChange(componentInfo, 'paddingRight')}
+          />
+          <ColorInput
+            inputName="Background"
+            initialValue={componentOptions.background}
+            changeColor={handleOnChange(componentInfo, 'background')}
           />
         </div>
       );
@@ -110,6 +116,11 @@ const ComponentSettings = (props) => {
             incrementPaddingRight={handleOnClick(componentInfo, 'paddingRight', adjustPx(componentOptions.paddingRight, 1))}
             decrementPaddingRight={handleOnClick(componentInfo, 'paddingRight', adjustPx(componentOptions.paddingRight, -1))}
             updatePaddingRight={handleOnChange(componentInfo, 'paddingRight')}
+          />
+          <ColorInput
+            inputName="Background"
+            initialValue={componentOptions.background}
+            changeColor={handleOnChange(componentInfo, 'background')}
           />
         </div>
       );

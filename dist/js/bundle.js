@@ -26855,6 +26855,7 @@ var ImageComponent = function ImageComponent(props) {
   var imgStyles = {
     margin: '0 auto',
     padding: paddingTop + ' ' + paddingRight + ' ' + paddingBottom + ' ' + paddingLeft,
+    background: background,
     width: width
   };
 
@@ -26999,7 +27000,8 @@ var TextComponent = function TextComponent(props) {
     paddingTop: paddingTop,
     paddingRight: paddingRight,
     paddingLeft: paddingLeft,
-    paddingBottom: paddingBottom
+    paddingBottom: paddingBottom,
+    background: background
   };
 
   var classes = (0, _classnames2.default)({
@@ -33899,6 +33901,10 @@ var _TextInput = __webpack_require__(242);
 
 var _TextInput2 = _interopRequireDefault(_TextInput);
 
+var _ColorInput = __webpack_require__(897);
+
+var _ColorInput2 = _interopRequireDefault(_ColorInput);
+
 var _utilities = __webpack_require__(132);
 
 var _IncrementingNumberInput = __webpack_require__(75);
@@ -33967,6 +33973,11 @@ var ComponentSettings = function ComponentSettings(props) {
           incrementPaddingRight: handleOnClick(componentInfo, 'paddingRight', (0, _utilities.adjustPx)(componentOptions.paddingRight, 1)),
           decrementPaddingRight: handleOnClick(componentInfo, 'paddingRight', (0, _utilities.adjustPx)(componentOptions.paddingRight, -1)),
           updatePaddingRight: handleOnChange(componentInfo, 'paddingRight')
+        }),
+        _react2.default.createElement(_ColorInput2.default, {
+          inputName: 'Background',
+          initialValue: componentOptions.background,
+          changeColor: handleOnChange(componentInfo, 'background')
         })
       );
       break;
@@ -34028,6 +34039,11 @@ var ComponentSettings = function ComponentSettings(props) {
             incrementPaddingRight: handleOnClick(componentInfo, 'paddingRight', (0, _utilities.adjustPx)(componentOptions.paddingRight, 1)),
             decrementPaddingRight: handleOnClick(componentInfo, 'paddingRight', (0, _utilities.adjustPx)(componentOptions.paddingRight, -1)),
             updatePaddingRight: handleOnChange(componentInfo, 'paddingRight')
+          }),
+          _react2.default.createElement(_ColorInput2.default, {
+            inputName: 'Background',
+            initialValue: componentOptions.background,
+            changeColor: handleOnChange(componentInfo, 'background')
           })
         );
         break;
@@ -34191,8 +34207,6 @@ var _classnames = __webpack_require__(29);
 
 var _classnames2 = _interopRequireDefault(_classnames);
 
-var _reactColor = __webpack_require__(677);
-
 var _actions = __webpack_require__(16);
 
 var _utilities = __webpack_require__(132);
@@ -34200,6 +34214,10 @@ var _utilities = __webpack_require__(132);
 var _IncrementingNumberInput = __webpack_require__(75);
 
 var _IncrementingNumberInput2 = _interopRequireDefault(_IncrementingNumberInput);
+
+var _ColorInput = __webpack_require__(897);
+
+var _ColorInput2 = _interopRequireDefault(_ColorInput);
 
 var _ComponentSettings = __webpack_require__(235);
 
@@ -34235,12 +34253,8 @@ var OptionsPane = exports.OptionsPane = function (_Component) {
     _this.handleIncreaseGlobalWidth = _this.handleIncreaseGlobalWidth.bind(_this);
     _this.handleChangeBackgroundColor = _this.handleChangeBackgroundColor.bind(_this);
     _this.handleClearMarkerFromPreview = _this.handleClearMarkerFromPreview.bind(_this);
-    _this.toggleColorPicker = _this.toggleColorPicker.bind(_this);
     _this.handleOnClick = _this.handleOnClick.bind(_this);
     _this.handleOnChange = _this.handleOnChange.bind(_this);
-    _this.state = {
-      showColorPicker: false
-    };
     return _this;
   }
 
@@ -34288,30 +34302,37 @@ var OptionsPane = exports.OptionsPane = function (_Component) {
     value: function handleOnChange(componentInfo, category) {
       var _this3 = this;
 
+      if (category === 'background') {
+        return function (color) {
+          _this3.props.dispatch((0, _actions.updateComponentValue)(componentInfo, category, color.hex));
+        };
+      }
       return function (e) {
         _this3.props.dispatch((0, _actions.updateComponentValue)(componentInfo, category, e.target.value));
       };
     }
   }, {
-    key: 'handleOnClick',
-    value: function handleOnClick(componentInfo, category, value) {
+    key: 'handleColorChange',
+    value: function handleColorChange(componentInfo, category) {
       var _this4 = this;
 
-      return function () {
-        _this4.props.dispatch((0, _actions.updateComponentValue)(componentInfo, category, value));
+      return function (e) {
+        _this4.props.dispatch((0, _actions.updateComponentValue)(componentInfo, category, e.target.value));
       };
     }
   }, {
-    key: 'toggleColorPicker',
-    value: function toggleColorPicker() {
-      this.setState({
-        showColorPicker: !this.state.showColorPicker
-      });
+    key: 'handleOnClick',
+    value: function handleOnClick(componentInfo, category, value) {
+      var _this5 = this;
+
+      return function () {
+        _this5.props.dispatch((0, _actions.updateComponentValue)(componentInfo, category, value));
+      };
     }
   }, {
     key: 'render',
     value: function render() {
-      var _this5 = this;
+      var _this6 = this;
 
       var _props = this.props,
           tabs = _props.tabs,
@@ -34323,10 +34344,6 @@ var OptionsPane = exports.OptionsPane = function (_Component) {
 
       var innerContent = void 0;
 
-      var csInnerStyles = {
-        background: globalOptions.backgroundColor
-      };
-
       switch (tabs.selected) {
         case 'Blocks':
           if (blocks.all.length > 0) {
@@ -34335,7 +34352,7 @@ var OptionsPane = exports.OptionsPane = function (_Component) {
                 return _react2.default.createElement(_MenuItem2.default, {
                   icon: category.image,
                   text: category.name,
-                  handleSwitchCategory: _this5.handleSwitchCategory(category.name),
+                  handleSwitchCategory: _this6.handleSwitchCategory(category.name),
                   key: (0, _lodash.uniqueId)()
                 });
               });
@@ -34355,7 +34372,7 @@ var OptionsPane = exports.OptionsPane = function (_Component) {
                   category: currentCategory,
                   id: block.id,
                   key: (0, _lodash.uniqueId)(),
-                  handleClearMarkerFromPreview: _this5.handleClearMarkerFromPreview
+                  handleClearMarkerFromPreview: _this6.handleClearMarkerFromPreview
                 });
               });
             }
@@ -34372,38 +34389,12 @@ var OptionsPane = exports.OptionsPane = function (_Component) {
               initialValue: globalOptions.width,
               inputName: 'Global Width'
             }),
-            _react2.default.createElement(
-              'div',
-              { className: 'style-item' },
-              _react2.default.createElement(
-                'label',
-                {
-                  className: 'style-item__label',
-                  htmlFor: 'background-color'
-                },
-                'Background Color'
-              ),
-              _react2.default.createElement(
-                'div',
-                { className: 'style-item__input color-picker' },
-                _react2.default.createElement(
-                  'button',
-                  { className: 'color-input', onClick: this.toggleColorPicker },
-                  _react2.default.createElement('div', { className: 'color-input__swatch', style: csInnerStyles }),
-                  _react2.default.createElement(
-                    'p',
-                    { className: 'color-input__text' },
-                    globalOptions.backgroundColor
-                  )
-                ),
-                this.state.showColorPicker ? _react2.default.createElement(_reactColor.SketchPicker, {
-                  disableAlpha: true,
-                  color: globalOptions.backgroundColor,
-                  onChange: this.handleChangeBackgroundColor,
-                  id: 'background-color'
-                }) : null
-              )
-            ),
+            _react2.default.createElement(_ColorInput2.default, {
+              classes: 'dark',
+              changeColor: this.handleChangeBackgroundColor,
+              initialValue: globalOptions.backgroundColor,
+              inputName: 'Background Color'
+            }),
             selected ? _react2.default.createElement(_ComponentSettings2.default, {
               selected: selected,
               handleOnClick: this.handleOnClick,
@@ -35657,7 +35648,7 @@ function generateTextTD(options) {
     paddingLeft: '0px'
   };
   var optionsToApply = Object.assign({}, defaultOptions, options);
-  return '<td style="padding: ' + optionsToApply.paddingTop + ', ' + optionsToApply.paddingRight + ', ' + optionsToApply.paddingBottom + ', ' + optionsToApply.paddingLeft + '; font-family: ' + optionsToApply.fontFamily + '; font-size: ' + optionsToApply.fontSize + '; line-height: ' + optionsToApply.lineHeight + '; text-align: ' + optionsToApply.textAlign + '; color: ' + optionsToApply.color + '">' + optionsToApply.innerContent + '</td>';
+  return '<td style="padding: ' + optionsToApply.paddingTop + ', ' + optionsToApply.paddingRight + ', ' + optionsToApply.paddingBottom + ', ' + optionsToApply.paddingLeft + '; background: ' + optionsToApply.background + '; font-family: ' + optionsToApply.fontFamily + '; font-size: ' + optionsToApply.fontSize + '; line-height: ' + optionsToApply.lineHeight + '; text-align: ' + optionsToApply.textAlign + '; color: ' + optionsToApply.color + '">' + optionsToApply.innerContent + '</td>';
 }
 
 function generateImageTD(options) {
@@ -35671,7 +35662,7 @@ function generateImageTD(options) {
     paddingLeft: '0px'
   };
   var optionsToApply = Object.assign({}, defaultOptions, options);
-  return '<td style="padding: ' + optionsToApply.paddingTop + ', ' + optionsToApply.paddingRight + ', ' + optionsToApply.paddingBottom + ', ' + optionsToApply.paddingLeft + '; font-size: 0; display: block; border: 0;"><img src="' + optionsToApply.src + '" width="' + optionsToApply.width + '" style="display: block; border: 0;"></td>';
+  return '<td style="padding: ' + optionsToApply.paddingTop + ', ' + optionsToApply.paddingRight + ', ' + optionsToApply.paddingBottom + ', ' + optionsToApply.paddingLeft + '; background: ' + optionsToApply.background + '; font-size: 0; display: block; border: 0;"><img src="' + optionsToApply.src + '" width="' + optionsToApply.width + '" style="display: block; border: 0;"></td>';
 }
 
 function generateOneColumnWrapper(blockName, blockContent) {
@@ -95434,6 +95425,123 @@ module.exports = function () {
   };
 };
 
+
+/***/ }),
+/* 897 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _lodash = __webpack_require__(19);
+
+var _reactColor = __webpack_require__(677);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var ColorInput = function (_Component) {
+  _inherits(ColorInput, _Component);
+
+  function ColorInput(props) {
+    _classCallCheck(this, ColorInput);
+
+    var _this = _possibleConstructorReturn(this, (ColorInput.__proto__ || Object.getPrototypeOf(ColorInput)).call(this, props));
+
+    _this.toggleColorPicker = _this.toggleColorPicker.bind(_this);
+    _this.state = {
+      showColorPicker: false
+    };
+    return _this;
+  }
+
+  _createClass(ColorInput, [{
+    key: 'toggleColorPicker',
+    value: function toggleColorPicker() {
+      this.setState({
+        showColorPicker: !this.state.showColorPicker
+      });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _props = this.props,
+          inputName = _props.inputName,
+          initialValue = _props.initialValue,
+          changeColor = _props.changeColor,
+          classes = _props.classes;
+
+      var inputId = (0, _lodash.kebabCase)((0, _lodash.lowerCase)(inputName));
+
+      var inputClasses = classes + ' color-input';
+
+      var styles = {
+        background: initialValue
+      };
+
+      return _react2.default.createElement(
+        'div',
+        { className: 'style-item' },
+        _react2.default.createElement(
+          'label',
+          { className: 'style-item__label', htmlFor: inputId },
+          inputName
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'style-item__input color-picker' },
+          _react2.default.createElement(
+            'button',
+            { className: inputClasses, onClick: this.toggleColorPicker },
+            _react2.default.createElement('div', { className: 'color-input__swatch', style: styles }),
+            _react2.default.createElement(
+              'p',
+              { className: 'color-input__text' },
+              initialValue
+            )
+          ),
+          this.state.showColorPicker ? _react2.default.createElement(_reactColor.SketchPicker, {
+            disableAlpha: true,
+            color: initialValue,
+            onChange: changeColor,
+            id: 'background-color'
+          }) : null
+        )
+      );
+    }
+  }]);
+
+  return ColorInput;
+}(_react.Component);
+
+exports.default = ColorInput;
+
+
+ColorInput.propTypes = {
+  initialValue: _react.PropTypes.string.isRequired,
+  inputName: _react.PropTypes.string.isRequired,
+  changeColor: _react.PropTypes.func.isRequired,
+  classes: _react.PropTypes.string
+};
+
+ColorInput.defaultProps = {
+  classes: ''
+};
 
 /***/ })
 /******/ ]);
