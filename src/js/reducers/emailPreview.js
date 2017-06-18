@@ -1,8 +1,9 @@
+import {set} from 'lodash';
 import generateEmailCode from '../data/contentGenerators';
 import { CHANGE_GLOBAL_WIDTH, CHANGE_BACKGROUND_COLOR, ADD_BLOCK_TO_PREVIEW,
   REMOVE_BLOCK_FROM_PREVIEW, MOVE_BLOCK_IN_PREVIEW, CLEAR_MARKER_FROM_PREVIEW,
   MOVE_MARKER, REMOVE_ALL_BLOCKS_IN_PREVIEW, SELECT_COMPONENT,
-  UPDATE_COMPONENT_VALUE } from '../actions/actions';
+  UPDATE_COMPONENT_VALUE, UPDATE_GLOBAL_VALUE } from '../actions/actions';
 
 
 const emailPreviewState = {
@@ -109,7 +110,7 @@ export function emailPreview(state = emailPreviewState, action) {
           block.id !== 'preview-panel-marker'),
       });
 
-    case SELECT_COMPONENT:
+    case SELECT_COMPONENT: {
       let newSelected;
       if ((action.info === null) || (state.selected && (action.info.componentId === state.selected.componentId))) {
         newSelected = null;
@@ -123,8 +124,9 @@ export function emailPreview(state = emailPreviewState, action) {
       return Object.assign({}, state, {
         selected: newSelected,
       });
+    }
 
-    case UPDATE_COMPONENT_VALUE:
+    case UPDATE_COMPONENT_VALUE: {
       const { componentInfo, property, value } = action;
       let updatedComponent;
       temp = blocks.slice().map((block) => {
@@ -134,7 +136,11 @@ export function emailPreview(state = emailPreviewState, action) {
           block.content.map((component) => {
             if (component.componentId === componentInfo.componentId) {
               // update the value
-              component[property] = value;
+              if (property.match(/\./)) {
+                set(component, property, value);
+              } else {
+                component[property] = value;
+              }
               updatedComponent = component;
             }
             return component;
@@ -147,8 +153,16 @@ export function emailPreview(state = emailPreviewState, action) {
         blocks: temp,
         code: generateEmailCode(temp),
         selected: Object.assign({}, state.selected, {componentOptions: updatedComponent}),
-      }
-    );
+      })
+    };
+
+    case UPDATE_GLOBAL_VALUE: {
+      const {property, value} = action;
+
+      return Object.assign({}, state, {
+        code: generateEmailCode(blocks, { [property]: value }),
+      });
+    }
 
     default:
       return state;
@@ -162,13 +176,10 @@ const globalOptionsIntialState = {
 
 export function globalOptions(state = globalOptionsIntialState, action) {
   switch (action.type) {
-    case CHANGE_GLOBAL_WIDTH:
+    case UPDATE_GLOBAL_VALUE:
+
       return Object.assign({}, state, {
-        width: action.width,
-      });
-    case CHANGE_BACKGROUND_COLOR:
-      return Object.assign({}, state, {
-        backgroundColor: action.backgroundColor,
+        [action.property]: action.value,
       });
     default:
       return state;

@@ -1,13 +1,14 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
+import { sameFourBorderValues } from '../../utilities/utilities';
 import { selectComponent, switchTab } from '../../actions/actions';
 
 const TextComponent = (props) => {
   const { blockId, dispatch, selected, tabs } = props;
   const { color, fontSize, lineHeight, componentId,
     fontFamily, textAlign, innerContent, paddingLeft, paddingRight,
-    paddingBottom, paddingTop, background } = props.content;
+    paddingBottom, paddingTop, background, border } = props.content;
 
   function handleSelectComponent(e) {
     e.stopPropagation();
@@ -26,6 +27,7 @@ const TextComponent = (props) => {
         paddingLeft,
         paddingRight,
         background,
+        border,
         type: 'text',
       },
     };
@@ -37,7 +39,7 @@ const TextComponent = (props) => {
     }
   }
 
-  const styles = {
+  let styles = {
     margin: '0 auto',
     color,
     fontSize,
@@ -50,6 +52,20 @@ const TextComponent = (props) => {
     paddingBottom,
     background,
   };
+
+  let borderStyles = {
+    borderTop: `${border.top.width} solid ${border.top.color}`,
+    borderBottom: `${border.bottom.width} solid ${border.bottom.color}`,
+    borderLeft: `${border.left.width} solid ${border.left.color}`,
+    borderRight: `${border.right.width} solid ${border.right.color}`,
+  };
+
+  // if all the border styles are the same, use shorthand
+  if (sameFourBorderValues(border)) {
+    borderStyles = { border: `${border.top.width} solid ${border.top.color}` };
+  }
+
+  styles = Object.assign({}, styles, borderStyles);
 
   const classes = classNames({
     selected: selected && (selected.componentId === componentId),
@@ -73,6 +89,24 @@ TextComponent.propTypes = {
     paddingRight: PropTypes.string.isRequired,
     paddingTop: PropTypes.string.isRequired,
     paddingBottom: PropTypes.string.isRequired,
+    border: PropTypes.shape({
+      top: PropTypes.shape({
+        width: PropTypes.string.isRequired,
+        color: PropTypes.string.isRequired,
+      }),
+      bottom: PropTypes.shape({
+        width: PropTypes.string.isRequired,
+        color: PropTypes.string.isRequired,
+      }),
+      right: PropTypes.shape({
+        width: PropTypes.string.isRequired,
+        color: PropTypes.string.isRequired,
+      }),
+      left: PropTypes.shape({
+        width: PropTypes.string.isRequired,
+        color: PropTypes.string.isRequired,
+      }),
+    }),
   }).isRequired,
   tabs: PropTypes.shape({
     selected: PropTypes.string,

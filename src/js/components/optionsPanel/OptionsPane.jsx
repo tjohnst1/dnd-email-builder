@@ -2,14 +2,15 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { uniqueId } from 'lodash';
 import classNames from 'classnames';
-import { switchCategory, fetchEmailBlocksIfNeeded, changeGlobalWidth,
-  changeBackgroundColor, clearMarkerFromPreview, updateComponentValue } from '../../actions/actions';
+import { switchCategory, fetchEmailBlocksIfNeeded, updateGlobalValue,
+   clearMarkerFromPreview, updateComponentValue } from '../../actions/actions';
 import { adjustPx } from '../../utilities/utilities';
 import IncrementingNumberInput from './IncrementingNumberInput';
 import ColorInput from './ColorInput';
 import ComponentSettings from './ComponentSettings';
 import MenuItem from './MenuItem';
 import Block from './Block';
+import Loader from '../../../svg/loader.svg';
 
 export class OptionsPane extends Component {
   constructor(props) {
@@ -35,19 +36,19 @@ export class OptionsPane extends Component {
   }
 
   handleDecreaseGlobalWidth() {
-    this.props.dispatch(changeGlobalWidth(adjustPx(this.props.globalOptions.width, -5)));
+    this.props.dispatch(updateGlobalValue('width', adjustPx(this.props.globalOptions.width, -5)));
   }
 
   handleIncreaseGlobalWidth() {
-    this.props.dispatch(changeGlobalWidth(adjustPx(this.props.globalOptions.width, 5)));
+    this.props.dispatch(updateGlobalValue('width', adjustPx(this.props.globalOptions.width, 5)));
   }
 
   handleChangeGlobalWidth(e) {
-    this.props.dispatch(changeGlobalWidth(e.target.value));
+    this.props.dispatch(updateGlobalValue('width', e.target.value));
   }
 
   handleChangeBackgroundColor(color) {
-    this.props.dispatch(changeBackgroundColor(color.hex));
+    this.props.dispatch(updateGlobalValue('backgroundColor', color.hex));
   }
 
   handleClearMarkerFromPreview() {
@@ -55,17 +56,11 @@ export class OptionsPane extends Component {
   }
 
   handleOnChange(componentInfo, category) {
-    if (category === 'background') {
+    if (/(border|background)/.test(category)) {
       return (color) => {
         this.props.dispatch(updateComponentValue(componentInfo, category, color.hex));
       };
     }
-    return (e) => {
-      this.props.dispatch(updateComponentValue(componentInfo, category, e.target.value));
-    };
-  }
-
-  handleColorChange(componentInfo, category) {
     return (e) => {
       this.props.dispatch(updateComponentValue(componentInfo, category, e.target.value));
     };
@@ -106,7 +101,7 @@ export class OptionsPane extends Component {
           }
         }
         break;
-      case 'Styles':
+      case 'Styles': {
         innerContent = (
           <div className="style-item-container">
             <IncrementingNumberInput
@@ -132,8 +127,14 @@ export class OptionsPane extends Component {
           </div>
         );
         break;
+      }
       default:
-        innerContent = <p>Loading...</p>;
+        // loading graphic
+        innerContent = (
+          <div className="loading-block">
+            <Loader />;
+          </div>
+        );
     }
 
     const classes = classNames({

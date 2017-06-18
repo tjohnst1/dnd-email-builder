@@ -1,13 +1,14 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
+import { sameFourBorderValues } from '../../utilities/utilities';
 import { selectComponent, switchTab } from '../../actions/actions';
 
 const ImageAndCaptionComponent = (props) => {
   const { blockId, dispatch, selected, tabs } = props;
-  const { color, fontSize, lineHeight, componentId,
+  const { color, fontSize, lineHeight, componentId, background,
     fontFamily, textAlign, innerContent, paddingLeft, paddingRight,
-    paddingBottom, paddingTop, link, src, width } = props.content;
+    paddingBottom, paddingTop, link, src, width, border } = props.content;
 
   function handleSelectComponent(e) {
     e.stopPropagation();
@@ -28,6 +29,8 @@ const ImageAndCaptionComponent = (props) => {
         paddingBottom,
         paddingLeft,
         paddingRight,
+        border,
+        background,
         type: 'image-and-caption',
       },
     };
@@ -39,7 +42,7 @@ const ImageAndCaptionComponent = (props) => {
     }
   }
 
-  const styles = {
+  let styles = {
     margin: '0 auto',
     color,
     fontSize,
@@ -50,11 +53,26 @@ const ImageAndCaptionComponent = (props) => {
     paddingRight,
     paddingLeft,
     paddingBottom,
+    background,
   };
 
   const classes = classNames({
     selected: selected && (selected.componentId === componentId),
   });
+
+  let borderStyles = {
+    borderTop: `${border.top.width} solid ${border.top.color}`,
+    borderBottom: `${border.bottom.width} solid ${border.bottom.color}`,
+    borderLeft: `${border.left.width} solid ${border.left.color}`,
+    borderRight: `${border.right.width} solid ${border.right.color}`,
+  };
+
+  // if all the border styles are the same, use shorthand
+  if (sameFourBorderValues(border)) {
+    borderStyles = { border: `${border.top.width} solid ${border.top.color}` };
+  }
+
+  styles = Object.assign({}, styles, borderStyles);
 
   return (
     <div className={classes} style={styles} onClick={handleSelectComponent}>
@@ -80,6 +98,25 @@ ImageAndCaptionComponent.propTypes = {
     paddingRight: PropTypes.string.isRequired,
     paddingTop: PropTypes.string.isRequired,
     paddingBottom: PropTypes.string.isRequired,
+    background: PropTypes.string.isRequired,
+    border: PropTypes.shape({
+      top: PropTypes.shape({
+        width: PropTypes.string.isRequired,
+        color: PropTypes.string.isRequired,
+      }),
+      bottom: PropTypes.shape({
+        width: PropTypes.string.isRequired,
+        color: PropTypes.string.isRequired,
+      }),
+      right: PropTypes.shape({
+        width: PropTypes.string.isRequired,
+        color: PropTypes.string.isRequired,
+      }),
+      left: PropTypes.shape({
+        width: PropTypes.string.isRequired,
+        color: PropTypes.string.isRequired,
+      }),
+    }),
   }).isRequired,
   tabs: PropTypes.shape({
     selected: PropTypes.string,

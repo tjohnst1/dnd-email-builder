@@ -1,12 +1,13 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
+import { sameFourBorderValues } from '../../utilities/utilities';
 import { selectComponent, switchTab } from '../../actions/actions';
 
 const ImageComponent = (props) => {
   const { blockId, dispatch, selected, tabs } = props;
-  const { link, src, width, paddingTop, paddingRight,
-    paddingBottom, paddingLeft, background, componentId } = props.content;
+  const { link, src, width, paddingTop, paddingRight, paddingBottom,
+    paddingLeft, background, componentId, border } = props.content;
 
   function handleSelectComponent(e) {
     e.stopPropagation();
@@ -22,6 +23,7 @@ const ImageComponent = (props) => {
         paddingLeft,
         paddingRight,
         background,
+        border,
         type: 'image',
       },
     };
@@ -33,41 +35,41 @@ const ImageComponent = (props) => {
     }
   }
 
-  let imgElement;
-
-  const imgLinkClasses = classNames({
-    selected: selected && (selected.componentId === componentId),
-  });
-
   const imgClasses = classNames({
     selected: selected && (selected.componentId === componentId),
     img: true,
   });
 
-  const imgStyles = {
+  let borderStyles = {
+    borderTop: `${border.top.width} solid ${border.top.color}`,
+    borderBottom: `${border.bottom.width} solid ${border.bottom.color}`,
+    borderLeft: `${border.left.width} solid ${border.left.color}`,
+    borderRight: `${border.right.width} solid ${border.right.color}`,
+  };
+
+  // if all the border styles are the same, use shorthand
+  if (sameFourBorderValues(border)) {
+    borderStyles = { border: `${border.top.width} solid ${border.top.color}` };
+  }
+
+  let imgStyles = {
     margin: '0 auto',
     padding: `${paddingTop} ${paddingRight} ${paddingBottom} ${paddingLeft}`,
     background,
     width,
   };
 
-  if (link) {
-    imgElement = (
-      <a href="#" className={imgLinkClasses} style={{ display: 'block' }} onClick={handleSelectComponent}>
-        <img className="img" src={src} alt="placeholder img" style={imgStyles} />
-      </a>
-    );
-  } else {
-    imgElement = (<img
+  imgStyles = Object.assign({}, imgStyles, borderStyles);
+
+  return (
+    <img
       className={imgClasses}
       src={src}
       style={imgStyles}
       alt="placeholder img"
       onClick={handleSelectComponent}
-    />);
-  }
-
-  return imgElement;
+    />
+  );
 };
 
 ImageComponent.propTypes = {
@@ -81,6 +83,28 @@ ImageComponent.propTypes = {
     paddingLeft: PropTypes.string.isRequired,
     paddingRight: PropTypes.string.isRequired,
     background: PropTypes.string.isRequired,
+    border: PropTypes.shape({
+      top: PropTypes.shape({
+        width: PropTypes.string.isRequired,
+        color: PropTypes.string.isRequired,
+      }),
+      bottom: PropTypes.shape({
+        width: PropTypes.string.isRequired,
+        color: PropTypes.string.isRequired,
+      }),
+      right: PropTypes.shape({
+        width: PropTypes.string.isRequired,
+        color: PropTypes.string.isRequired,
+      }),
+      left: PropTypes.shape({
+        width: PropTypes.string.isRequired,
+        color: PropTypes.string.isRequired,
+      }),
+    }),
+  }).isRequired,
+  tabs: PropTypes.shape({
+    names: PropTypes.array.isRequired,
+    selected: PropTypes.string.isRequired,
   }).isRequired,
   blockId: PropTypes.string.isRequired,
   dispatch: PropTypes.func.isRequired,

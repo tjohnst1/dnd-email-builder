@@ -4,8 +4,6 @@ export const SWITCH_TAB = 'SWITCH_TAB';
 export const SWITCH_CATEGORY = 'SWITCH_CATEGORY';
 export const REQUEST_BLOCKS = 'REQUEST_EMAIL_BLOCKS';
 export const RECEIVE_BLOCKS = 'RECEIVE_EMAIL_BLOCKS';
-export const CHANGE_GLOBAL_WIDTH = 'CHANGE_GLOBAL_WIDTH';
-export const CHANGE_BACKGROUND_COLOR = 'CHANGE_BACKGROUND_COLOR';
 export const ADD_BLOCK_TO_PREVIEW = 'ADD_BLOCK_TO_PREVIEW';
 export const REMOVE_BLOCK_FROM_PREVIEW = 'REMOVE_BLOCK_FROM_PREVIEW';
 export const REMOVE_ALL_BLOCKS_IN_PREVIEW = 'REMOVE_ALL_BLOCKS_IN_PREVIEW';
@@ -15,6 +13,7 @@ export const MOVE_MARKER = 'MOVE_MARKER';
 export const TOGGLE_EXPORT_MODAL = 'TOGGLE_EXPORT_MODAL';
 export const SELECT_COMPONENT = 'SELECT_COMPONENT';
 export const UPDATE_COMPONENT_VALUE = 'UPDATE_COMPONENT_VALUE';
+export const UPDATE_GLOBAL_VALUE = 'UPDATE_GLOBAL_VALUE';
 
 import database from '../store/firebase'
 
@@ -68,18 +67,12 @@ function receiveEmailBlocks(blocks, categories) {
   };
 }
 
-export function changeBackgroundColor(backgroundColor) {
+export function updateGlobalValue(property, value) {
   return {
-    type: CHANGE_BACKGROUND_COLOR,
-    backgroundColor,
-  };
-}
-
-export function changeGlobalWidth(width) {
-  return {
-    type: CHANGE_GLOBAL_WIDTH,
-    width,
-  };
+    type: UPDATE_GLOBAL_VALUE,
+    property,
+    value,
+  }
 }
 
 export function updateComponentValue(componentInfo, property, value) {

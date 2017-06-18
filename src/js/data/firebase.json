@@ -8,7 +8,7 @@
       "content": [{
         "type": "text",
         "color": "#828282",
-        "background": "#ffffff",
+        "background": "transparent",
         "fontFamily": "Helvetica, Arial, sans-serif",
         "fontSize": "10px",
         "lineHeight": "12px",
@@ -17,7 +17,25 @@
         "paddingLeft": "0px",
         "paddingRight": "0px",
         "paddingTop": "0px",
-        "paddingBottom": "0px"
+        "paddingBottom": "0px",
+        "border": {
+          "top": {
+            "width": "0",
+            "color": "transparent"
+          },
+          "right": {
+            "width": "0",
+            "color": "transparent"
+          },
+          "bottom": {
+            "width": "0",
+            "color": "transparent"
+          },
+          "left": {
+            "width": "0",
+            "color": "transparent"
+          }
+        }
       }]
     },
     {
@@ -29,12 +47,30 @@
         "type": "image",
         "link": true,
         "src": "http://placehold.it/576x200",
-        "background": "#ffffff",
+        "background": "transparent",
         "width": "576px",
         "paddingLeft": "0px",
         "paddingRight": "0px",
         "paddingTop": "0px",
-        "paddingBottom": "0px"
+        "paddingBottom": "0px",
+        "border": {
+          "top": {
+            "width": "0",
+            "color": "transparent"
+          },
+          "right": {
+            "width": "0",
+            "color": "transparent"
+          },
+          "bottom": {
+            "width": "0",
+            "color": "transparent"
+          },
+          "left": {
+            "width": "0",
+            "color": "transparent"
+          }
+        }
       }]
     },
     {
@@ -45,7 +81,7 @@
       "content": [{
         "type": "text",
         "color": "#1d1d1d",
-        "background": "#ffffff",
+        "background": "transparent",
         "fontFamily": "Helvetica, Arial, sans-serif",
         "fontSize": "14px",
         "lineHeight": "16px",
@@ -54,7 +90,25 @@
         "paddingLeft": "0px",
         "paddingRight": "0px",
         "paddingTop": "0px",
-        "paddingBottom": "0px"
+        "paddingBottom": "0px",
+        "border": {
+          "top": {
+            "width": "0",
+            "color": "transparent"
+          },
+          "right": {
+            "width": "0",
+            "color": "transparent"
+          },
+          "bottom": {
+            "width": "0",
+            "color": "transparent"
+          },
+          "left": {
+            "width": "0",
+            "color": "transparent"
+          }
+        }
       }]
     },
     {
@@ -65,7 +119,7 @@
       "content": [{
         "type": "button",
         "color": "#1d1d1d",
-        "background": "#ffffff",
+        "background": "transparent",
         "fontFamily": "Helvetica, Arial, sans-serif",
         "fontSize": "14px",
         "lineHeight": "16px",
@@ -74,7 +128,25 @@
         "paddingLeft": "0px",
         "paddingRight": "0px",
         "paddingTop": "0px",
-        "paddingBottom": "0px"
+        "paddingBottom": "0px",
+        "border": {
+          "top": {
+            "width": "0",
+            "color": "transparent"
+          },
+          "right": {
+            "width": "0",
+            "color": "transparent"
+          },
+          "bottom": {
+            "width": "0",
+            "color": "transparent"
+          },
+          "left": {
+            "width": "0",
+            "color": "transparent"
+          }
+        }
       }]
     },
     {
@@ -88,7 +160,7 @@
         "src": "http://placehold.it/200x200",
         "width": "200px",
         "color": "#1d1d1d",
-        "background": "#ffffff",
+        "background": "transparent",
         "fontFamily": "Helvetica, Arial, sans-serif",
         "fontSize": "14px",
         "lineHeight": "16px",
@@ -97,7 +169,25 @@
         "paddingLeft": "0px",
         "paddingRight": "0px",
         "paddingTop": "0px",
-        "paddingBottom": "0px"
+        "paddingBottom": "0px",
+        "border": {
+          "top": {
+            "width": "0",
+            "color": "transparent"
+          },
+          "right": {
+            "width": "0",
+            "color": "transparent"
+          },
+          "bottom": {
+            "width": "0",
+            "color": "transparent"
+          },
+          "left": {
+            "width": "0",
+            "color": "transparent"
+          }
+        }
       }]
     },
     {
@@ -111,7 +201,7 @@
         "src": "http://placehold.it/200x200",
         "width": "200px",
         "color": "#1d1d1d",
-        "background": "#ffffff",
+        "background": "transparent",
         "fontFamily": "Helvetica, Arial, sans-serif",
         "fontSize": "14px",
         "lineHeight": "16px",
@@ -120,7 +210,25 @@
         "paddingLeft": "0px",
         "paddingRight": "0px",
         "paddingTop": "0px",
-        "paddingBottom": "0px"
+        "paddingBottom": "0px",
+        "border": {
+          "top": {
+            "width": "1px",
+            "color": "#eeeeee"
+          },
+          "right": {
+            "width": "1px",
+            "color": "#eeeeee"
+          },
+          "bottom": {
+            "width": "1px",
+            "color": "#eeeeee"
+          },
+          "left": {
+            "width": "1px",
+            "color": "#eeeeee"
+          }
+        }
       }]
     },
     {
@@ -139,7 +247,7 @@
         {
           "type": "text",
           "color": "#1d1d1d",
-          "background": "#ffffff",
+          "background": "transparent",
           "fontFamily": "Helvetica, Arial, sans-serif",
           "fontSize": "14px",
           "lineHeight": "16px",
@@ -148,18 +256,54 @@
           "paddingLeft": "0px",
           "paddingRight": "0px",
           "paddingTop": "0px",
-          "paddingBottom": "0px"
+          "paddingBottom": "0px",
+          "border": {
+            "top": {
+              "width": "0",
+              "color": "transparent"
+            },
+            "right": {
+              "width": "0",
+              "color": "transparent"
+            },
+            "bottom": {
+              "width": "0",
+              "color": "transparent"
+            },
+            "left": {
+              "width": "0",
+              "color": "transparent"
+            }
+          }
         },
         {
           "type": "image",
           "link": true,
-          "background": "#ffffff",
+          "background": "transparent",
           "src": "http://placehold.it/200x200",
           "width": "200px",
           "paddingLeft": "0px",
           "paddingRight": "0px",
           "paddingTop": "0px",
-          "paddingBottom": "0px"
+          "paddingBottom": "0px",
+          "border": {
+            "top": {
+              "width": "0",
+              "color": "transparent"
+            },
+            "right": {
+              "width": "0",
+              "color": "transparent"
+            },
+            "bottom": {
+              "width": "0",
+              "color": "transparent"
+            },
+            "left": {
+              "width": "0",
+              "color": "transparent"
+            }
+          }
         }
       ]
     },
@@ -174,16 +318,34 @@
           "link": true,
           "src": "http://placehold.it/200x200",
           "width": "200px",
-          "background": "#ffffff",
+          "background": "transparent",
           "paddingLeft": "0px",
           "paddingRight": "0px",
           "paddingTop": "0px",
-          "paddingBottom": "0px"
+          "paddingBottom": "0px",
+          "border": {
+            "top": {
+              "width": "0",
+              "color": "transparent"
+            },
+            "right": {
+              "width": "0",
+              "color": "transparent"
+            },
+            "bottom": {
+              "width": "0",
+              "color": "transparent"
+            },
+            "left": {
+              "width": "0",
+              "color": "transparent"
+            }
+          }
         },
         {
           "type": "text",
           "color": "#1d1d1d",
-          "background": "#ffffff",
+          "background": "transparent",
           "fontFamily": "Helvetica, Arial, sans-serif",
           "fontSize": "14px",
           "lineHeight": "16px",
@@ -192,7 +354,25 @@
           "paddingLeft": "0px",
           "paddingRight": "0px",
           "paddingTop": "0px",
-          "paddingBottom": "0px"
+          "paddingBottom": "0px",
+          "border": {
+            "top": {
+              "width": "0",
+              "color": "transparent"
+            },
+            "right": {
+              "width": "0",
+              "color": "transparent"
+            },
+            "bottom": {
+              "width": "0",
+              "color": "transparent"
+            },
+            "left": {
+              "width": "0",
+              "color": "transparent"
+            }
+          }
         }
       ]
     },
@@ -207,9 +387,8 @@
           "link": true,
           "src": "http://placehold.it/200x200",
           "width": "200px",
-          "background": "#ffffff",
+          "background": "transparent",
           "color": "#1d1d1d",
-          "background": "#ffffff",
           "fontFamily": "Helvetica, Arial, sans-serif",
           "fontSize": "14px",
           "lineHeight": "16px",
@@ -218,7 +397,25 @@
           "paddingLeft": "0px",
           "paddingRight": "0px",
           "paddingTop": "0px",
-          "paddingBottom": "0px"
+          "paddingBottom": "0px",
+          "border": {
+            "top": {
+              "width": "0",
+              "color": "transparent"
+            },
+            "right": {
+              "width": "0",
+              "color": "transparent"
+            },
+            "bottom": {
+              "width": "0",
+              "color": "transparent"
+            },
+            "left": {
+              "width": "0",
+              "color": "transparent"
+            }
+          }
         },
         {
           "type": "image-and-caption",
@@ -226,7 +423,7 @@
           "src": "http://placehold.it/200x200",
           "width": "200px",
           "color": "#1d1d1d",
-          "background": "#ffffff",
+          "background": "transparent",
           "fontFamily": "Helvetica, Arial, sans-serif",
           "fontSize": "14px",
           "lineHeight": "16px",
@@ -235,7 +432,25 @@
           "paddingLeft": "0px",
           "paddingRight": "0px",
           "paddingTop": "0px",
-          "paddingBottom": "0px"
+          "paddingBottom": "0px",
+          "border": {
+            "top": {
+              "width": "0",
+              "color": "transparent"
+            },
+            "right": {
+              "width": "0",
+              "color": "transparent"
+            },
+            "bottom": {
+              "width": "0",
+              "color": "transparent"
+            },
+            "left": {
+              "width": "0",
+              "color": "transparent"
+            }
+          }
         }
       ]
     },
@@ -250,9 +465,8 @@
           "link": true,
           "src": "http://placehold.it/200x200",
           "width": "200px",
-          "background": "#ffffff",
+          "background": "transparent",
           "color": "#1d1d1d",
-          "background": "#ffffff",
           "fontFamily": "Helvetica, Arial, sans-serif",
           "fontSize": "14px",
           "lineHeight": "16px",
@@ -261,7 +475,25 @@
           "paddingLeft": "0px",
           "paddingRight": "0px",
           "paddingTop": "0px",
-          "paddingBottom": "0px"
+          "paddingBottom": "0px",
+          "border": {
+            "top": {
+              "width": "1px",
+              "color": "#eeeeee"
+            },
+            "right": {
+              "width": "1px",
+              "color": "#eeeeee"
+            },
+            "bottom": {
+              "width": "1px",
+              "color": "#eeeeee"
+            },
+            "left": {
+              "width": "1px",
+              "color": "#eeeeee"
+            }
+          }
         },
         {
           "type": "image-and-caption",
@@ -269,7 +501,7 @@
           "src": "http://placehold.it/200x200",
           "width": "200px",
           "color": "#1d1d1d",
-          "background": "#ffffff",
+          "background": "transparent",
           "fontFamily": "Helvetica, Arial, sans-serif",
           "fontSize": "14px",
           "lineHeight": "16px",
@@ -278,7 +510,25 @@
           "paddingLeft": "0px",
           "paddingRight": "0px",
           "paddingTop": "0px",
-          "paddingBottom": "0px"
+          "paddingBottom": "0px",
+          "border": {
+            "top": {
+              "width": "1px",
+              "color": "#eeeeee"
+            },
+            "right": {
+              "width": "1px",
+              "color": "#eeeeee"
+            },
+            "bottom": {
+              "width": "1px",
+              "color": "#eeeeee"
+            },
+            "left": {
+              "width": "1px",
+              "color": "#eeeeee"
+            }
+          }
         }
       ]
     }

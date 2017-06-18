@@ -5,7 +5,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'dist/js'),
     filename: 'bundle.js',
-    publicPath: '/dist'
+    publicPath: '/dist',
   },
   devServer: {
     inline: true,
@@ -13,20 +13,40 @@ module.exports = {
   },
   module: {
     rules: [
-      { test: /\.jsx?$/,
+      {
+        test: /\.jsx?$/,
         exclude: /node_modules/,
         loader: 'babel-loader',
         options: {
-          presets: ['env', 'react']
+          presets: ['env', 'react'],
         }
       },
-      { test: /\.jsx$/,
+      {
+        enforce: "pre",
+        test: /\.jsx$/,
         exclude: /node_modules/,
         loader: 'eslint-loader',
+      },
+      {
+        test: /\.svg$/,
+        loaders: [
+          {
+            loader: 'babel-loader',
+            query: {
+              presets: ['es2015']
+            }
+          },
+          {
+            loader: 'react-svg-loader',
+            query: {
+              jsx: true
+            }
+          }
+        ]
       }
     ]
   },
   resolve: {
-    extensions: ['.js', '.jsx']
+    extensions: ['.js', '.jsx'],
   }
 }

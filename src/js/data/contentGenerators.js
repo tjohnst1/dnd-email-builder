@@ -1,3 +1,6 @@
+import isMatch from 'lodash';
+import { sameFourBorderValues } from '../utilities/utilities';
+
 function generateTextTD(options) {
   const defaultOptions = {
     fontFamily: 'Helvetica, Arial, sana-serif',
@@ -9,9 +12,39 @@ function generateTextTD(options) {
     paddingRight: '0px',
     paddingBottom: '0px',
     paddingLeft: '0px',
+    border: {
+      top: {
+        width: '0',
+        color: 'transparent',
+      },
+      right: {
+        width: '0',
+        color: 'transparent',
+      },
+      bottom: {
+        width: '0',
+        color: 'transparent',
+      },
+      left: {
+        width: '0',
+        color: 'transparent',
+      },
+    },
   };
+
   const optionsToApply = Object.assign({}, defaultOptions, options);
-  return `<td style="padding: ${optionsToApply.paddingTop}, ${optionsToApply.paddingRight}, ${optionsToApply.paddingBottom}, ${optionsToApply.paddingLeft}; background: ${optionsToApply.background}; font-family: ${optionsToApply.fontFamily}; font-size: ${optionsToApply.fontSize}; line-height: ${optionsToApply.lineHeight}; text-align: ${optionsToApply.textAlign}; color: ${optionsToApply.color}">${optionsToApply.innerContent}</td>`;
+
+  // check if the there is a border style to apply
+  if (isMatch(optionsToApply.border, defaultOptions.border)){
+    return `<td style="padding: ${optionsToApply.paddingTop}, ${optionsToApply.paddingRight}, ${optionsToApply.paddingBottom}, ${optionsToApply.paddingLeft}; background: ${optionsToApply.background}; font-family: ${optionsToApply.fontFamily}; font-size: ${optionsToApply.fontSize}; line-height: ${optionsToApply.lineHeight}; text-align: ${optionsToApply.textAlign}; color: ${optionsToApply.color}">${optionsToApply.innerContent}</td>`;
+  } else {
+    // if there is, check if the border properties (i.e. top, bottom, left, and right) all have the same values
+    if (sameFourBorderValues(optionsToApply.border)) {
+      return `<td style="padding: ${optionsToApply.paddingTop}, ${optionsToApply.paddingRight}, ${optionsToApply.paddingBottom}, ${optionsToApply.paddingLeft}; background: ${optionsToApply.background}; font-family: ${optionsToApply.fontFamily}; font-size: ${optionsToApply.fontSize}; line-height: ${optionsToApply.lineHeight}; text-align: ${optionsToApply.textAlign}; color: ${optionsToApply.color}; border: ${optionsToApply.border.top.width} solid ${optionsToApply.border.top.color};">${optionsToApply.innerContent}</td>`;
+    }
+    // if not, declare individual border values
+    return `<td style="padding: ${optionsToApply.paddingTop}, ${optionsToApply.paddingRight}, ${optionsToApply.paddingBottom}, ${optionsToApply.paddingLeft}; background: ${optionsToApply.background}; font-family: ${optionsToApply.fontFamily}; font-size: ${optionsToApply.fontSize}; line-height: ${optionsToApply.lineHeight}; text-align: ${optionsToApply.textAlign}; color: ${optionsToApply.color}; border-top: ${optionsToApply.border.top.width} solid ${optionsToApply.border.top.color} border-right: ${optionsToApply.border.right.width} solid ${optionsToApply.border.right.color}; border-bottom: ${optionsToApply.border.bottom.width} solid ${optionsToApply.border.bottom.color}; border-left: ${optionsToApply.border.left.width} solid ${optionsToApply.border.left.color};">${optionsToApply.innerContent}</td>`;
+  }
 }
 
 function generateImageTD(options) {
@@ -23,14 +56,49 @@ function generateImageTD(options) {
     paddingRight: '0px',
     paddingBottom: '0px',
     paddingLeft: '0px',
+    border: {
+      top: {
+        width: '0',
+        color: 'transparent',
+      },
+      right: {
+        width: '0',
+        color: 'transparent',
+      },
+      bottom: {
+        width: '0',
+        color: 'transparent',
+      },
+      left: {
+        width: '0',
+        color: 'transparent',
+      },
+    },
   }
+
   const optionsToApply = Object.assign({}, defaultOptions, options);
-  return `<td style="padding: ${optionsToApply.paddingTop}, ${optionsToApply.paddingRight}, ${optionsToApply.paddingBottom}, ${optionsToApply.paddingLeft}; background: ${optionsToApply.background}; font-size: 0; display: block; border: 0;"><img src="${optionsToApply.src}" width="${optionsToApply.width}" style="display: block; border: 0;"></td>`;
+
+  // check if the there is a border style to apply
+  if (isMatch(optionsToApply.border, defaultOptions.border)){
+  return `<td style="padding: ${optionsToApply.paddingTop}, ${optionsToApply.paddingRight}, ${optionsToApply.paddingBottom}, ${optionsToApply.paddingLeft}; background: ${optionsToApply.background}; font-size: 0; display: block;"><img src="${optionsToApply.src}" width="${optionsToApply.width}" style="display: block; border: 0;"></td>`;
+  } else {
+    // if there is, check if the border properties (i.e. top, bottom, left, and right) all have the same values
+    if (sameFourBorderValues(optionsToApply.border)) {
+      return `<td style="padding: ${optionsToApply.paddingTop}, ${optionsToApply.paddingRight}, ${optionsToApply.paddingBottom}, ${optionsToApply.paddingLeft}; background: ${optionsToApply.background}; font-size: 0; display: block; border: ${optionsToApply.border.top.width} solid ${optionsToApply.border.top.color};"><img src="${optionsToApply.src}" width="${optionsToApply.width}" style="display: block; border: 0;"></td>`;
+    }
+    // if not, declare individual border values
+    return `<td style="padding: ${optionsToApply.paddingTop}, ${optionsToApply.paddingRight}, ${optionsToApply.paddingBottom}, ${optionsToApply.paddingLeft}; background: ${optionsToApply.background}; font-size: 0; display: block; border-top: ${optionsToApply.border.top.width} solid ${optionsToApply.border.top.color} border-right: ${optionsToApply.border.right.width} solid ${optionsToApply.border.right.color}; border-bottom: ${optionsToApply.border.bottom.width} solid ${optionsToApply.border.bottom.color}; border-left: ${optionsToApply.border.left.width} solid ${optionsToApply.border.left.color};"><img src="${optionsToApply.src}" width="${optionsToApply.width}" style="display: block; border: 0;"></td>`;
+  }
+
 }
 
-function generateOneColumnWrapper(blockName, blockContent) {
+function generateOneColumnWrapper(blockName, blockContent, globalOptions = null) {
+  let width = '640'
+  if (globalOptions !== null && globalOptions.width !== undefined) {
+    width = globalOptions.width.match(/\d+/)[0]
+  }
   return `<!-- /// ${blockName} -->
-    <table style="margin: 0 auto;" class="w100" align="center" width="640" cellpadding="0" cellspacing="0" border="0">
+    <table style="margin: 0 auto;" class="w100" align="center" width="${width}" cellpadding="0" cellspacing="0" border="0">
       <tr>
         <td>
           <table style="margin: 0 auto;" width="90%" align="center" cellpadding="0" cellspacing="0" border="0">
@@ -50,9 +118,13 @@ function generateOneColumnWrapper(blockName, blockContent) {
     <!-- ${blockName} /// -->\r\n`;
 }
 
-function generateTwoColumnWrapper(blockName, blockContent) {
+function generateTwoColumnWrapper(blockName, blockContent, globalOptions = null) {
+  let width = '640'
+  if (globalOptions !== null && globalOptions.width !== undefined) {
+    width = globalOptions.width.match(/\d+/)[0]
+  }
   return `<!-- /// ${blockName} -->
-    <table style="margin: 0 auto;" class="w100" align="center" width="640" cellpadding="0" cellspacing="0" border="0">
+    <table style="margin: 0 auto;" class="w100" align="center" width="${width}" cellpadding="0" cellspacing="0" border="0">
       <tr>
         <td>
           <table style="margin: 0 auto;" width="90%" align="center" cellpadding="0" cellspacing="0" border="0">
@@ -100,9 +172,14 @@ function generateTwoColumnWrapper(blockName, blockContent) {
     <!-- ${blockName} /// -->\r\n`
 }
 
-export default function generateEmailCode(blocks) {
+export default function generateEmailCode(blocks, globalOptions = null) {
   let innerContent = '';
   var blockContent;
+
+  let backgroundColor = '#ffffff'
+  if (globalOptions !== null && globalOptions.backgroundColor !== undefined) {
+    backgroundColor = globalOptions.backgroundColor.match(/\d+/)[0]
+  }
 
   blocks.forEach((block) => {
     switch (block.category) {
@@ -113,7 +190,7 @@ export default function generateEmailCode(blocks) {
           }
           return generateTextTD(content);
         });
-        innerContent += generateTwoColumnWrapper(block.name, blockContent);
+        innerContent += generateTwoColumnWrapper(block.name, blockContent, globalOptions);
         break;
       default:
         blockContent = block.content.map((content) => {
@@ -123,7 +200,7 @@ export default function generateEmailCode(blocks) {
           return generateTextTD(content);
         })
         .join('');
-        innerContent += generateOneColumnWrapper(block.name, blockContent);
+        innerContent += generateOneColumnWrapper(block.name, blockContent, globalOptions);
         break;
     }
   });
@@ -271,7 +348,7 @@ export default function generateEmailCode(blocks) {
     <body style="margin: 0; padding: 0; width: 100% !important; background-color: #ffffff;">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td style="background-color: #ffffff;" align="center" valign="top">
+          <td style="background-color: ${backgroundColor}" align="center" valign="top">
             <table width="100%" cellpadding="0" cellspacing="0" border="0">
               <tr>
                 <td align="center" valign="top">
