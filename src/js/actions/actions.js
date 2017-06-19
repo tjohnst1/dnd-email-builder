@@ -113,10 +113,10 @@ export function removeAllBlocksInPreview() {
   };
 }
 
-export function removeBlockFromPreview(index) {
+export function removeBlockFromPreview(blockId) {
   return {
     type: REMOVE_BLOCK_FROM_PREVIEW,
-    index,
+    blockId,
   };
 }
 

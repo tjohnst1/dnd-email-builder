@@ -1,4 +1,4 @@
-import {set} from 'lodash';
+import { set, findIndex } from 'lodash';
 import generateEmailCode from '../data/contentGenerators';
 import { CHANGE_GLOBAL_WIDTH, CHANGE_BACKGROUND_COLOR, ADD_BLOCK_TO_PREVIEW,
   REMOVE_BLOCK_FROM_PREVIEW, MOVE_BLOCK_IN_PREVIEW, CLEAR_MARKER_FROM_PREVIEW,
@@ -55,17 +55,20 @@ export function emailPreview(state = emailPreviewState, action) {
         selected: null,
       });
 
-    case REMOVE_BLOCK_FROM_PREVIEW:
+    case REMOVE_BLOCK_FROM_PREVIEW: {
+      const index = findIndex(blocks, { "blockId": action.blockId });
+
       temp = blocks
-        .slice(0, action.index)
-        .concat(blocks.slice(action.index + 1))
+        .slice(0, index)
+        .concat(blocks.slice(index + 1));
+
       return Object.assign({}, state, {
           blocks: temp,
           code: generateEmailCode(temp),
           selected: null,
         }
       );
-
+    }
     case REMOVE_ALL_BLOCKS_IN_PREVIEW:
       return Object.assign({}, state, {
         markerPresent: false,

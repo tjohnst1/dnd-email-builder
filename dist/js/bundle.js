@@ -18683,10 +18683,10 @@ function removeAllBlocksInPreview() {
   };
 }
 
-function removeBlockFromPreview(index) {
+function removeBlockFromPreview(blockId) {
   return {
     type: REMOVE_BLOCK_FROM_PREVIEW,
-    index: index
+    blockId: blockId
   };
 }
 
@@ -26840,6 +26840,11 @@ var ImageAndCaptionComponent = function ImageAndCaptionComponent(props) {
     }
   }
 
+  function handleDeleteComponent(e) {
+    e.stopPropagation;
+    dispatch((0, _actions.removeBlockFromPreview)(blockId));
+  }
+
   var styles = {
     margin: '0 auto',
     color: color,
@@ -26872,16 +26877,38 @@ var ImageAndCaptionComponent = function ImageAndCaptionComponent(props) {
 
   styles = Object.assign({}, styles, borderStyles);
 
-  return _react2.default.createElement(
-    'div',
-    { className: classes, style: styles, onClick: handleSelectComponent },
-    _react2.default.createElement('img', { className: 'img', src: src, alt: 'placeholder img' }),
-    _react2.default.createElement(
-      'p',
-      null,
-      innerContent
-    )
-  );
+  if (selected && selected.componentId === componentId) {
+    return _react2.default.createElement(
+      'div',
+      { className: 'relative' },
+      _react2.default.createElement(
+        'div',
+        { className: classes, style: styles, onClick: handleSelectComponent },
+        _react2.default.createElement('img', { className: 'img', src: src, alt: 'placeholder img' }),
+        _react2.default.createElement(
+          'p',
+          null,
+          innerContent
+        )
+      ),
+      _react2.default.createElement(
+        'button',
+        { className: 'close-button', onClick: handleDeleteComponent },
+        'X'
+      )
+    );
+  } else {
+    return _react2.default.createElement(
+      'div',
+      { className: classes, style: styles, onClick: handleSelectComponent },
+      _react2.default.createElement('img', { className: 'img', src: src, alt: 'placeholder img' }),
+      _react2.default.createElement(
+        'p',
+        null,
+        innerContent
+      )
+    );
+  }
 };
 
 ImageAndCaptionComponent.propTypes = {
@@ -27021,6 +27048,11 @@ var ImageComponent = function ImageComponent(props) {
     }
   }
 
+  function handleDeleteComponent(e) {
+    e.stopPropagation;
+    dispatch((0, _actions.removeBlockFromPreview)(blockId));
+  }
+
   var imgClasses = (0, _classnames2.default)({
     selected: selected && selected.componentId === componentId,
     img: true
@@ -27047,13 +27079,20 @@ var ImageComponent = function ImageComponent(props) {
 
   imgStyles = Object.assign({}, imgStyles, borderStyles);
 
-  return _react2.default.createElement('img', {
-    className: imgClasses,
-    src: src,
-    style: imgStyles,
-    alt: 'placeholder img',
-    onClick: handleSelectComponent
-  });
+  if (selected && selected.componentId === componentId) {
+    return _react2.default.createElement(
+      'div',
+      { className: 'relative' },
+      _react2.default.createElement('img', { className: imgClasses, src: src, style: imgStyles, alt: 'placeholder img', onClick: handleSelectComponent }),
+      _react2.default.createElement(
+        'button',
+        { className: 'close-button', onClick: handleDeleteComponent },
+        'X'
+      )
+    );
+  } else {
+    return _react2.default.createElement('img', { className: imgClasses, src: src, style: imgStyles, alt: 'placeholder img', onClick: handleSelectComponent });
+  }
 };
 
 ImageComponent.propTypes = {
@@ -27194,6 +27233,11 @@ var TextComponent = function TextComponent(props) {
     }
   }
 
+  function handleDeleteComponent(e) {
+    e.stopPropagation;
+    dispatch((0, _actions.removeBlockFromPreview)(blockId));
+  }
+
   var styles = {
     margin: '0 auto',
     color: color,
@@ -27226,11 +27270,28 @@ var TextComponent = function TextComponent(props) {
     selected: selected && selected.componentId === componentId
   });
 
-  return _react2.default.createElement(
-    'p',
-    { className: classes, style: styles, onClick: handleSelectComponent },
-    innerContent
-  );
+  if (selected && selected.componentId === componentId) {
+    return _react2.default.createElement(
+      'div',
+      { className: 'relative' },
+      _react2.default.createElement(
+        'p',
+        { className: classes, style: styles, onClick: handleSelectComponent },
+        innerContent
+      ),
+      _react2.default.createElement(
+        'button',
+        { className: 'close-button', onClick: handleDeleteComponent },
+        'X'
+      )
+    );
+  } else {
+    return _react2.default.createElement(
+      'p',
+      { className: classes, style: styles, onClick: handleSelectComponent },
+      innerContent
+    );
+  }
 };
 
 TextComponent.propTypes = {
@@ -36406,13 +36467,17 @@ function emailPreview() {
       });
 
     case _actions.REMOVE_BLOCK_FROM_PREVIEW:
-      temp = blocks.slice(0, action.index).concat(blocks.slice(action.index + 1));
-      return Object.assign({}, state, {
-        blocks: temp,
-        code: (0, _contentGenerators2.default)(temp),
-        selected: null
-      });
+      {
+        var index = (0, _lodash.findIndex)(blocks, { "blockId": action.blockId });
 
+        temp = blocks.slice(0, index).concat(blocks.slice(index + 1));
+
+        return Object.assign({}, state, {
+          blocks: temp,
+          code: (0, _contentGenerators2.default)(temp),
+          selected: null
+        });
+      }
     case _actions.REMOVE_ALL_BLOCKS_IN_PREVIEW:
       return Object.assign({}, state, {
         markerPresent: false,

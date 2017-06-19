@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
 import { sameFourBorderValues } from '../../utilities/utilities';
-import { selectComponent, switchTab } from '../../actions/actions';
+import { selectComponent, switchTab, removeBlockFromPreview } from '../../actions/actions';
 
 const ImageComponent = (props) => {
   const { blockId, dispatch, selected, tabs } = props;
@@ -35,6 +35,11 @@ const ImageComponent = (props) => {
     }
   }
 
+  function handleDeleteComponent(e) {
+    e.stopPropagation;
+    dispatch(removeBlockFromPreview(blockId));
+  }
+
   const imgClasses = classNames({
     selected: selected && (selected.componentId === componentId),
     img: true,
@@ -61,15 +66,18 @@ const ImageComponent = (props) => {
 
   imgStyles = Object.assign({}, imgStyles, borderStyles);
 
-  return (
-    <img
-      className={imgClasses}
-      src={src}
-      style={imgStyles}
-      alt="placeholder img"
-      onClick={handleSelectComponent}
-    />
-  );
+  if (selected && (selected.componentId === componentId)) {
+    return (
+      <div className="relative">
+        <img className={imgClasses} src={src} style={imgStyles} alt="placeholder img" onClick={handleSelectComponent} />
+        <button className="close-button" onClick={handleDeleteComponent}>X</button>
+      </div>
+    );
+  } else {
+    return (
+      <img className={imgClasses} src={src} style={imgStyles} alt="placeholder img" onClick={handleSelectComponent} />
+    );
+  }
 };
 
 ImageComponent.propTypes = {

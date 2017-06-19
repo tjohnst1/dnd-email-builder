@@ -25,3 +25,18 @@
   position: absolute;
   top: 50%;
 }
+
+.close-button {
+  display: block;
+  background: red;
+  color: $offwhite;
+  padding: 5px 8px;
+  cursor: pointer;
+  display: block;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  z-index: 15;
+  border-radius: 50%;
+  border: 0;
+}

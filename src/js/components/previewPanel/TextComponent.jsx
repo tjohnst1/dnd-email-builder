@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
 import { sameFourBorderValues } from '../../utilities/utilities';
-import { selectComponent, switchTab } from '../../actions/actions';
+import { selectComponent, switchTab, removeBlockFromPreview } from '../../actions/actions';
 
 const TextComponent = (props) => {
   const { blockId, dispatch, selected, tabs } = props;
@@ -39,6 +39,11 @@ const TextComponent = (props) => {
     }
   }
 
+  function handleDeleteComponent(e) {
+    e.stopPropagation;
+    dispatch(removeBlockFromPreview(blockId));
+  }
+
   let styles = {
     margin: '0 auto',
     color,
@@ -71,9 +76,19 @@ const TextComponent = (props) => {
     selected: selected && (selected.componentId === componentId),
   });
 
-  return (
-    <p className={classes} style={styles} onClick={handleSelectComponent}>{ innerContent }</p>
-  );
+  if (selected && (selected.componentId === componentId)) {
+    return (
+      <div className="relative">
+        <p className={classes} style={styles} onClick={handleSelectComponent}>{ innerContent }</p>
+        <button className="close-button" onClick={handleDeleteComponent}>X</button>
+      </div>
+    );
+  } else {
+    return (
+      <p className={classes} style={styles} onClick={handleSelectComponent}>{ innerContent }</p>
+    );
+  }
+
 };
 
 TextComponent.propTypes = {

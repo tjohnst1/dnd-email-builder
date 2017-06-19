@@ -386,8 +386,8 @@ body {
   padding: 0;
   margin: 0; }
 
-*:focus {
-  outline: none; }
+.relative {
+  position: relative; }
 
 .panel-container {
   display: -webkit-box;
@@ -722,6 +722,20 @@ body {
   width: 70%;
   position: absolute;
   top: 50%; }
+
+.close-button {
+  display: block;
+  background: red;
+  color: #FBFBFF;
+  padding: 5px 8px;
+  cursor: pointer;
+  display: block;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  z-index: 15;
+  border-radius: 50%;
+  border: 0; }
 
 .export-modal {
   position: absolute;
