@@ -6,8 +6,7 @@ import { selectComponent, switchTab, removeBlockFromPreview } from '../../action
 
 const ImageComponent = (props) => {
   const { blockId, dispatch, selected, tabs } = props;
-  const { link, src, width, paddingTop, paddingRight, paddingBottom,
-    paddingLeft, background, componentId, border } = props.content;
+  const { link, src, width, padding, background, componentId, border } = props.content;
 
   function handleSelectComponent(e) {
     e.stopPropagation();
@@ -18,10 +17,7 @@ const ImageComponent = (props) => {
         link,
         src,
         width,
-        paddingTop,
-        paddingBottom,
-        paddingLeft,
-        paddingRight,
+        padding,
         background,
         border,
         type: 'image',
@@ -45,26 +41,16 @@ const ImageComponent = (props) => {
     img: true,
   });
 
-  let borderStyles = {
+  let imgStyles = {
+    margin: '0 auto',
+    padding: `${padding.top} ${padding.right} ${padding.bottom} ${padding.left}`,
+    background,
+    width,
     borderTop: `${border.top.width} solid ${border.top.color}`,
     borderBottom: `${border.bottom.width} solid ${border.bottom.color}`,
     borderLeft: `${border.left.width} solid ${border.left.color}`,
     borderRight: `${border.right.width} solid ${border.right.color}`,
   };
-
-  // if all the border styles are the same, use shorthand
-  if (sameFourBorderValues(border)) {
-    borderStyles = { border: `${border.top.width} solid ${border.top.color}` };
-  }
-
-  let imgStyles = {
-    margin: '0 auto',
-    padding: `${paddingTop} ${paddingRight} ${paddingBottom} ${paddingLeft}`,
-    background,
-    width,
-  };
-
-  imgStyles = Object.assign({}, imgStyles, borderStyles);
 
   if (selected && (selected.componentId === componentId)) {
     return (
@@ -86,10 +72,12 @@ ImageComponent.propTypes = {
     src: PropTypes.string.isRequired,
     width: PropTypes.string.isRequired,
     componentId: PropTypes.string.isRequired,
-    paddingTop: PropTypes.string.isRequired,
-    paddingBottom: PropTypes.string.isRequired,
-    paddingLeft: PropTypes.string.isRequired,
-    paddingRight: PropTypes.string.isRequired,
+    padding: PropTypes.shape({
+      top: PropTypes.string.isRequired,
+      bottom: PropTypes.string.isRequired,
+      left: PropTypes.string.isRequired,
+      right: PropTypes.string.isRequired,
+    }),
     background: PropTypes.string.isRequired,
     border: PropTypes.shape({
       top: PropTypes.shape({

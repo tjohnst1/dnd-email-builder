@@ -14,10 +14,12 @@
         "lineHeight": "12px",
         "textAlign": "center",
         "innerContent": "This is some text.",
-        "paddingLeft": "0px",
-        "paddingRight": "0px",
-        "paddingTop": "0px",
-        "paddingBottom": "0px",
+        "padding": {
+          "top": "0px",
+          "right": "0px",
+          "bottom": "0px",
+          "left": "0px"
+        },
         "border": {
           "top": {
             "width": "0",
@@ -49,10 +51,12 @@
         "src": "http://placehold.it/576x200",
         "background": "transparent",
         "width": "576px",
-        "paddingLeft": "0px",
-        "paddingRight": "0px",
-        "paddingTop": "0px",
-        "paddingBottom": "0px",
+        "padding": {
+          "top": "0px",
+          "right": "0px",
+          "bottom": "0px",
+          "left": "0px"
+        },
         "border": {
           "top": {
             "width": "0",
@@ -87,10 +91,12 @@
         "lineHeight": "16px",
         "textAlign": "left",
         "innerContent": "lorem ipsum",
-        "paddingLeft": "0px",
-        "paddingRight": "0px",
-        "paddingTop": "0px",
-        "paddingBottom": "0px",
+        "padding": {
+          "top": "0px",
+          "right": "0px",
+          "bottom": "0px",
+          "left": "0px"
+        },
         "border": {
           "top": {
             "width": "0",
@@ -125,10 +131,12 @@
         "lineHeight": "16px",
         "textAlign": "left",
         "innerContent": "lorem ipsum",
-        "paddingLeft": "0px",
-        "paddingRight": "0px",
-        "paddingTop": "0px",
-        "paddingBottom": "0px",
+        "padding": {
+          "top": "0px",
+          "right": "0px",
+          "bottom": "0px",
+          "left": "0px"
+        },
         "border": {
           "top": {
             "width": "0",
@@ -166,10 +174,12 @@
         "lineHeight": "16px",
         "textAlign": "left",
         "innerContent": "lorem ipsum",
-        "paddingLeft": "0px",
-        "paddingRight": "0px",
-        "paddingTop": "0px",
-        "paddingBottom": "0px",
+        "padding": {
+          "top": "0px",
+          "right": "0px",
+          "bottom": "0px",
+          "left": "0px"
+        },
         "border": {
           "top": {
             "width": "0",
@@ -207,10 +217,12 @@
         "lineHeight": "16px",
         "textAlign": "left",
         "innerContent": "lorem ipsum",
-        "paddingLeft": "0px",
-        "paddingRight": "0px",
-        "paddingTop": "0px",
-        "paddingBottom": "0px",
+        "padding": {
+          "top": "0px",
+          "right": "0px",
+          "bottom": "0px",
+          "left": "0px"
+        },
         "border": {
           "top": {
             "width": "1px",
@@ -253,10 +265,12 @@
           "lineHeight": "16px",
           "textAlign": "left",
           "innerContent": "lorem ipsum",
-          "paddingLeft": "0px",
-          "paddingRight": "0px",
-          "paddingTop": "0px",
-          "paddingBottom": "0px",
+          "padding": {
+            "top": "0px",
+            "right": "0px",
+            "bottom": "0px",
+            "left": "0px"
+          },
           "border": {
             "top": {
               "width": "0",
@@ -282,10 +296,12 @@
           "background": "transparent",
           "src": "http://placehold.it/200x200",
           "width": "200px",
-          "paddingLeft": "0px",
-          "paddingRight": "0px",
-          "paddingTop": "0px",
-          "paddingBottom": "0px",
+          "padding": {
+            "top": "0px",
+            "right": "0px",
+            "bottom": "0px",
+            "left": "0px"
+          },
           "border": {
             "top": {
               "width": "0",
@@ -319,10 +335,12 @@
           "src": "http://placehold.it/200x200",
           "width": "200px",
           "background": "transparent",
-          "paddingLeft": "0px",
-          "paddingRight": "0px",
-          "paddingTop": "0px",
-          "paddingBottom": "0px",
+          "padding": {
+            "top": "0px",
+            "right": "0px",
+            "bottom": "0px",
+            "left": "0px"
+          },
           "border": {
             "top": {
               "width": "0",
@@ -351,10 +369,12 @@
           "lineHeight": "16px",
           "textAlign": "left",
           "innerContent": "lorem ipsum",
-          "paddingLeft": "0px",
-          "paddingRight": "0px",
-          "paddingTop": "0px",
-          "paddingBottom": "0px",
+          "padding": {
+            "top": "0px",
+            "right": "0px",
+            "bottom": "0px",
+            "left": "0px"
+          },
           "border": {
             "top": {
               "width": "0",
@@ -394,10 +414,12 @@
           "lineHeight": "16px",
           "textAlign": "left",
           "innerContent": "lorem ipsum",
-          "paddingLeft": "0px",
-          "paddingRight": "0px",
-          "paddingTop": "0px",
-          "paddingBottom": "0px",
+          "padding": {
+            "top": "0px",
+            "right": "0px",
+            "bottom": "0px",
+            "left": "0px"
+          },
           "border": {
             "top": {
               "width": "0",
@@ -429,10 +451,12 @@
           "lineHeight": "16px",
           "textAlign": "left",
           "innerContent": "lorem ipsum",
-          "paddingLeft": "0px",
-          "paddingRight": "0px",
-          "paddingTop": "0px",
-          "paddingBottom": "0px",
+          "padding": {
+            "top": "0px",
+            "right": "0px",
+            "bottom": "0px",
+            "left": "0px"
+          },
           "border": {
             "top": {
               "width": "0",
@@ -472,10 +496,12 @@
           "lineHeight": "16px",
           "textAlign": "left",
           "innerContent": "lorem ipsum",
-          "paddingLeft": "0px",
-          "paddingRight": "0px",
-          "paddingTop": "0px",
-          "paddingBottom": "0px",
+          "padding": {
+            "top": "0px",
+            "right": "0px",
+            "bottom": "0px",
+            "left": "0px"
+          },
           "border": {
             "top": {
               "width": "1px",
@@ -507,10 +533,12 @@
           "lineHeight": "16px",
           "textAlign": "left",
           "innerContent": "lorem ipsum",
-          "paddingLeft": "0px",
-          "paddingRight": "0px",
-          "paddingTop": "0px",
-          "paddingBottom": "0px",
+          "padding": {
+            "top": "0px",
+            "right": "0px",
+            "bottom": "0px",
+            "left": "0px"
+          },
           "border": {
             "top": {
               "width": "1px",

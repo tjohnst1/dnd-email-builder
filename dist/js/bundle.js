@@ -26798,10 +26798,7 @@ var ImageAndCaptionComponent = function ImageAndCaptionComponent(props) {
       fontFamily = _props$content.fontFamily,
       textAlign = _props$content.textAlign,
       innerContent = _props$content.innerContent,
-      paddingLeft = _props$content.paddingLeft,
-      paddingRight = _props$content.paddingRight,
-      paddingBottom = _props$content.paddingBottom,
-      paddingTop = _props$content.paddingTop,
+      padding = _props$content.padding,
       link = _props$content.link,
       src = _props$content.src,
       width = _props$content.width,
@@ -26823,10 +26820,7 @@ var ImageAndCaptionComponent = function ImageAndCaptionComponent(props) {
         fontFamily: fontFamily,
         textAlign: textAlign,
         innerContent: innerContent,
-        paddingTop: paddingTop,
-        paddingBottom: paddingBottom,
-        paddingLeft: paddingLeft,
-        paddingRight: paddingRight,
+        padding: padding,
         border: border,
         background: background,
         type: 'image-and-caption'
@@ -26852,30 +26846,17 @@ var ImageAndCaptionComponent = function ImageAndCaptionComponent(props) {
     lineHeight: lineHeight,
     fontFamily: fontFamily,
     textAlign: textAlign,
-    paddingTop: paddingTop,
-    paddingRight: paddingRight,
-    paddingLeft: paddingLeft,
-    paddingBottom: paddingBottom,
-    background: background
+    background: background,
+    borderTop: border.top.width + ' solid ' + border.top.color,
+    borderBottom: border.bottom.width + ' solid ' + border.bottom.color,
+    borderLeft: border.left.width + ' solid ' + border.left.color,
+    borderRight: border.right.width + ' solid ' + border.right.color,
+    padding: padding.top + ' ' + padding.right + ' ' + padding.bottom + ' ' + padding.left
   };
 
   var classes = (0, _classnames2.default)({
     selected: selected && selected.componentId === componentId
   });
-
-  var borderStyles = {
-    borderTop: border.top.width + ' solid ' + border.top.color,
-    borderBottom: border.bottom.width + ' solid ' + border.bottom.color,
-    borderLeft: border.left.width + ' solid ' + border.left.color,
-    borderRight: border.right.width + ' solid ' + border.right.color
-  };
-
-  // if all the border styles are the same, use shorthand
-  if ((0, _utilities.sameFourBorderValues)(border)) {
-    borderStyles = { border: border.top.width + ' solid ' + border.top.color };
-  }
-
-  styles = Object.assign({}, styles, borderStyles);
 
   if (selected && selected.componentId === componentId) {
     return _react2.default.createElement(
@@ -26923,10 +26904,12 @@ ImageAndCaptionComponent.propTypes = {
     textAlign: _react.PropTypes.string.isRequired,
     innerContent: _react.PropTypes.string.isRequired,
     componentId: _react.PropTypes.string.isRequired,
-    paddingLeft: _react.PropTypes.string.isRequired,
-    paddingRight: _react.PropTypes.string.isRequired,
-    paddingTop: _react.PropTypes.string.isRequired,
-    paddingBottom: _react.PropTypes.string.isRequired,
+    padding: _react.PropTypes.shape({
+      top: _react.PropTypes.string.isRequired,
+      bottom: _react.PropTypes.string.isRequired,
+      left: _react.PropTypes.string.isRequired,
+      right: _react.PropTypes.string.isRequired
+    }),
     background: _react.PropTypes.string.isRequired,
     border: _react.PropTypes.shape({
       top: _react.PropTypes.shape({
@@ -27013,10 +26996,7 @@ var ImageComponent = function ImageComponent(props) {
       link = _props$content.link,
       src = _props$content.src,
       width = _props$content.width,
-      paddingTop = _props$content.paddingTop,
-      paddingRight = _props$content.paddingRight,
-      paddingBottom = _props$content.paddingBottom,
-      paddingLeft = _props$content.paddingLeft,
+      padding = _props$content.padding,
       background = _props$content.background,
       componentId = _props$content.componentId,
       border = _props$content.border;
@@ -27031,10 +27011,7 @@ var ImageComponent = function ImageComponent(props) {
         link: link,
         src: src,
         width: width,
-        paddingTop: paddingTop,
-        paddingBottom: paddingBottom,
-        paddingLeft: paddingLeft,
-        paddingRight: paddingRight,
+        padding: padding,
         background: background,
         border: border,
         type: 'image'
@@ -27058,26 +27035,16 @@ var ImageComponent = function ImageComponent(props) {
     img: true
   });
 
-  var borderStyles = {
+  var imgStyles = {
+    margin: '0 auto',
+    padding: padding.top + ' ' + padding.right + ' ' + padding.bottom + ' ' + padding.left,
+    background: background,
+    width: width,
     borderTop: border.top.width + ' solid ' + border.top.color,
     borderBottom: border.bottom.width + ' solid ' + border.bottom.color,
     borderLeft: border.left.width + ' solid ' + border.left.color,
     borderRight: border.right.width + ' solid ' + border.right.color
   };
-
-  // if all the border styles are the same, use shorthand
-  if ((0, _utilities.sameFourBorderValues)(border)) {
-    borderStyles = { border: border.top.width + ' solid ' + border.top.color };
-  }
-
-  var imgStyles = {
-    margin: '0 auto',
-    padding: paddingTop + ' ' + paddingRight + ' ' + paddingBottom + ' ' + paddingLeft,
-    background: background,
-    width: width
-  };
-
-  imgStyles = Object.assign({}, imgStyles, borderStyles);
 
   if (selected && selected.componentId === componentId) {
     return _react2.default.createElement(
@@ -27101,10 +27068,12 @@ ImageComponent.propTypes = {
     src: _react.PropTypes.string.isRequired,
     width: _react.PropTypes.string.isRequired,
     componentId: _react.PropTypes.string.isRequired,
-    paddingTop: _react.PropTypes.string.isRequired,
-    paddingBottom: _react.PropTypes.string.isRequired,
-    paddingLeft: _react.PropTypes.string.isRequired,
-    paddingRight: _react.PropTypes.string.isRequired,
+    padding: _react.PropTypes.shape({
+      top: _react.PropTypes.string.isRequired,
+      bottom: _react.PropTypes.string.isRequired,
+      left: _react.PropTypes.string.isRequired,
+      right: _react.PropTypes.string.isRequired
+    }),
     background: _react.PropTypes.string.isRequired,
     border: _react.PropTypes.shape({
       top: _react.PropTypes.shape({
@@ -27196,10 +27165,7 @@ var TextComponent = function TextComponent(props) {
       fontFamily = _props$content.fontFamily,
       textAlign = _props$content.textAlign,
       innerContent = _props$content.innerContent,
-      paddingLeft = _props$content.paddingLeft,
-      paddingRight = _props$content.paddingRight,
-      paddingBottom = _props$content.paddingBottom,
-      paddingTop = _props$content.paddingTop,
+      padding = _props$content.padding,
       background = _props$content.background,
       border = _props$content.border;
 
@@ -27216,10 +27182,7 @@ var TextComponent = function TextComponent(props) {
         fontFamily: fontFamily,
         textAlign: textAlign,
         innerContent: innerContent,
-        paddingTop: paddingTop,
-        paddingBottom: paddingBottom,
-        paddingLeft: paddingLeft,
-        paddingRight: paddingRight,
+        padding: padding,
         background: background,
         border: border,
         type: 'text'
@@ -27245,26 +27208,13 @@ var TextComponent = function TextComponent(props) {
     lineHeight: lineHeight,
     fontFamily: fontFamily,
     textAlign: textAlign,
-    paddingTop: paddingTop,
-    paddingRight: paddingRight,
-    paddingLeft: paddingLeft,
-    paddingBottom: paddingBottom,
-    background: background
-  };
-
-  var borderStyles = {
+    padding: padding.top + ' ' + padding.right + ' ' + padding.bottom + ' ' + padding.left,
+    background: background,
     borderTop: border.top.width + ' solid ' + border.top.color,
     borderBottom: border.bottom.width + ' solid ' + border.bottom.color,
     borderLeft: border.left.width + ' solid ' + border.left.color,
     borderRight: border.right.width + ' solid ' + border.right.color
   };
-
-  // if all the border styles are the same, use shorthand
-  if ((0, _utilities.sameFourBorderValues)(border)) {
-    borderStyles = { border: border.top.width + ' solid ' + border.top.color };
-  }
-
-  styles = Object.assign({}, styles, borderStyles);
 
   var classes = (0, _classnames2.default)({
     selected: selected && selected.componentId === componentId
@@ -27303,10 +27253,12 @@ TextComponent.propTypes = {
     textAlign: _react.PropTypes.string.isRequired,
     innerContent: _react.PropTypes.string.isRequired,
     componentId: _react.PropTypes.string.isRequired,
-    paddingLeft: _react.PropTypes.string.isRequired,
-    paddingRight: _react.PropTypes.string.isRequired,
-    paddingTop: _react.PropTypes.string.isRequired,
-    paddingBottom: _react.PropTypes.string.isRequired,
+    padding: _react.PropTypes.shape({
+      top: _react.PropTypes.string.isRequired,
+      bottom: _react.PropTypes.string.isRequired,
+      left: _react.PropTypes.string.isRequired,
+      right: _react.PropTypes.string.isRequired
+    }),
     border: _react.PropTypes.shape({
       top: _react.PropTypes.shape({
         width: _react.PropTypes.string.isRequired,
@@ -34366,12 +34318,6 @@ var ComponentSettings = function ComponentSettings(props) {
     blockId: selected.blockId,
     componentId: selected.componentId
   };
-  var paddingValues = {
-    top: componentOptions.paddingTop,
-    left: componentOptions.paddingLeft,
-    bottom: componentOptions.paddingBottom,
-    right: componentOptions.paddingRight
-  };
 
   switch (componentOptions.type) {
     case 'image':
@@ -34402,19 +34348,19 @@ var ComponentSettings = function ComponentSettings(props) {
         }),
         _react2.default.createElement(_PaddingInput2.default, {
           inputName: 'Padding',
-          initialValues: paddingValues,
-          incrementPaddingTop: handleOnClick(componentInfo, 'paddingTop', (0, _utilities.adjustPx)(componentOptions.paddingTop, 1)),
-          decrementPaddingTop: handleOnClick(componentInfo, 'paddingTop', (0, _utilities.adjustPx)(componentOptions.paddingTop, -1)),
-          updatePaddingTop: handleOnChange(componentInfo, 'paddingTop'),
-          incrementPaddingLeft: handleOnClick(componentInfo, 'paddingLeft', (0, _utilities.adjustPx)(componentOptions.paddingLeft, 1)),
-          decrementPaddingLeft: handleOnClick(componentInfo, 'paddingLeft', (0, _utilities.adjustPx)(componentOptions.paddingLeft, -1)),
-          updatePaddingLeft: handleOnChange(componentInfo, 'paddingLeft'),
-          incrementPaddingBottom: handleOnClick(componentInfo, 'paddingBottom', (0, _utilities.adjustPx)(componentOptions.paddingBottom, 1)),
-          decrementPaddingBottom: handleOnClick(componentInfo, 'paddingBottom', (0, _utilities.adjustPx)(componentOptions.paddingBottom, -1)),
-          updatePaddingBottom: handleOnChange(componentInfo, 'paddingBottom'),
-          incrementPaddingRight: handleOnClick(componentInfo, 'paddingRight', (0, _utilities.adjustPx)(componentOptions.paddingRight, 1)),
-          decrementPaddingRight: handleOnClick(componentInfo, 'paddingRight', (0, _utilities.adjustPx)(componentOptions.paddingRight, -1)),
-          updatePaddingRight: handleOnChange(componentInfo, 'paddingRight')
+          initialValues: componentOptions.padding,
+          incrementPaddingTop: handleOnClick(componentInfo, 'padding.top', (0, _utilities.adjustPx)(componentOptions.padding.top, 1)),
+          decrementPaddingTop: handleOnClick(componentInfo, 'padding.top', (0, _utilities.adjustPx)(componentOptions.padding.top, -1)),
+          updatePaddingTop: handleOnChange(componentInfo, 'padding.top'),
+          incrementPaddingRight: handleOnClick(componentInfo, 'padding.right', (0, _utilities.adjustPx)(componentOptions.padding.right, 1)),
+          decrementPaddingRight: handleOnClick(componentInfo, 'padding.right', (0, _utilities.adjustPx)(componentOptions.padding.right, -1)),
+          updatePaddingRight: handleOnChange(componentInfo, 'padding.right'),
+          incrementPaddingBottom: handleOnClick(componentInfo, 'padding.bottom', (0, _utilities.adjustPx)(componentOptions.padding.bottom, 1)),
+          decrementPaddingBottom: handleOnClick(componentInfo, 'padding.bottom', (0, _utilities.adjustPx)(componentOptions.padding.bottom, -1)),
+          updatePaddingBottom: handleOnChange(componentInfo, 'padding.bottom'),
+          incrementPaddingLeft: handleOnClick(componentInfo, 'padding.left', (0, _utilities.adjustPx)(componentOptions.padding.left, 1)),
+          decrementPaddingLeft: handleOnClick(componentInfo, 'padding.left', (0, _utilities.adjustPx)(componentOptions.padding.left, -1)),
+          updatePaddingLeft: handleOnChange(componentInfo, 'padding.left')
         }),
         _react2.default.createElement(_BorderInput2.default, {
           inputName: 'Border',
@@ -34488,19 +34434,19 @@ var ComponentSettings = function ComponentSettings(props) {
           }),
           _react2.default.createElement(_PaddingInput2.default, {
             inputName: 'Padding',
-            initialValues: paddingValues,
-            incrementPaddingTop: handleOnClick(componentInfo, 'border', (0, _utilities.adjustPx)(componentOptions.paddingTop, 1)),
-            decrementPaddingTop: handleOnClick(componentInfo, 'border', (0, _utilities.adjustPx)(componentOptions.paddingTop, -1)),
-            updatePaddingTop: handleOnChange(componentInfo, 'border'),
-            incrementPaddingLeft: handleOnClick(componentInfo, 'border', (0, _utilities.adjustPx)(componentOptions.paddingLeft, 1)),
-            decrementPaddingLeft: handleOnClick(componentInfo, 'border', (0, _utilities.adjustPx)(componentOptions.paddingLeft, -1)),
-            updatePaddingLeft: handleOnChange(componentInfo, 'border'),
-            incrementPaddingBottom: handleOnClick(componentInfo, 'border', (0, _utilities.adjustPx)(componentOptions.paddingBottom, 1)),
-            decrementPaddingBottom: handleOnClick(componentInfo, 'border', (0, _utilities.adjustPx)(componentOptions.paddingBottom, -1)),
-            updatePaddingBottom: handleOnChange(componentInfo, 'border'),
-            incrementPaddingRight: handleOnClick(componentInfo, 'border', (0, _utilities.adjustPx)(componentOptions.paddingRight, 1)),
-            decrementPaddingRight: handleOnClick(componentInfo, 'border', (0, _utilities.adjustPx)(componentOptions.paddingRight, -1)),
-            updatePaddingRight: handleOnChange(componentInfo, 'border')
+            initialValues: componentOptions.padding,
+            incrementPaddingTop: handleOnClick(componentInfo, 'padding.top', (0, _utilities.adjustPx)(componentOptions.padding.top, 1)),
+            decrementPaddingTop: handleOnClick(componentInfo, 'padding.top', (0, _utilities.adjustPx)(componentOptions.padding.top, -1)),
+            updatePaddingTop: handleOnChange(componentInfo, 'padding.top'),
+            incrementPaddingRight: handleOnClick(componentInfo, 'padding.right', (0, _utilities.adjustPx)(componentOptions.padding.right, 1)),
+            decrementPaddingRight: handleOnClick(componentInfo, 'padding.right', (0, _utilities.adjustPx)(componentOptions.padding.right, -1)),
+            updatePaddingRight: handleOnChange(componentInfo, 'padding.right'),
+            incrementPaddingBottom: handleOnClick(componentInfo, 'padding.bottom', (0, _utilities.adjustPx)(componentOptions.padding.bottom, 1)),
+            decrementPaddingBottom: handleOnClick(componentInfo, 'padding.bottom', (0, _utilities.adjustPx)(componentOptions.padding.bottom, -1)),
+            updatePaddingBottom: handleOnChange(componentInfo, 'padding.bottom'),
+            incrementPaddingLeft: handleOnClick(componentInfo, 'padding.left', (0, _utilities.adjustPx)(componentOptions.padding.left, 1)),
+            decrementPaddingLeft: handleOnClick(componentInfo, 'padding.left', (0, _utilities.adjustPx)(componentOptions.padding.left, -1)),
+            updatePaddingLeft: handleOnChange(componentInfo, 'padding.left')
           }),
           _react2.default.createElement(_BorderInput2.default, {
             inputName: 'Border',
@@ -34509,18 +34455,18 @@ var ComponentSettings = function ComponentSettings(props) {
             decrementBorderTopWidth: handleOnClick(componentInfo, 'border.top.width', (0, _utilities.adjustPx)(componentOptions.border.top.width, -1)),
             updateBorderTopWidth: handleOnChange(componentInfo, 'border.top.width'),
             changeBorderTopColor: handleOnChange(componentInfo, 'border.top.color'),
-            incrementBorderLeftWidth: handleOnClick(componentInfo, 'border.left.width', (0, _utilities.adjustPx)(componentOptions.border.left.width, 1)),
-            decrementBorderLeftWidth: handleOnClick(componentInfo, 'border.left.width', (0, _utilities.adjustPx)(componentOptions.border.left.width, -1)),
-            updateBorderLeftWidth: handleOnChange(componentInfo, 'border.left.width'),
-            changeBorderLeftColor: handleOnChange(componentInfo, 'border.left.color'),
+            incrementBorderRightWidth: handleOnClick(componentInfo, 'border.right.width', (0, _utilities.adjustPx)(componentOptions.border.right.width, 1)),
+            decrementBorderRightWidth: handleOnClick(componentInfo, 'border.right.width', (0, _utilities.adjustPx)(componentOptions.border.right.width, -1)),
+            updateBorderRightWidth: handleOnChange(componentInfo, 'border.right.width'),
+            changeBorderRightColor: handleOnChange(componentInfo, 'border.right.color'),
             incrementBorderBottomWidth: handleOnClick(componentInfo, 'border.bottom.width', (0, _utilities.adjustPx)(componentOptions.border.bottom.width, 1)),
             decrementBorderBottomWidth: handleOnClick(componentInfo, 'border.bottom.width', (0, _utilities.adjustPx)(componentOptions.border.bottom.width, -1)),
             updateBorderBottomWidth: handleOnChange(componentInfo, 'border.bottom.width'),
             changeBorderBottomColor: handleOnChange(componentInfo, 'border.bottom.color'),
-            incrementBorderRightWidth: handleOnClick(componentInfo, 'border.right.width', (0, _utilities.adjustPx)(componentOptions.border.right.width, 1)),
-            decrementBorderRightWidth: handleOnClick(componentInfo, 'border.right.width', (0, _utilities.adjustPx)(componentOptions.border.right.width, -1)),
-            updateBorderRightWidth: handleOnChange(componentInfo, 'border.right.width'),
-            changeBorderRightColor: handleOnChange(componentInfo, 'border.right.color')
+            incrementBorderLeftWidth: handleOnClick(componentInfo, 'border.left.width', (0, _utilities.adjustPx)(componentOptions.border.left.width, 1)),
+            decrementBorderLeftWidth: handleOnClick(componentInfo, 'border.left.width', (0, _utilities.adjustPx)(componentOptions.border.left.width, -1)),
+            updateBorderLeftWidth: handleOnChange(componentInfo, 'border.left.width'),
+            changeBorderLeftColor: handleOnChange(componentInfo, 'border.left.color')
           })
         );
         break;
@@ -34587,19 +34533,19 @@ var ComponentSettings = function ComponentSettings(props) {
           }),
           _react2.default.createElement(_PaddingInput2.default, {
             inputName: 'Padding',
-            initialValues: paddingValues,
-            incrementPaddingTop: handleOnClick(componentInfo, 'paddingTop', (0, _utilities.adjustPx)(componentOptions.paddingTop, 1)),
-            decrementPaddingTop: handleOnClick(componentInfo, 'paddingTop', (0, _utilities.adjustPx)(componentOptions.paddingTop, -1)),
-            updatePaddingTop: handleOnChange(componentInfo, 'paddingTop'),
-            incrementPaddingLeft: handleOnClick(componentInfo, 'paddingLeft', (0, _utilities.adjustPx)(componentOptions.paddingLeft, 1)),
-            decrementPaddingLeft: handleOnClick(componentInfo, 'paddingLeft', (0, _utilities.adjustPx)(componentOptions.paddingLeft, -1)),
-            updatePaddingLeft: handleOnChange(componentInfo, 'paddingLeft'),
-            incrementPaddingBottom: handleOnClick(componentInfo, 'paddingBottom', (0, _utilities.adjustPx)(componentOptions.paddingBottom, 1)),
-            decrementPaddingBottom: handleOnClick(componentInfo, 'paddingBottom', (0, _utilities.adjustPx)(componentOptions.paddingBottom, -1)),
-            updatePaddingBottom: handleOnChange(componentInfo, 'paddingBottom'),
-            incrementPaddingRight: handleOnClick(componentInfo, 'paddingRight', (0, _utilities.adjustPx)(componentOptions.paddingRight, 1)),
-            decrementPaddingRight: handleOnClick(componentInfo, 'paddingRight', (0, _utilities.adjustPx)(componentOptions.paddingRight, -1)),
-            updatePaddingRight: handleOnChange(componentInfo, 'paddingRight')
+            initialValues: componentOptions.padding,
+            incrementPaddingTop: handleOnClick(componentInfo, 'padding.top', (0, _utilities.adjustPx)(componentOptions.padding.top, 1)),
+            decrementPaddingTop: handleOnClick(componentInfo, 'padding.top', (0, _utilities.adjustPx)(componentOptions.padding.top, -1)),
+            updatePaddingTop: handleOnChange(componentInfo, 'padding.top'),
+            incrementPaddingRight: handleOnClick(componentInfo, 'padding.right', (0, _utilities.adjustPx)(componentOptions.padding.right, 1)),
+            decrementPaddingRight: handleOnClick(componentInfo, 'padding.right', (0, _utilities.adjustPx)(componentOptions.padding.right, -1)),
+            updatePaddingRight: handleOnChange(componentInfo, 'padding.right'),
+            incrementPaddingBottom: handleOnClick(componentInfo, 'padding.bottom', (0, _utilities.adjustPx)(componentOptions.padding.bottom, 1)),
+            decrementPaddingBottom: handleOnClick(componentInfo, 'padding.bottom', (0, _utilities.adjustPx)(componentOptions.padding.bottom, -1)),
+            updatePaddingBottom: handleOnChange(componentInfo, 'padding.bottom'),
+            incrementPaddingLeft: handleOnClick(componentInfo, 'padding.left', (0, _utilities.adjustPx)(componentOptions.padding.left, 1)),
+            decrementPaddingLeft: handleOnClick(componentInfo, 'padding.left', (0, _utilities.adjustPx)(componentOptions.padding.left, -1)),
+            updatePaddingLeft: handleOnChange(componentInfo, 'padding.left')
           }),
           _react2.default.createElement(_BorderInput2.default, {
             inputName: 'Border',

@@ -7,8 +7,7 @@ import { selectComponent, switchTab, removeBlockFromPreview } from '../../action
 const ImageAndCaptionComponent = (props) => {
   const { blockId, dispatch, selected, tabs } = props;
   const { color, fontSize, lineHeight, componentId, background,
-    fontFamily, textAlign, innerContent, paddingLeft, paddingRight,
-    paddingBottom, paddingTop, link, src, width, border } = props.content;
+    fontFamily, textAlign, innerContent, padding, link, src, width, border } = props.content;
 
   function handleSelectComponent(e) {
     e.stopPropagation();
@@ -25,10 +24,7 @@ const ImageAndCaptionComponent = (props) => {
         fontFamily,
         textAlign,
         innerContent,
-        paddingTop,
-        paddingBottom,
-        paddingLeft,
-        paddingRight,
+        padding,
         border,
         background,
         type: 'image-and-caption',
@@ -54,30 +50,17 @@ const ImageAndCaptionComponent = (props) => {
     lineHeight,
     fontFamily,
     textAlign,
-    paddingTop,
-    paddingRight,
-    paddingLeft,
-    paddingBottom,
     background,
+    borderTop: `${border.top.width} solid ${border.top.color}`,
+    borderBottom: `${border.bottom.width} solid ${border.bottom.color}`,
+    borderLeft: `${border.left.width} solid ${border.left.color}`,
+    borderRight: `${border.right.width} solid ${border.right.color}`,
+    padding: `${padding.top} ${padding.right} ${padding.bottom} ${padding.left}`,
   };
 
   const classes = classNames({
     selected: selected && (selected.componentId === componentId),
   });
-
-  let borderStyles = {
-    borderTop: `${border.top.width} solid ${border.top.color}`,
-    borderBottom: `${border.bottom.width} solid ${border.bottom.color}`,
-    borderLeft: `${border.left.width} solid ${border.left.color}`,
-    borderRight: `${border.right.width} solid ${border.right.color}`,
-  };
-
-  // if all the border styles are the same, use shorthand
-  if (sameFourBorderValues(border)) {
-    borderStyles = { border: `${border.top.width} solid ${border.top.color}` };
-  }
-
-  styles = Object.assign({}, styles, borderStyles);
 
   if (selected && (selected.componentId === componentId)) {
     return (
@@ -112,10 +95,12 @@ ImageAndCaptionComponent.propTypes = {
     textAlign: PropTypes.string.isRequired,
     innerContent: PropTypes.string.isRequired,
     componentId: PropTypes.string.isRequired,
-    paddingLeft: PropTypes.string.isRequired,
-    paddingRight: PropTypes.string.isRequired,
-    paddingTop: PropTypes.string.isRequired,
-    paddingBottom: PropTypes.string.isRequired,
+    padding: PropTypes.shape({
+      top: PropTypes.string.isRequired,
+      bottom: PropTypes.string.isRequired,
+      left: PropTypes.string.isRequired,
+      right: PropTypes.string.isRequired,
+    }),
     background: PropTypes.string.isRequired,
     border: PropTypes.shape({
       top: PropTypes.shape({

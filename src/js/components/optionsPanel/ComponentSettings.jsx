@@ -17,12 +17,6 @@ const ComponentSettings = (props) => {
     blockId: selected.blockId,
     componentId: selected.componentId,
   };
-  const paddingValues = {
-    top: componentOptions.paddingTop,
-    left: componentOptions.paddingLeft,
-    bottom: componentOptions.paddingBottom,
-    right: componentOptions.paddingRight,
-  };
 
   switch (componentOptions.type) {
     case 'image':
@@ -48,19 +42,19 @@ const ComponentSettings = (props) => {
           />
           <PaddingInput
             inputName="Padding"
-            initialValues={paddingValues}
-            incrementPaddingTop={handleOnClick(componentInfo, 'paddingTop', adjustPx(componentOptions.paddingTop, 1))}
-            decrementPaddingTop={handleOnClick(componentInfo, 'paddingTop', adjustPx(componentOptions.paddingTop, -1))}
-            updatePaddingTop={handleOnChange(componentInfo, 'paddingTop')}
-            incrementPaddingLeft={handleOnClick(componentInfo, 'paddingLeft', adjustPx(componentOptions.paddingLeft, 1))}
-            decrementPaddingLeft={handleOnClick(componentInfo, 'paddingLeft', adjustPx(componentOptions.paddingLeft, -1))}
-            updatePaddingLeft={handleOnChange(componentInfo, 'paddingLeft')}
-            incrementPaddingBottom={handleOnClick(componentInfo, 'paddingBottom', adjustPx(componentOptions.paddingBottom, 1))}
-            decrementPaddingBottom={handleOnClick(componentInfo, 'paddingBottom', adjustPx(componentOptions.paddingBottom, -1))}
-            updatePaddingBottom={handleOnChange(componentInfo, 'paddingBottom')}
-            incrementPaddingRight={handleOnClick(componentInfo, 'paddingRight', adjustPx(componentOptions.paddingRight, 1))}
-            decrementPaddingRight={handleOnClick(componentInfo, 'paddingRight', adjustPx(componentOptions.paddingRight, -1))}
-            updatePaddingRight={handleOnChange(componentInfo, 'paddingRight')}
+            initialValues={componentOptions.padding}
+            incrementPaddingTop={handleOnClick(componentInfo, 'padding.top', adjustPx(componentOptions.padding.top, 1))}
+            decrementPaddingTop={handleOnClick(componentInfo, 'padding.top', adjustPx(componentOptions.padding.top, -1))}
+            updatePaddingTop={handleOnChange(componentInfo, 'padding.top')}
+            incrementPaddingRight={handleOnClick(componentInfo, 'padding.right', adjustPx(componentOptions.padding.right, 1))}
+            decrementPaddingRight={handleOnClick(componentInfo, 'padding.right', adjustPx(componentOptions.padding.right, -1))}
+            updatePaddingRight={handleOnChange(componentInfo, 'padding.right')}
+            incrementPaddingBottom={handleOnClick(componentInfo, 'padding.bottom', adjustPx(componentOptions.padding.bottom, 1))}
+            decrementPaddingBottom={handleOnClick(componentInfo, 'padding.bottom', adjustPx(componentOptions.padding.bottom, -1))}
+            updatePaddingBottom={handleOnChange(componentInfo, 'padding.bottom')}
+            incrementPaddingLeft={handleOnClick(componentInfo, 'padding.left', adjustPx(componentOptions.padding.left, 1))}
+            decrementPaddingLeft={handleOnClick(componentInfo, 'padding.left', adjustPx(componentOptions.padding.left, -1))}
+            updatePaddingLeft={handleOnChange(componentInfo, 'padding.left')}
           />
           <BorderInput
             inputName="Border"
@@ -129,19 +123,19 @@ const ComponentSettings = (props) => {
           />
           <PaddingInput
             inputName="Padding"
-            initialValues={paddingValues}
-            incrementPaddingTop={handleOnClick(componentInfo, 'border', adjustPx(componentOptions.paddingTop, 1))}
-            decrementPaddingTop={handleOnClick(componentInfo, 'border', adjustPx(componentOptions.paddingTop, -1))}
-            updatePaddingTop={handleOnChange(componentInfo, 'border')}
-            incrementPaddingLeft={handleOnClick(componentInfo, 'border', adjustPx(componentOptions.paddingLeft, 1))}
-            decrementPaddingLeft={handleOnClick(componentInfo, 'border', adjustPx(componentOptions.paddingLeft, -1))}
-            updatePaddingLeft={handleOnChange(componentInfo, 'border')}
-            incrementPaddingBottom={handleOnClick(componentInfo, 'border', adjustPx(componentOptions.paddingBottom, 1))}
-            decrementPaddingBottom={handleOnClick(componentInfo, 'border', adjustPx(componentOptions.paddingBottom, -1))}
-            updatePaddingBottom={handleOnChange(componentInfo, 'border')}
-            incrementPaddingRight={handleOnClick(componentInfo, 'border', adjustPx(componentOptions.paddingRight, 1))}
-            decrementPaddingRight={handleOnClick(componentInfo, 'border', adjustPx(componentOptions.paddingRight, -1))}
-            updatePaddingRight={handleOnChange(componentInfo, 'border')}
+            initialValues={componentOptions.padding}
+            incrementPaddingTop={handleOnClick(componentInfo, 'padding.top', adjustPx(componentOptions.padding.top, 1))}
+            decrementPaddingTop={handleOnClick(componentInfo, 'padding.top', adjustPx(componentOptions.padding.top, -1))}
+            updatePaddingTop={handleOnChange(componentInfo, 'padding.top')}
+            incrementPaddingRight={handleOnClick(componentInfo, 'padding.right', adjustPx(componentOptions.padding.right, 1))}
+            decrementPaddingRight={handleOnClick(componentInfo, 'padding.right', adjustPx(componentOptions.padding.right, -1))}
+            updatePaddingRight={handleOnChange(componentInfo, 'padding.right')}
+            incrementPaddingBottom={handleOnClick(componentInfo, 'padding.bottom', adjustPx(componentOptions.padding.bottom, 1))}
+            decrementPaddingBottom={handleOnClick(componentInfo, 'padding.bottom', adjustPx(componentOptions.padding.bottom, -1))}
+            updatePaddingBottom={handleOnChange(componentInfo, 'padding.bottom')}
+            incrementPaddingLeft={handleOnClick(componentInfo, 'padding.left', adjustPx(componentOptions.padding.left, 1))}
+            decrementPaddingLeft={handleOnClick(componentInfo, 'padding.left', adjustPx(componentOptions.padding.left, -1))}
+            updatePaddingLeft={handleOnChange(componentInfo, 'padding.left')}
           />
           <BorderInput
             inputName="Border"
@@ -150,18 +144,18 @@ const ComponentSettings = (props) => {
             decrementBorderTopWidth={handleOnClick(componentInfo, 'border.top.width', adjustPx(componentOptions.border.top.width, -1))}
             updateBorderTopWidth={handleOnChange(componentInfo, 'border.top.width')}
             changeBorderTopColor={handleOnChange(componentInfo, 'border.top.color')}
-            incrementBorderLeftWidth={handleOnClick(componentInfo, 'border.left.width', adjustPx(componentOptions.border.left.width, 1))}
-            decrementBorderLeftWidth={handleOnClick(componentInfo, 'border.left.width', adjustPx(componentOptions.border.left.width, -1))}
-            updateBorderLeftWidth={handleOnChange(componentInfo, 'border.left.width')}
-            changeBorderLeftColor={handleOnChange(componentInfo, 'border.left.color')}
-            incrementBorderBottomWidth={handleOnClick(componentInfo, 'border.bottom.width', adjustPx(componentOptions.border.bottom.width, 1))}
-            decrementBorderBottomWidth={handleOnClick(componentInfo, 'border.bottom.width', adjustPx(componentOptions.border.bottom.width, -1))}
-            updateBorderBottomWidth={handleOnChange(componentInfo, 'border.bottom.width')}
-            changeBorderBottomColor={handleOnChange(componentInfo, 'border.bottom.color')}
             incrementBorderRightWidth={handleOnClick(componentInfo, 'border.right.width', adjustPx(componentOptions.border.right.width, 1))}
             decrementBorderRightWidth={handleOnClick(componentInfo, 'border.right.width', adjustPx(componentOptions.border.right.width, -1))}
             updateBorderRightWidth={handleOnChange(componentInfo, 'border.right.width')}
             changeBorderRightColor={handleOnChange(componentInfo, 'border.right.color')}
+            incrementBorderBottomWidth={handleOnClick(componentInfo, 'border.bottom.width', adjustPx(componentOptions.border.bottom.width, 1))}
+            decrementBorderBottomWidth={handleOnClick(componentInfo, 'border.bottom.width', adjustPx(componentOptions.border.bottom.width, -1))}
+            updateBorderBottomWidth={handleOnChange(componentInfo, 'border.bottom.width')}
+            changeBorderBottomColor={handleOnChange(componentInfo, 'border.bottom.color')}
+            incrementBorderLeftWidth={handleOnClick(componentInfo, 'border.left.width', adjustPx(componentOptions.border.left.width, 1))}
+            decrementBorderLeftWidth={handleOnClick(componentInfo, 'border.left.width', adjustPx(componentOptions.border.left.width, -1))}
+            updateBorderLeftWidth={handleOnChange(componentInfo, 'border.left.width')}
+            changeBorderLeftColor={handleOnChange(componentInfo, 'border.left.color')}
           />
         </div>
       );
@@ -223,19 +217,19 @@ const ComponentSettings = (props) => {
           />
           <PaddingInput
             inputName="Padding"
-            initialValues={paddingValues}
-            incrementPaddingTop={handleOnClick(componentInfo, 'paddingTop', adjustPx(componentOptions.paddingTop, 1))}
-            decrementPaddingTop={handleOnClick(componentInfo, 'paddingTop', adjustPx(componentOptions.paddingTop, -1))}
-            updatePaddingTop={handleOnChange(componentInfo, 'paddingTop')}
-            incrementPaddingLeft={handleOnClick(componentInfo, 'paddingLeft', adjustPx(componentOptions.paddingLeft, 1))}
-            decrementPaddingLeft={handleOnClick(componentInfo, 'paddingLeft', adjustPx(componentOptions.paddingLeft, -1))}
-            updatePaddingLeft={handleOnChange(componentInfo, 'paddingLeft')}
-            incrementPaddingBottom={handleOnClick(componentInfo, 'paddingBottom', adjustPx(componentOptions.paddingBottom, 1))}
-            decrementPaddingBottom={handleOnClick(componentInfo, 'paddingBottom', adjustPx(componentOptions.paddingBottom, -1))}
-            updatePaddingBottom={handleOnChange(componentInfo, 'paddingBottom')}
-            incrementPaddingRight={handleOnClick(componentInfo, 'paddingRight', adjustPx(componentOptions.paddingRight, 1))}
-            decrementPaddingRight={handleOnClick(componentInfo, 'paddingRight', adjustPx(componentOptions.paddingRight, -1))}
-            updatePaddingRight={handleOnChange(componentInfo, 'paddingRight')}
+            initialValues={componentOptions.padding}
+            incrementPaddingTop={handleOnClick(componentInfo, 'padding.top', adjustPx(componentOptions.padding.top, 1))}
+            decrementPaddingTop={handleOnClick(componentInfo, 'padding.top', adjustPx(componentOptions.padding.top, -1))}
+            updatePaddingTop={handleOnChange(componentInfo, 'padding.top')}
+            incrementPaddingRight={handleOnClick(componentInfo, 'padding.right', adjustPx(componentOptions.padding.right, 1))}
+            decrementPaddingRight={handleOnClick(componentInfo, 'padding.right', adjustPx(componentOptions.padding.right, -1))}
+            updatePaddingRight={handleOnChange(componentInfo, 'padding.right')}
+            incrementPaddingBottom={handleOnClick(componentInfo, 'padding.bottom', adjustPx(componentOptions.padding.bottom, 1))}
+            decrementPaddingBottom={handleOnClick(componentInfo, 'padding.bottom', adjustPx(componentOptions.padding.bottom, -1))}
+            updatePaddingBottom={handleOnChange(componentInfo, 'padding.bottom')}
+            incrementPaddingLeft={handleOnClick(componentInfo, 'padding.left', adjustPx(componentOptions.padding.left, 1))}
+            decrementPaddingLeft={handleOnClick(componentInfo, 'padding.left', adjustPx(componentOptions.padding.left, -1))}
+            updatePaddingLeft={handleOnChange(componentInfo, 'padding.left')}
           />
           <BorderInput
             inputName="Border"
