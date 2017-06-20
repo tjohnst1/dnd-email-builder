@@ -118,7 +118,7 @@
       }]
     },
     {
-      "name": "CTA",
+      "name": "Button",
       "image": "img/modules/one-column/cta.svg",
       "category": "one-column",
       "id": "m4",
